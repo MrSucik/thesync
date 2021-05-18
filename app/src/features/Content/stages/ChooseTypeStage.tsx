@@ -1,0 +1,78 @@
+import { Avatar, ListItemAvatar, withStyles } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { List } from "../../../components/List";
+import ListItem from "../../../components/ListItem";
+import { ListItemText } from "../../../components/ListItemText";
+// import { useSelector } from "../../../store";
+import { getIconSource } from "../../../utils/icons";
+import { ContentType, setActiveStep, setContentType } from "../contentSlice";
+import NextBackButtons from "../NextBackButtons";
+
+interface Option {
+  type: ContentType;
+  name: string;
+  icon: JSX.Element;
+}
+
+const options: Option[] = [
+  {
+    type: "existing",
+    name: "Vybrat existující",
+    icon: <Avatar src={getIconSource("plus")} />,
+  },
+  {
+    type: "upload",
+    name: "Nahrát soubor",
+    icon: <Avatar src={getIconSource("upload-file")} />,
+  },
+  {
+    type: "bakalari-suplovani",
+    name: "Bakaláři - Suplování",
+    icon: <Avatar src={getIconSource("bakalari")} />,
+  },
+  {
+    type: "bakalari-planakci",
+    name: "Bakaláři - Plán akcí",
+    icon: <Avatar src={getIconSource("bakalari")} />,
+  },
+];
+
+const OptionsList = withStyles({
+  root: { width: "80%", margin: "auto", overflow: "visible" },
+})(List);
+
+const ChooseTypeStage = () => {
+  // const selectedOption = useSelector<ContentType | undefined>(
+  //   (state) => state.content.type
+  // );
+  const dispatch = useDispatch();
+  const createClickHandler = (type: ContentType) => () => {
+    dispatch(setContentType(type));
+    dispatch(setActiveStep(1));
+  };
+  return (
+    <>
+      <OptionsList>
+        {options.map((option) => (
+          <ListItem
+            key={option.type}
+            // style={{
+            //   boxShadow:
+            //     option.type === selectedOption
+            //       ? "0 0 0 2px rgba(255, 255, 255, 0.7)"
+            //       : undefined,
+            // }}
+            onClick={createClickHandler(option.type)}
+            button
+          >
+            <ListItemAvatar>{option.icon}</ListItemAvatar>
+            <ListItemText primary={option.name} />
+          </ListItem>
+        ))}
+      </OptionsList>
+      <NextBackButtons backHidden nextHidden />
+    </>
+  );
+};
+
+export default ChooseTypeStage;

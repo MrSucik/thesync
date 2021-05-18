@@ -1,0 +1,57 @@
+import { IconButton, ListItemSecondaryAction } from "@material-ui/core";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { useFirestore } from "react-redux-firebase";
+import RoundedImage from "../../components/RoundedImage";
+import Tooltip from "../../components/Tooltip";
+import { MediaModel } from "../../definitions";
+import { useCurrentScene } from "../../hooks/useCurrentScene";
+import { getIconSource } from "../../utils/icons";
+import {
+  setActiveStep,
+  setContentOpen,
+  setContentType,
+  setUpdatingMedia,
+} from "../Content/contentSlice";
+
+const MediaListItemActions: React.FC<{ media: MediaModel }> = ({ media }) => {
+  const firestore = useFirestore();
+  const scene = useCurrentScene();
+  const dispatch = useDispatch();
+  const handleConfigureClick = () => {
+    dispatch(setContentOpen(true));
+    dispatch(setContentType("existing"));
+    dispatch(setActiveStep(2));
+    dispatch(
+      setUpdatingMedia({
+        name: media.name,
+        duration: media.duration,
+        file: media.file,
+        fileType: media.fileType,
+        id: media.id,
+      })
+    );
+  };
+  const handleDeleteClick = () => {
+    firestore.delete(`media/${media.id}`);
+    firestore.update(`scenes/${scene.id}`, {
+      mediaList: scene.mediaList.filter((m) => m !== media.id),
+    });
+  };
+  return (
+    <ListItemSecondaryAction>
+      <Tooltip title="Konfigurovat">
+        <IconButton onClick={handleConfigureClick} size="small">
+          <RoundedImage src={getIconSource("settings")} />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Odstranit">
+        <IconButton onClick={handleDeleteClick} size="small">
+          <RoundedImage src={getIconSource("delete")} />
+        </IconButton>
+      </Tooltip>
+    </ListItemSecondaryAction>
+  );
+};
+
+export default MediaListItemActions;

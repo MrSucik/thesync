@@ -1,0 +1,38 @@
+{
+  "name": "thesync-functions",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "12"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "child-process-promise": "^2.2.1",
+    "ffmpeg-static": "^4.3.0",
+    "firebase-admin": "^9.2.0",
+    "firebase-functions": "^3.11.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "moment": "^2.29.1",
+    "puppeteer": "^8.0.0",
+    "sharp": "^0.28.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/child-process-promise": "^2.2.1",
+    "@types/ffmpeg-static": "^3.0.0",
+    "@types/fluent-ffmpeg": "^2.1.17",
+    "@types/puppeteer": "^5.4.3",
+    "@types/sharp": "^0.28.0",
+    "@types/uuid": "^8.3.0",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^3.8.0"
+  },
+  "private": true
+}

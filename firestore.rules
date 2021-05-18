@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;      	
+    }
+   	match /{document=**} {
+      allow read: if true;      	
+    }
+    match /media/{mediaId} {
+     	allow write: if isAuth() 
+    }
+    match /scenes/{sceneId} {
+     	allow write: if isAuth() 
+    }
+    match /devices/{deviceId} {
+     	allow write: if isAuth() 
+    }
+    match /logs/{logId} {
+     	allow write: if true
+    }
+    match /users/{userId} {
+     	allow write: if isAuth() 
+       && get(/databases/$(database)/documents
+       /users/$(request.auth.token["email"])).data.bigD == true;
+    }
+    function isAuth() {
+    	return request.auth != null 
+      && exists(/databases/$(database)/documents
+      /users/$(request.auth.token["email"]))
+    }
+  }
+}
