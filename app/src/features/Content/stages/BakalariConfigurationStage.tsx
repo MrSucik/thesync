@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "../../../store";
 import client from "../../../utils/client";
-import firebase from "firebase";
+import firebase from "firebase/app";
 import {
   ContentType,
   setBakalariDates,

@@ -5,7 +5,7 @@ import {
   ListItemAvatar,
   withStyles,
 } from "@material-ui/core";
-import firebase from "firebase";
+import firebase from "firebase/app";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
 import { List } from "../../../components/List";

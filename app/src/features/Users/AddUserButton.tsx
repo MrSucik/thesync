@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
-import firebase from "firebase";
+import firebase from "firebase/app";
 import { useSnackbar } from "notistack";
 import Action from "../../components/Action";
 
