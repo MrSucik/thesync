@@ -24,6 +24,7 @@ export interface MediaModel extends FirestoreDocument {
   file: string;
   fileType: "image" | "video";
   backgroundColor?: string;
+  bakalariConfiguration?: string | "auto";
 }
 
 export interface DeviceModel extends FirestoreDocument {

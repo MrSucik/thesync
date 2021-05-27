@@ -25,6 +25,16 @@ import {
 } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
 
+const generateName = (bakalariType: string) =>
+  bakalariType === "bakalari-suplovani"
+    ? `Bakaláři - Suplování (${moment().format("DD. MM.")})`
+    : `Bakaláři - Plán Akcí (${moment()
+        .startOf("isoWeek")
+        .format("DD. MM.")} - ${moment()
+        .startOf("isoWeek")
+        .add(5, "days")
+        .format("DD. MM.")})`;
+
 const FormContainer = withStyles({
   root: { width: "min(80%, 240px)", margin: "auto" },
 })(FormGroup);
@@ -77,10 +87,7 @@ const BakalariConfigurationStage = () => {
       ...media,
       bakalariConfiguration: selectedOption,
       bakalariType,
-      name:
-        bakalariType === "bakalari-planakci"
-          ? "Bakaláři - Plán Akcí"
-          : "Bakaláři - Suplování",
+      name: generateName(bakalariType),
     };
     const { id } = await firestore.add("media", {
       ...newMedia,

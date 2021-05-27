@@ -48,6 +48,7 @@ const MediaUpdateStage = () => {
           variant="filled"
           value={media.name}
           onChange={handleChange}
+          disabled={Boolean(media.bakalariConfiguration)}
         />
         {durationVisible && (
           <TextField

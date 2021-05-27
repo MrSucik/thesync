@@ -85,6 +85,16 @@ export const getAvailableDates = async (page: puppeteer.Page) => {
 
 const getUrl = (date: moment.Moment) => moment(date).format("YYMMDD");
 
+const generateName = (bakalariType: string) =>
+  bakalariType === "bakalari-suplovani"
+    ? `Bakaláři - Suplování (${moment().format("DD. MM.")})`
+    : `Bakaláři - Plán Akcí (${moment()
+        .startOf("isoWeek")
+        .format("DD. MM.")} - ${moment()
+        .startOf("isoWeek")
+        .add(5, "days")
+        .format("DD. MM.")})`;
+
 export const exportCurrentBakalari = async () => {
   const { docs } = await firestore
     .collection("media")
@@ -92,7 +102,9 @@ export const exportCurrentBakalari = async () => {
     .get();
   const page = await initialize();
   for (const doc of docs) {
-    const type = doc.data().bakalariType;
+    const type = doc.data().bakalariType as
+      | "bakalari-planakci"
+      | "bakalari-suplovani";
     const scrape = type === "bakalari-planakci" ? scrapePlan : scrapeSupl;
     const local = await scrape(page, moment());
     const remote = await uploadFile(
@@ -102,6 +114,7 @@ export const exportCurrentBakalari = async () => {
     await doc.ref.update({
       file: remote[0].metadata.name,
       bakalariUpdated: moment().format(),
+      name: generateName(type),
     });
   }
 };
