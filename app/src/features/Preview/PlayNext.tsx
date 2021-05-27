@@ -28,8 +28,8 @@ const PlayNextPrevious: React.FC<Props> = ({ type }) => {
     <IconButton
       className={classes.icon}
       style={{
-        right: type === "next" ? -32 : undefined,
-        left: type === "previous" ? -32 : undefined,
+        right: type === "next" ? 0 : undefined,
+        left: type === "previous" ? 0 : undefined,
       }}
       onClick={handleClick}
     >

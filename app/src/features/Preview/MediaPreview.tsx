@@ -1,13 +1,44 @@
-import { createStyles, makeStyles } from "@material-ui/core";
-import React from "react";
+import { useState, useRef, useLayoutEffect } from "react";
 import { MediaModel } from "../../definitions";
 import { useDownloadURL } from "../../hooks/useDownloadURL";
+import styled, { keyframes, css } from "styled-components";
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    media: { height: "100%", width: " 100%", objectFit: "contain" },
-  })
-);
+const scroll = (props: { offset: number }) => keyframes`
+0% {
+  transform: translateY(0)
+}
+10% {
+  transform: translateY(0)
+}
+50% {
+  transform: translateY(${-props.offset}px)
+}
+60% {
+  transform: translateY(${-props.offset}px)
+}
+90% {
+  transform: translateY(0)
+}
+100% {
+  transform: translateY(0)
+}
+`;
+
+const animation = (props: { offset: number }) =>
+  css`
+    ${scroll(props)} 15s ease-in-out
+  `;
+
+const ScrollingImage = styled.img`
+  margin: auto;
+  max-width: 100%;
+  display: ${(props: { visible: boolean; offset: number }) =>
+    props.visible ? "inline" : "none"};
+  max-height: ${(props: { offset: number; visible: boolean }) =>
+    props.offset ? "" : "100%"};
+  animation: ${(props: { offset: number; visible: boolean }) =>
+    props.offset ? animation(props) : ""};
+`;
 
 interface Props {
   visible: boolean;
@@ -15,22 +46,29 @@ interface Props {
 }
 
 const MediaPreview: React.FC<Props> = ({ media, visible }) => {
-  const classes = useStyles();
+  const [height, setHeight] = useState(0);
+  const ref = useRef<HTMLImageElement>(null);
   const downloadURL = useDownloadURL(media.file);
-  return media.fileType === "image" ? (
-    <img
-      className={classes.media}
-      style={{ display: visible ? "inline" : "none" }}
-      src={downloadURL}
-      alt={media.name}
-    />
-  ) : (
-    <video
-      className={classes.media}
-      style={{ visibility: visible ? "visible" : "hidden" }}
-      src={downloadURL}
-      autoPlay
-    />
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useLayoutEffect(() => {
+    if (ref.current) {
+      setHeight(ref.current.clientHeight);
+    }
+  });
+
+  return (
+    <>
+      {media.fileType === "image" && (
+        <ScrollingImage
+          ref={ref}
+          src={downloadURL}
+          alt={media.name}
+          offset={height - 1760 < 0 ? 0 : height - 1760}
+          visible={visible}
+        />
+      )}
+    </>
   );
 };
 

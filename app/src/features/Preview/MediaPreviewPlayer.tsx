@@ -13,7 +13,7 @@ const Container = withStyles({
     minHeight: "calc(100% - 96px - 64px)",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    overflow: "hidden",
   },
 })(Box);
 
