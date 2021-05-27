@@ -16,6 +16,7 @@ const Weather = forwardRef((_props, ref) => {
     updateWeather();
     const interval = setInterval(updateWeather, 10 * 60 * 1000);
     return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const { currentTemperature, maxTemperature, icon, description } = useSelector(
     (state) => state.weather

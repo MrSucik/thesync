@@ -6,7 +6,6 @@ import { SceneModel } from "../../definitions";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSelectedScene } from "../../store/slices/app";
-import { useSelector } from "../../store";
 
 const FormGroup = withStyles({
   root: { display: "flex", flexDirection: "column", gap: 8 },
@@ -25,12 +24,10 @@ const SettingsContainer = withStyles({
 const Settings = () => {
   const { footer, backgroundColor, name, id } = useCurrentScene();
   const [formData, setFormData] = useState({ name, footer, backgroundColor });
-  const scenes = useSelector((state) => state.firestore.ordered.scenes);
   const firestore = useFirestore();
   const dispatch = useDispatch();
   const handleDeleteClick = async () => {
     await firestore.delete(`scenes/${id}`);
-    const updatedScenes = scenes.filter((x) => x.id !== id);
     dispatch(setSelectedScene(null));
   };
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +48,7 @@ const Settings = () => {
   }, []);
   useEffect(() => {
     setFormData({ name, footer, backgroundColor });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   return (
     <SettingsContainer>

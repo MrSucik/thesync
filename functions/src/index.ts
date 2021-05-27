@@ -18,8 +18,9 @@ import { createThumbnailFromVideo } from "./thumbnails";
 
 export const scheduledBakalariUpdate = functions
   .region("europe-west3")
-  .runWith({ timeoutSeconds: 300 })
-  .https.onRequest(exportCurrentBakalari);
+  .runWith({ timeoutSeconds: 300, memory: "4GB" })
+  .pubsub.schedule("every 5 minutes")
+  .onRun(exportCurrentBakalari);
 
 export const generateDeviceToken = functions
   .region("europe-west3")

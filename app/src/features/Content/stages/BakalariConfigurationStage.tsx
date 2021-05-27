@@ -3,13 +3,14 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
+  LinearProgress,
   MenuItem,
   Select,
   Switch,
   withStyles,
 } from "@material-ui/core";
 import moment from "moment";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "../../../store";
@@ -20,7 +21,6 @@ import {
   setBakalariDates,
   setBakalariFileLoading,
   setSelectedBakalariOption,
-  setUpdatingMedia,
   updateUpdatingMediaLmao,
 } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
@@ -38,9 +38,9 @@ const BakalariConfigurationStage = () => {
   const selectedOption = useSelector(
     (state) => state.content.bakalariSelectedOption
   );
+  const [datesLoading, setDatesLoading] = useState(true);
   const media = useSelector((state) => state.content.updatingMedia);
   const fetchDates = async () => {
-    dispatch(setBakalariFileLoading(true));
     dispatch(setSelectedBakalariOption("auto"));
     const response =
       bakalariType === "bakalari-planakci"
@@ -51,7 +51,7 @@ const BakalariConfigurationStage = () => {
         response.data.map((x) => moment(x, "DD-MM-YYYY").format())
       )
     );
-    dispatch(setBakalariFileLoading(false));
+    setDatesLoading(false);
   };
   const updateFile = async () => {
     dispatch(setBakalariFileLoading(true));
@@ -69,10 +69,10 @@ const BakalariConfigurationStage = () => {
     dispatch(setBakalariFileLoading(false));
   };
   useEffect(() => void fetchDates(), []);
-  useEffect(() => void updateFile(), [selectedOption]);
   const manualDate = selectedOption !== "auto";
   const firestore = useFirestore();
   const handleNextClick = async () => {
+    await updateFile();
     const newMedia = {
       ...media,
       bakalariConfiguration: selectedOption,
@@ -86,7 +86,7 @@ const BakalariConfigurationStage = () => {
       ...newMedia,
       created: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    dispatch(setUpdatingMedia({ ...newMedia, id }));
+    dispatch(updateUpdatingMediaLmao({ ...newMedia, id }));
   };
   return (
     <>
@@ -105,22 +105,27 @@ const BakalariConfigurationStage = () => {
             />
           }
         />
-        {manualDate && (
-          <Select
-            margin="none"
-            variant="outlined"
-            value={selectedOption}
-            onChange={(event) =>
-              dispatch(setSelectedBakalariOption(event.target.value as string))
-            }
-          >
-            {dates.map((date) => (
-              <MenuItem key={date} value={date}>
-                {moment(date).format("DD. MM.")}
-              </MenuItem>
-            ))}
-          </Select>
-        )}
+        {manualDate &&
+          (datesLoading ? (
+            <LinearProgress />
+          ) : (
+            <Select
+              margin="none"
+              variant="outlined"
+              value={selectedOption}
+              onChange={(event) =>
+                dispatch(
+                  setSelectedBakalariOption(event.target.value as string)
+                )
+              }
+            >
+              {dates.map((date) => (
+                <MenuItem key={date} value={date}>
+                  {moment(date).format("DD. MM.")}
+                </MenuItem>
+              ))}
+            </Select>
+          ))}
       </FormContainer>
       <NextBackButtons onNextClick={handleNextClick} />
     </>

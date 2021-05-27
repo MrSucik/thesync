@@ -15,7 +15,7 @@ const ProgressBar: React.FC = () => {
     previewMediaList.map((id) => state.firestore.data.media[id])
   );
   return (
-    <Overlay height={96 }>
+    <Overlay height={96}>
       <Box
         style={{
           flex: 1,

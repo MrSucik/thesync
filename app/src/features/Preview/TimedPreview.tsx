@@ -2,7 +2,7 @@ import React from "react";
 import { useTimeout } from "../../hooks/useTimeout";
 interface Props {
   id: string;
-  timeout: number;
+  timeout: number | string;
   onTimeoutEnd: () => void;
 }
 const TimedPreview: React.FC<Props> = ({

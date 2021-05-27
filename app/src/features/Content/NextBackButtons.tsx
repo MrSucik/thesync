@@ -16,7 +16,7 @@ const Container = withStyles({
 
 const NextBackButtons: React.FC<{
   nextHidden?: boolean;
-  onNextClick?: () => void;
+  onNextClick?: (() => Promise<void>) | (() => void);
   backHidden?: boolean;
   onBackClick?: () => void;
 }> = ({
@@ -28,12 +28,12 @@ const NextBackButtons: React.FC<{
   const loading = useSelector((state) => state.content.bakalariFileLoading);
   const activeStep = useSelector((state) => state.content.activeStep);
   const dispatch = useDispatch();
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
+    await onNextClick();
     dispatch(setActiveStep(activeStep + 1));
     if (steps.length - 1 === activeStep) {
       dispatch(setContentOpen(false));
     }
-    onNextClick();
   };
   const handleBackClick = () => {
     dispatch(setActiveStep(activeStep - 1));
