@@ -80,10 +80,7 @@ const createProcessDateHandler = (type: "supl" | "plan") =>
     .https.onRequest(async (request, response) => {
       let date = request.query["date"] as string;
       if (date === "auto") {
-        const dates = await loadDates(
-          type === "supl" ? bakaSuplDatesRoute : bakaPlanDatesRoute
-        );
-        date = moment(dates[0], "DD-MM-YYYY").format();
+        date = moment().format();
       }
       const page = await initialize();
       const screen =
