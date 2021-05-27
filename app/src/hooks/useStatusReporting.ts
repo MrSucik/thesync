@@ -19,8 +19,14 @@ export const useStatusReporting = (deviceId: string) => {
       .ref(".info/connected")
       .on("value", async (snapshot) => {
         if (snapshot.val()) {
-          await userStatusDatabaseRef.onDisconnect().set(isOfflineForDatabase);
-          userStatusDatabaseRef.set(isOnlineForDatabase);
+          try {
+            await userStatusDatabaseRef
+              .onDisconnect()
+              .set(isOfflineForDatabase);
+            userStatusDatabaseRef.set(isOnlineForDatabase);
+          } catch (error) {
+            console.error("Failed to save status to the database", error);
+          }
         }
       });
   }, [deviceId, database]);
