@@ -43,8 +43,9 @@ const Preview: React.FC<Props> = ({ disableControls }) => {
   return !media ? null : (
     <PreviewContainer
       style={{
-        backgroundColor: selectedScene.backgroundColor,
+        backgroundColor: media.backgroundColor || selectedScene.backgroundColor,
         cursor: disableControls ? "none" : "auto",
+        transition: "all 300ms ease-in-out",
       }}
     >
       <ProgressBar />

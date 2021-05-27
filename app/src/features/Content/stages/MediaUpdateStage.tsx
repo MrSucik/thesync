@@ -1,4 +1,6 @@
 import { Box, TextField, withStyles } from "@material-ui/core";
+import ColorPicker from "material-ui-color-picker";
+import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "../../../store";
@@ -21,6 +23,12 @@ const MediaUpdateStage = () => {
   const media = useSelector((state) => state.content.updatingMedia);
   const durationVisible = media.fileType === "image";
   const firestore = useFirestore();
+  const ref = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.value = "IIIIIIIIIIIIIIIIIIIIIIIIIIII";
+    }
+  }, []);
   const hanleNextClick = () => {
     const mediaId = media.id + "";
     firestore.update(`media/${mediaId}`, media);
@@ -51,6 +59,16 @@ const MediaUpdateStage = () => {
             onChange={handleChange}
           />
         )}
+        <ColorPicker
+          inputRef={ref}
+          value={media.backgroundColor}
+          onChange={(color) =>
+            color &&
+            dispatch(updateUpdatingMediaLmao({ backgroundColor: color + "" }))
+          }
+          variant="filled"
+          label="Barva pozadí"
+        />
       </Container>
       <NextBackButtons backHidden onNextClick={hanleNextClick} />
     </>

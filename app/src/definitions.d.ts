@@ -23,7 +23,7 @@ export interface MediaModel extends FirestoreDocument {
   duration: number;
   file: string;
   fileType: "image" | "video";
-  color: string;
+  backgroundColor?: string;
 }
 
 export interface DeviceModel extends FirestoreDocument {
