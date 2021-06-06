@@ -20,10 +20,12 @@ import {
   ContentType,
   setBakalariDates,
   setBakalariFileLoading,
+  setContentOpen,
   setSelectedBakalariOption,
   updateUpdatingMediaLmao,
 } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
+import { useSnackbar } from "notistack";
 
 const generateName = (bakalariType: string, manualDate: Moment) =>
   bakalariType === "bakalari-suplovani"
@@ -50,6 +52,7 @@ const BakalariConfigurationStage = () => {
   );
   const [datesLoading, setDatesLoading] = useState(true);
   const media = useSelector((state) => state.content.updatingMedia);
+  const { enqueueSnackbar } = useSnackbar();
   const fetchDates = async () => {
     dispatch(setSelectedBakalariOption("auto"));
     const response =
@@ -64,29 +67,36 @@ const BakalariConfigurationStage = () => {
     setDatesLoading(false);
   };
   const updateFile = async () => {
-    dispatch(setBakalariFileLoading(true));
-    const response =
-      bakalariType === "bakalari-planakci"
-        ? await client.bakalariProcessPlan(selectedOption)
-        : await client.bakalariProcessSupl(selectedOption);
-    const file = response.data;
-    dispatch(
-      updateUpdatingMediaLmao({
-        file,
-        fileType: "image",
-      })
-    );
-    dispatch(setBakalariFileLoading(false));
+    try {
+      dispatch(setBakalariFileLoading(true));
+      const response =
+        bakalariType === "bakalari-planakci"
+          ? await client.bakalariProcessPlan(selectedOption)
+          : await client.bakalariProcessSupl(selectedOption);
+      const file = response.data;
+      dispatch(
+        updateUpdatingMediaLmao({
+          file,
+          fileType: "image",
+        })
+      );
+      dispatch(setBakalariFileLoading(false));
+    } catch (error) {
+      enqueueSnackbar("Nepodařilo se načíst Bakaláře", { variant: "error" });
+      dispatch(setContentOpen(false));
+    }
   };
   useEffect(() => void fetchDates(), []);
   const manualDate = selectedOption !== "auto";
   const firestore = useFirestore();
+  const author = useSelector((state) => state.firebase.auth.email);
   const handleNextClick = async () => {
     await updateFile();
     const newMedia = {
       ...media,
       bakalariConfiguration: selectedOption,
       bakalariType,
+      author,
       name: generateName(
         bakalariType,
         manualDate ? moment(selectedOption) : moment()

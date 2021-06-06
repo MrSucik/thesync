@@ -72,6 +72,7 @@ const FileUploadStage = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const media = useSelector((state) => state.content.updatingMedia);
+  const author = useSelector((state) => state.firebase.auth.email);
   const { enqueueSnackbar } = useSnackbar();
   const firestore = useFirestore();
   const handleDropAccepted = <T extends File>(files: T[], event: DropEvent) => {
@@ -110,6 +111,7 @@ const FileUploadStage = () => {
           duration: 7,
           file: remoteFile.fullPath,
           fileType,
+          author,
         };
         const { id } = await firestore.add("media", {
           ...newMedia,
@@ -143,7 +145,7 @@ const FileUploadStage = () => {
             <Typography>
               Nahrát soubor <br />
               <Typography style={{ opacity: 0.8 }} variant="caption">
-                (pro optimální zobrazení použijte rozlišení - 1080x1780)
+                (pro optimální zobrazení použijte rozlišení - 1080x1760)
               </Typography>
             </Typography>
             {media.file && <Label>Soubor: {media.file}</Label>}

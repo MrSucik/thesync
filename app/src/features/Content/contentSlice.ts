@@ -48,6 +48,8 @@ const contentSlice = createSlice({
           duration: 7,
           name: "",
         };
+        state.bakalariFileLoading = false;
+        state.bakalariSelectedOption = "auto";
       }
     },
     setActiveStep(state, action: PayloadAction<number>) {

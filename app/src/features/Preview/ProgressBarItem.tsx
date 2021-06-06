@@ -39,7 +39,7 @@ const ProgressBarItem: React.FC<Props> = ({ index, media }) => {
           textAlign: "center",
           fontWeight: 500,
           padding: 4,
-          fontSize: window.outerHeight > 1080 ? 24 : 14,
+          fontSize: window.outerHeight > 1080 ? 20 : 14,
           color: state === "running" ? "white" : "rgba(220, 220, 220, 0.5)",
           overflow: "hidden",
         }}
