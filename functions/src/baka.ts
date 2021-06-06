@@ -10,11 +10,7 @@ const removeNewLines = (input: string) => input.replace(/\r?\n|\r/g, "");
 const defaultOptions = {
   headless: true,
   args: ["--no-sandbox"],
-  defaultViewport: {
-    width: 1080,
-    height: 100,
-    deviceScaleFactor: 2,
-  },
+  defaultViewport: { width: 1080, height: 100 },
 };
 
 export const takeScreenshot = async (
@@ -85,17 +81,16 @@ export const getAvailableDates = async (page: puppeteer.Page) => {
 
 const getUrl = (date: moment.Moment) => moment(date).format("YYMMDD");
 
-const generateName = (bakalariType: string) =>
+const generateName = (bakalariType: string, date: moment.Moment) =>
   bakalariType === "bakalari-suplovani"
-    ? `Bakaláři - Suplování (${moment().format("DD. MM.")})`
-    : `Bakaláři - Plán Akcí (${moment()
-        .startOf("isoWeek")
-        .format("DD. MM.")} - ${moment()
+    ? `Suplování (${date.format("DD. MM.")})`
+    : `Plán Akcí (${date.startOf("isoWeek").format("DD. MM.")} - ${date
         .startOf("isoWeek")
         .add(5, "days")
         .format("DD. MM.")})`;
 
 export const exportCurrentBakalari = async () => {
+  const desiredDay = moment().add(8, "hours");
   const { docs } = await firestore
     .collection("media")
     .where("bakalariConfiguration", "==", "auto")
@@ -106,15 +101,15 @@ export const exportCurrentBakalari = async () => {
       | "bakalari-planakci"
       | "bakalari-suplovani";
     const scrape = type === "bakalari-planakci" ? scrapePlan : scrapeSupl;
-    const local = await scrape(page, moment());
+    const local = await scrape(page, desiredDay);
     const remote = await uploadFile(
       local,
-      `bakalari/${type}-${uuid()}-${moment().format()}.png`
+      `bakalari/${type}-${uuid()}-${desiredDay.format()}.png`
     );
     await doc.ref.update({
       file: remote[0].metadata.name,
       bakalariUpdated: moment().format(),
-      name: generateName(type),
+      name: generateName(type, desiredDay),
     });
   }
 };

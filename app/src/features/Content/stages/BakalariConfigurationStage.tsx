@@ -9,7 +9,7 @@ import {
   Switch,
   withStyles,
 } from "@material-ui/core";
-import moment from "moment";
+import moment, { Moment } from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
@@ -25,12 +25,12 @@ import {
 } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
 
-const generateName = (bakalariType: string) =>
+const generateName = (bakalariType: string, manualDate: Moment) =>
   bakalariType === "bakalari-suplovani"
-    ? `Bakaláři - Suplování (${moment().format("DD. MM.")})`
-    : `Bakaláři - Plán Akcí (${moment()
+    ? `Suplování (${manualDate.format("DD. MM.")})`
+    : `Plán Akcí (${manualDate
         .startOf("isoWeek")
-        .format("DD. MM.")} - ${moment()
+        .format("DD. MM.")} - ${manualDate
         .startOf("isoWeek")
         .add(5, "days")
         .format("DD. MM.")})`;
@@ -87,7 +87,10 @@ const BakalariConfigurationStage = () => {
       ...media,
       bakalariConfiguration: selectedOption,
       bakalariType,
-      name: generateName(bakalariType),
+      name: generateName(
+        bakalariType,
+        manualDate ? moment(selectedOption) : moment()
+      ),
     };
     const { id } = await firestore.add("media", {
       ...newMedia,

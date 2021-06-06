@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
+import firebase from "firebase/app";
 import { firestore } from "../utils/fire";
 
 const defaultTimeout = 15;
@@ -32,6 +33,7 @@ export default class ErrorContainer extends React.Component<
     firestore.collection("logs").add({
       error: JSON.stringify({ error, errorInfo }),
       location: window.location.pathname,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
     const interval = setInterval(() => {
       if (this.state.timeout < 1) {
