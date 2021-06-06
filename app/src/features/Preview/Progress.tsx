@@ -49,8 +49,8 @@ const Progress: React.FC<Props> = ({ duration, state }) => {
           ),
         1000
       );
-      return () => clearInterval(interval?.current as any);
     }
+    return () => clearInterval(interval?.current as any);
   }, [duration, state, completed]);
   return (
     <LinearProgress
