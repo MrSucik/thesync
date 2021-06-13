@@ -19,7 +19,7 @@ import { createThumbnailFromVideo } from "./thumbnails";
 export const scheduledBakalariUpdate = functions
   .region("europe-west3")
   .runWith({ timeoutSeconds: 300, memory: "4GB" })
-  .pubsub.schedule("every 5 minutes")
+  .pubsub.schedule("every 30 minutes")
   .onRun(exportCurrentBakalari);
 
 export const generateDeviceToken = functions
@@ -79,15 +79,14 @@ const createProcessDateHandler = (type: "supl" | "plan") =>
     .region("europe-west3")
     .runWith({ memory: "1GB" })
     .https.onRequest(async (request, response) => {
-      let date = request.query["date"] as string;
-      if (date === "auto") {
-        date = moment().format();
-      }
+      const dateQuery = request.query["date"] as string;
+      const date =
+        dateQuery === "auto" ? moment() : moment(dateQuery).add(12, "hours");
       const page = await initialize();
       const screen =
         type === "supl"
-          ? await scrapeSupl(page, moment(date))
-          : await scrapePlan(page, moment(date));
+          ? await scrapeSupl(page, date)
+          : await scrapePlan(page, date);
       const result = await uploadFile(screen, `bakalari/${type}-${date}.png`);
       response.set("Access-Control-Allow-Origin", "*");
       response.send(result[1].name);
