@@ -54,3 +54,6 @@ def loop():
             run()
     except Exception as err:
         error(err)
+
+
+loop()

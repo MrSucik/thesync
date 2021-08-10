@@ -10,7 +10,7 @@ def run_shell(command):
 
 
 def write_file(path, content):
-    f = open(path)
+    f = open(path, "w")
     f.write(content)
     f.close()
 
