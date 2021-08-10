@@ -14,10 +14,15 @@ export const useFirestoreSubscribe = () => {
       orderBy: ["created", "desc"],
     },
     { collection: "users", orderBy: ["created", "asc"] },
+    { collection: "powersettings", orderBy: ["updated", "desc"], limit: 1 },
   ]);
   const dataLoaded = useSelector<RootState, boolean>(
     ({ firestore: { data } }) =>
-      data.devices && data.scenes && data.media && data.users
+      data.devices &&
+      data.scenes &&
+      data.media &&
+      data.users &&
+      data.powersettings
   );
   return dataLoaded;
 };

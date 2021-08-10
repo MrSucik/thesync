@@ -21,6 +21,9 @@ service cloud.firestore {
     }
     match /users/{userId} {
      	allow write: if isAuth()
+    }  
+    match /powersettings/{powersettingsId} {
+     	allow write: if isAuth()
     }
     function isAuth() {
     	return request.auth != null 

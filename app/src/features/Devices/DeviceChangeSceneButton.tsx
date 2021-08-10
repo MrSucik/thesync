@@ -1,8 +1,6 @@
 import { Icon, IconButton } from "@material-ui/core";
-import { getIconSource } from "../../utils/icons";
 import { useDispatch } from "react-redux";
 import { setDeviceSceneUpdate } from "../../store/slices/app";
-import RoundedImage from "../../components/RoundedImage";
 import Tooltip from "../../components/Tooltip";
 
 const DeviceChangeSceneButton: React.FC<{ deviceId: string | "all" }> = ({

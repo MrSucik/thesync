@@ -194,9 +194,27 @@ export const endpoint = functions.https.onRequest((request, response) => {
     } else if (data?.forceReboot) {
       deviceDoc.update({ forceReboot: false });
     }
+    const schedule = await firestore
+      .collection("powersettings")
+      .orderBy("updated", "desc")
+      .limit(1)
+      .get();
+    const scheduleSettings = schedule.docs[0].data();
+    const time = moment(scheduleSettings.time);
+    const isCorrectTime =
+      moment().hours() == time.hours() && moment().minutes() == time.minutes();
+    const scheduledShutdown =
+      scheduleSettings.enabled &&
+      isCorrectTime &&
+      scheduleSettings.action === "shutdown";
+    const scheduledReboot =
+      scheduleSettings.enabled &&
+      isCorrectTime &&
+      scheduleSettings.action === "reboot";
+
     response.send({
-      shutdown: data?.forceShutdown || false,
-      reboot: data?.reboot || false,
+      shutdown: scheduledShutdown || data?.forceShutdown || false,
+      reboot: scheduledReboot || data?.reboot || false,
       startup: false,
     });
   });

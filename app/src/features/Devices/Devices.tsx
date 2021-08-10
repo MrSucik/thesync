@@ -5,6 +5,8 @@ import ConfirmationDialog from "./DeviceChangeSceneDialog";
 import UpdateDeviceModal from "./UpdateDeviceModal";
 import DeviceChangeSceneButton from "./DeviceChangeSceneButton";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
+import DeviceScheduleButton from "./DeviceSchedule/DeviceScheduleButton";
+import DeviceScheduleDialog from "./DeviceSchedule/DeviceScheduleDialog";
 
 const Container = withStyles({
   root: {
@@ -21,11 +23,17 @@ const Device = () => {
   return (
     <>
       <ConfirmationDialog />
+      <DeviceScheduleDialog />
       <UpdateDeviceModal />
       <Container>
         <Box display="flex" justifyContent="space-between" pr={2}>
           <Title>zařízení</Title>
-          {user?.bigD && <DeviceChangeSceneButton deviceId="all" />}
+          {user?.bigD && (
+            <Box>
+              <DeviceScheduleButton />
+              <DeviceChangeSceneButton deviceId="all" />
+            </Box>
+          )}
         </Box>
         <DeviceList />
       </Container>

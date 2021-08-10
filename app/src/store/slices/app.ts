@@ -13,6 +13,7 @@ export interface AppState {
   deviceSceneUpdate: string | "all";
   choosingMedia: string | null;
   optimisticReorderUpdate: ReorderUpdate | null;
+  deviceScheduleOpen: boolean;
 }
 
 const initialState: AppState = {
@@ -21,6 +22,7 @@ const initialState: AppState = {
   deviceSceneUpdate: "",
   choosingMedia: null,
   optimisticReorderUpdate: null,
+  deviceScheduleOpen: false,
 };
 
 const appSlice = createSlice({
@@ -45,6 +47,9 @@ const appSlice = createSlice({
     ) {
       state.optimisticReorderUpdate = action.payload;
     },
+    setDeviceScheduleOpen(state, action: PayloadAction<boolean>) {
+      state.deviceScheduleOpen = action.payload;
+    },
   },
 });
 
@@ -54,6 +59,7 @@ export const {
   setDeviceSceneUpdate,
   setChoosingMedia,
   setOptimisticReorderUpdate,
+  setDeviceScheduleOpen,
 } = appSlice.actions;
 
 export default appSlice.reducer;
