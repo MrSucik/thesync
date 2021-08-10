@@ -20,9 +20,7 @@ service cloud.firestore {
      	allow write: if true
     }
     match /users/{userId} {
-     	allow write: if isAuth() 
-       && get(/databases/$(database)/documents
-       /users/$(request.auth.token["email"])).data.bigD == true;
+     	allow write: if isAuth()
     }
     function isAuth() {
     	return request.auth != null 
