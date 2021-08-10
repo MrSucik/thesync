@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import { validateDeviceId, createDeviceToken } from "./auth";
-import { bucket, firestore, uploadFile } from "./fire";
+import { bucket, firestore, storage, uploadFile } from "./fire";
 import {
   exportCurrentBakalari,
   getAvailableDates,
@@ -15,6 +15,11 @@ import * as os from "os";
 import * as fs from "fs";
 import { spawn } from "child-process-promise";
 import { createThumbnailFromVideo } from "./thumbnails";
+import sharp = require("sharp");
+import * as cors from "cors";
+import { tempFilePath } from "./utils";
+
+const corsHandler = cors({ origin: true });
 
 export const scheduledBakalariUpdate = functions
   .region("europe-west3")
@@ -25,15 +30,16 @@ export const scheduledBakalariUpdate = functions
 export const generateDeviceToken = functions
   .region("europe-west3")
   .https.onRequest(async (request, response) => {
-    const deviceId = request.query.deviceId + "";
-    const isValid = await validateDeviceId(deviceId);
-    response.set("Access-Control-Allow-Origin", "*");
-    if (!isValid) {
-      response.status(500).send("Invalid device ID");
-    } else {
-      const token = await createDeviceToken(deviceId);
-      response.send(token);
-    }
+    corsHandler(request, response, async () => {
+      const deviceId = request.query.deviceId + "";
+      const isValid = await validateDeviceId(deviceId);
+      if (!isValid) {
+        response.status(500).send("Invalid device ID");
+      } else {
+        const token = await createDeviceToken(deviceId);
+        response.send(token);
+      }
+    });
   });
 
 export const onClientStatusChanged = functions
@@ -63,9 +69,10 @@ const createAvailableDatesHandler = (url: string) =>
     .region("europe-west3")
     .runWith({ memory: "1GB" })
     .https.onRequest(async (_request, response) => {
-      const dates = await loadDates(url);
-      response.set("Access-Control-Allow-Origin", "*");
-      response.send(dates);
+      corsHandler(_request, response, async () => {
+        const dates = await loadDates(url);
+        response.send(dates);
+      });
     });
 
 export const availableBakaSuplDates =
@@ -79,17 +86,21 @@ const createProcessDateHandler = (type: "supl" | "plan") =>
     .region("europe-west3")
     .runWith({ memory: "1GB" })
     .https.onRequest(async (request, response) => {
-      const dateQuery = request.query["date"] as string;
-      const date =
-        dateQuery === "auto" ? moment() : moment(dateQuery).add(12, "hours");
-      const page = await initialize();
-      const screen =
-        type === "supl"
-          ? await scrapeSupl(page, date)
-          : await scrapePlan(page, date);
-      const result = await uploadFile(screen, `bakalari/${type}-${date}.png`);
-      response.set("Access-Control-Allow-Origin", "*");
-      response.send(result[1].name);
+      try {
+        response.set("Access-Control-Allow-Origin", "*");
+        const dateQuery = request.query["date"] as string;
+        const date =
+          dateQuery === "auto" ? moment() : moment(dateQuery).add(12, "hours");
+        const page = await initialize();
+        const screen =
+          type === "supl"
+            ? await scrapeSupl(page, date)
+            : await scrapePlan(page, date);
+        const result = await uploadFile(screen, `bakalari/${type}-${date}.png`);
+        response.send(result[1].name);
+      } catch (error) {
+        response.send(error);
+      }
     });
 
 export const bakalariProcessSupl = createProcessDateHandler("supl");
@@ -151,3 +162,50 @@ export const onFileCreated = functions
     });
     return fs.unlinkSync(tempFilePath);
   });
+
+export const getImageSize = functions
+  .region("europe-west3")
+  .https.onRequest(async (request, response) => {
+    corsHandler(request, response, async () => {
+      const destination = tempFilePath(request.body);
+      storage.bucket().file(request.body).download({ destination });
+      const { width, height } = await sharp(destination).metadata();
+      response.send({ width, height, destination });
+    });
+  });
+
+export const echoDevice = functions
+  .region("europe-west3")
+  .https.onRequest((request, response) => {
+    corsHandler(request, response, async () => {
+      response.send({
+        shutdown: moment().add(-3, "minutes"),
+        startup: moment().add(3, "minutes"),
+      });
+    });
+  });
+
+export const endpoint = functions.https.onRequest((request, response) => {
+  corsHandler(request, response, async () => {
+    const deviceDoc = firestore.doc(`devices/${request.query.deviceId}`);
+    const data = (await deviceDoc.get()).data();
+    if (data?.forceShutdown) {
+      deviceDoc.update({ forceShutdown: false });
+    } else if (data?.forceReboot) {
+      deviceDoc.update({ forceReboot: false });
+    }
+    response.send({
+      shutdown: data?.forceShutdown || false,
+      reboot: data?.reboot || false,
+      startup: false,
+    });
+  });
+});
+
+export const log = functions.https.onRequest((request, response) => {
+  corsHandler(request, response, async () => {
+    const log = request.body;
+    firestore.collection("logs").add(log);
+    response.status(200).send();
+  });
+});

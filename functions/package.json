@@ -14,11 +14,14 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "buffer-image-size": "^0.6.4",
     "child-process-promise": "^2.2.1",
+    "cors": "^2.8.5",
     "ffmpeg-static": "^4.3.0",
     "firebase-admin": "^9.2.0",
     "firebase-functions": "^3.11.0",
     "fluent-ffmpeg": "^2.1.2",
+    "image-size": "^1.0.0",
     "moment": "^2.29.1",
     "puppeteer": "^8.0.0",
     "sharp": "^0.28.1",
@@ -26,6 +29,7 @@
   },
   "devDependencies": {
     "@types/child-process-promise": "^2.2.1",
+    "@types/cors": "^2.8.10",
     "@types/ffmpeg-static": "^3.0.0",
     "@types/fluent-ffmpeg": "^2.1.17",
     "@types/puppeteer": "^5.4.3",
