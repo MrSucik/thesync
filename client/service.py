@@ -8,8 +8,8 @@ import datetime
 interval = 10
 deviceId = "a7T7cDqYwxOmplfSnFii"
 endpoint = "https://us-central1-thesync.cloudfunctions.net/"
-power_control = endpoint + "endpoint?deviceId=" + deviceId
-log = endpoint + "log"
+power_control_endpoint = endpoint + "endpoint?deviceId=" + deviceId
+log_endpoint = endpoint + "log"
 
 
 def run_shell(command):
@@ -27,7 +27,7 @@ def reboot():
 
 
 def run():
-    with urllib.request.urlopen(power_control) as url:
+    with urllib.request.urlopen(power_control_endpoint) as url:
         data = json.loads(url.read().decode())
         print(data)
         if data["shutdown"]:
@@ -43,7 +43,7 @@ def error(message):
         time: datetime.datetime.now(),
         "source": "python power manager"
     }
-    requests.post(log, data)
+    requests.post(log_endpoint, data)
     loop()
 
 
@@ -54,6 +54,3 @@ def loop():
             run()
     except Exception as err:
         error(err)
-
-
-loop()
