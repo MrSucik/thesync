@@ -22,7 +22,7 @@ export interface ContentState {
 const initialState: ContentState = {
   activeStep: 0,
   contentOpen: false,
-  bakalariDates: ["2021-03-28T00:00:00", "2021-03-27T00:00:00"],
+  bakalariDates: [],
   previewMediaId: "",
   durationVisible: false,
   bakalariSelectedOption: "auto",
@@ -39,7 +39,7 @@ const contentSlice = createSlice({
   reducers: {
     setContentOpen(state, action: PayloadAction<boolean>) {
       state.contentOpen = action.payload;
-      if (!state.contentOpen) {
+      if (!action.payload) {
         state.activeStep = 0;
         state.durationVisible = false;
         state.previewMediaId = "";
@@ -50,6 +50,7 @@ const contentSlice = createSlice({
         };
         state.bakalariFileLoading = false;
         state.bakalariSelectedOption = "auto";
+        state.bakalariDates = [];
       }
     },
     setActiveStep(state, action: PayloadAction<number>) {

@@ -19,6 +19,7 @@ import { v4 as uuid } from "uuid";
 import { useSnackbar } from "notistack";
 import NextBackButtons from "../NextBackButtons";
 import { useFirestore } from "react-redux-firebase";
+import client from "../../../utils/client";
 
 const getFileType = (type: string) => {
   console.log(type);
@@ -79,8 +80,10 @@ const FileUploadStage = () => {
     setLoading(true);
     const file = files[0];
     const fileType = getFileType(file.type);
-    const remoteFile = firebase.storage().ref(`uploads/${uuid() + file.name}`);
+    const remoteFileName = `uploads/${uuid() + file.name}`;
+    const remoteFile = firebase.storage().ref(remoteFileName);
     const task = remoteFile.put(file);
+    console.log(task, remoteFile, file);
     task.on(
       "state-changed",
       (snapshot) => {},
@@ -106,6 +109,9 @@ const FileUploadStage = () => {
         } else if (fileType === "image") {
           dispatch(setDurationVisible(true));
         }
+        const response = await client.getImageSize(remoteFileName);
+        console.log(response);
+
         const newMedia = {
           name: "Nový soubor",
           duration: 7,
@@ -132,7 +138,7 @@ const FileUploadStage = () => {
   const { getInputProps, getRootProps } = useDropzone({
     onDropAccepted: handleDropAccepted,
     onDropRejected: handleDropRejected,
-    accept: ["image/png", "image/gif", "image/jpeg"],
+    accept: ["image/png", "image/gif", "image/jpeg", "video/mp4"],
     multiple: false,
   });
   return (

@@ -1,4 +1,4 @@
-import { IconButton } from "@material-ui/core";
+import { Icon, IconButton } from "@material-ui/core";
 import { getIconSource } from "../../utils/icons";
 import { useDispatch } from "react-redux";
 import { setDeviceSceneUpdate } from "../../store/slices/app";
@@ -17,7 +17,7 @@ const DeviceChangeSceneButton: React.FC<{ deviceId: string | "all" }> = ({
       }`}
     >
       <IconButton onClick={handleChange} size="small">
-        <RoundedImage src={getIconSource("change-scene")} />
+        <Icon style={{ color: "#c4c4c4" }}>swap_vert</Icon>
       </IconButton>
     </Tooltip>
   );

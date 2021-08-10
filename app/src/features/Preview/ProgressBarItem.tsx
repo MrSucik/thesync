@@ -39,14 +39,14 @@ const ProgressBarItem: React.FC<Props> = ({ index, media }) => {
           textAlign: "center",
           fontWeight: 500,
           padding: 4,
-          fontSize: window.outerHeight > 1080 ? 20 : 14,
+          fontSize: window.outerHeight > 1080 ? 18 : 13,
           color: state === "running" ? "white" : "rgba(220, 220, 220, 0.5)",
           overflow: "hidden",
         }}
       >
         {media.name.length > 32 ? (
           <Tooltip title={media.name}>
-            <span>{media.name.substr(0, 24)}...</span>
+            <span>{media.name.substr(0, 32)}...</span>
           </Tooltip>
         ) : (
           <span>{media.name}</span>

@@ -22,6 +22,12 @@ const client = {
     axios.get(
       `https://api.openweathermap.org/data/2.5/onecall?lat=49.82569613880751&lon=18.16797453409319&appid=49edff20339efac809359e260fb69a33&lang=cz&units=metric`
     ),
+  getImageSize: (file: string) => {
+    axiosClient.post<{ height: number; width: number; type: string }>(
+      "getImageSize",
+      file
+    );
+  },
 };
 
 export default client;

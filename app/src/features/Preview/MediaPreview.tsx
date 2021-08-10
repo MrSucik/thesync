@@ -26,7 +26,7 @@ const scroll = (props: { offset: number }) => keyframes`
 
 const animation = (props: { offset: number }) =>
   css`
-    ${scroll(props)} 15s ease-in-out
+    ${scroll(props)} 80s linear
   `;
 
 const ScrollingImage = styled.img`
@@ -35,9 +35,14 @@ const ScrollingImage = styled.img`
   display: ${(props: { visible: boolean; offset: number }) =>
     props.visible ? "inline" : "none"};
   max-height: ${(props: { offset: number; visible: boolean }) =>
-    props.offset ? "" : "100%"};
+    window.innerHeight > 1200 ? "" : "100%"};
   animation: ${(props: { offset: number; visible: boolean }) =>
     props.offset ? animation(props) : ""};
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-transform-style: preserve-3d;
+  -webkit-perspective: 1000;
 `;
 
 interface Props {
@@ -67,6 +72,15 @@ const MediaPreview: React.FC<Props> = ({ media, visible }) => {
           offset={height - 1760 < 0 ? 0 : height - 1760}
           visible={visible}
         />
+      )}
+      {media.fileType === "video" && (
+        <video autoPlay loop>
+          <source
+            src={`https://firebasestorage.googleapis.com/v0/b/thesync.appspot.com/o/output.mp4?alt=media&token=c2e8b86c-0f83-40d2-8dbf-60656803762d`}
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
       )}
     </>
   );

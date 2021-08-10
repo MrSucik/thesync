@@ -62,13 +62,15 @@ const ChooseExistingStage = () => {
       <Container>
         <FormLabel component="legend">Kopírovat položku</FormLabel>
         <List>
-          {media.map((med) => (
-            <ListIt
-              key={med.id}
-              media={med}
-              onClick={createClickHandler(med.id)}
-            />
-          ))}
+          {media
+            .filter((x) => !x.bakalariConfiguration)
+            .map((med) => (
+              <ListIt
+                key={med.id}
+                media={med}
+                onClick={createClickHandler(med.id)}
+              />
+            ))}
         </List>
       </Container>
       <NextBackButtons nextHidden />

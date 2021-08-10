@@ -7,7 +7,13 @@ import DeviceChangeSceneButton from "./DeviceChangeSceneButton";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 const Container = withStyles({
-  root: { flex: 2, display: "flex", flexDirection: "column", overflow: "auto" },
+  root: {
+    minWidth: "20rem",
+    flex: 2,
+    display: "flex",
+    flexDirection: "column",
+    overflow: "auto",
+  },
 })(Box);
 
 const Device = () => {

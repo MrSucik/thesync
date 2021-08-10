@@ -1,16 +1,11 @@
 import React from "react";
 import { useTimeout } from "../../hooks/useTimeout";
-interface Props {
+
+const TimedPreview: React.FC<{
   id: string;
   timeout: number | string;
-  onTimeoutEnd: () => void;
-}
-const TimedPreview: React.FC<Props> = ({
-  timeout,
-  id,
-  onTimeoutEnd,
-  children,
-}) => {
+  onTimeoutEnd: (() => void) | null;
+}> = ({ timeout, id, onTimeoutEnd, children }) => {
   useTimeout(timeout, onTimeoutEnd);
   return <>{children}</>;
 };

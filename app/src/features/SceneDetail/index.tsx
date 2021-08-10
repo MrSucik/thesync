@@ -10,6 +10,7 @@ const SceneDetailContainer = withStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     backgroundColor: theme.palette.background.default,
+    minWidth: "20rem",
   },
 }))(Paper);
 

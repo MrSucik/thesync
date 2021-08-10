@@ -1,7 +1,4 @@
-import {
-  withStyles,
-  ListItemText as MuiListItemText
-} from "@material-ui/core";
+import { withStyles, ListItemText as MuiListItemText } from "@material-ui/core";
 
 export const ListItemText = withStyles({
   primary: { color: "rgb(255, 255, 255)" },

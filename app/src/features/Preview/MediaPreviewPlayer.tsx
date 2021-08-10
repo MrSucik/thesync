@@ -35,9 +35,7 @@ const MediaPreviewPlayer: React.FC = () => {
             key={media.id}
             id={media.id}
             timeout={media.duration}
-            onTimeoutEnd={
-              index === activeMediaIndex ? handleMediaEnded : () => {}
-            }
+            onTimeoutEnd={index === activeMediaIndex ? handleMediaEnded : null}
           >
             <MediaPreview
               key={previewMediaList[index]}

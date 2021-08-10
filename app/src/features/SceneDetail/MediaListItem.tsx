@@ -21,7 +21,7 @@ const MediaListItem: React.FC<{ media: MediaModel; index: number }> = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <ListItem>
+          <ListItem style={{ paddingRight: 86 }}>
             <ListItemAvatar>
               <Avatar src={url} />
             </ListItemAvatar>

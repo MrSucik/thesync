@@ -15,7 +15,9 @@ import { BrowserRouter } from "react-router-dom";
 import ErrorContainer from "./components/ErrorContainer";
 import "moment/locale/cs";
 import moment from "moment";
+// import "./features/FPS/index";
 moment.locale("cs");
+
 
 ReactDOM.render(
   <React.StrictMode>
