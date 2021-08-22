@@ -214,7 +214,7 @@ export const endpoint = functions.https.onRequest((request, response) => {
 
     response.send({
       shutdown: scheduledShutdown || data?.forceShutdown || false,
-      reboot: scheduledReboot || data?.reboot || false,
+      reboot: scheduledReboot || data?.forceReboot || false,
       startup: false,
     });
   });
