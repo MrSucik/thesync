@@ -28,6 +28,8 @@ sudo echo "$PYTHON_STARTUP" > '/home/pi/.config/autostart/blink.desktop'
 # Update ~/.config/lxsession/LXDE/autostart to auto-start Chromium
 
 read -r -d '' CHROME_STARTUP << EOM
+@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
 @xset s off
 @xset -dpms
 @xset s noblank
@@ -35,6 +37,8 @@ read -r -d '' CHROME_STARTUP << EOM
 @chromium-browser --noerrdialogs --kiosk https://thesync.web.app/preview/m2TW95XRoJod3tVT8ly5 --incognito --disable-translate
 EOM
 
-sudo mrdir -p /home/pi/.config/lxsession/LXDE/
+sudo mkdir -p /home/pi/.config/lxsession/LXDE/
+sudo mkdir -p /etc/xdg/lxsession/LXDE-pi/
 
 sudo echo "$CHROME_STARTUP" > '/home/pi/.config/lxsession/LXDE/autostart'
+sudo echo "$CHROME_STARTUP" > '/etc/xdg/lxsession/LXDE-pi/autostart'
