@@ -15,8 +15,6 @@ git clone https://github.com/MrSucik/thesync
 
 # Update ~/.config/lxsession/LXDE/autostart to auto-start Chromium
 read -r -d '' CHROME_STARTUP << EOM
-@lxpanel --profile LXDE-pi
-@pcmanfm --desktop --profile LXDE-pi
 @xscreensaver -no-splash
 @xset s off
 @xset -dpms
