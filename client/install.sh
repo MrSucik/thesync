@@ -11,17 +11,19 @@ sudo apt-get install chromium-browser unclutter lxde git --yes
 # Download Python script from GitHub
 cd /home/pi/Desktop/
 git clone https://github.com/MrSucik/thesync
+cd thesync 
+sudo git update
 
 # Update /etc/rc.local to run Python script on startup
-mkdir -p /home/pi/.config/autostart
-read -r -d '' PYTHON_STARTUP << EOM
-[Desktop Entry]
-Type=Application
-Name=Blink
-Exec=/usr/bin/python3 /home/pi/Desktop/thesync/client/autoupdate.py
-EOM
+# mkdir -p /home/pi/.config/autostart
+# read -r -d '' PYTHON_STARTUP << EOM
+# [Desktop Entry]
+# Type=Application
+# Name=Blink
+# Exec=/usr/bin/python3 /home/pi/Desktop/thesync/client/autoupdate.py
+# EOM
 
-sudo echo "$PYTHON_STARTUP" | sudo tee /home/pi/.config/autostart/blink.desktop
+# sudo echo "$PYTHON_STARTUP" | sudo tee /home/pi/.config/autostart/blink.desktop
 
 # Enable autologin from raspi-config
 
@@ -49,4 +51,4 @@ sudo echo "$CHROME_STARTUP" | sudo tee /etc/xdg/lxsession/LXDE-pi/autostart
 cd /home/pi/Desktop/thesync/client/
 sudo chmod 755 launcher.sh
 sudo mkdir -p logs
-crontab -l | { cat; echo "@reboot sh /home/pi/Desktop/thesync/client/launcher.sh >/home/pi/logs/cronlog 2>&1"; } | crontab -
+sudo crontab -l | { cat; echo "@reboot sh /home/pi/Desktop/thesync/client/launcher.sh >/home/pi/logs/cronlog 2>&1"; } | crontab -
