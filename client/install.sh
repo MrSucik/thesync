@@ -12,7 +12,7 @@ sudo apt-get install chromium-browser unclutter lxde git --yes
 cd /home/pi/Desktop/
 git clone https://github.com/MrSucik/thesync
 cd thesync 
-sudo git update
+sudo git pull
 
 # Update /etc/rc.local to run Python script on startup
 # mkdir -p /home/pi/.config/autostart
