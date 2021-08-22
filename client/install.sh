@@ -15,17 +15,6 @@ git clone https://github.com/MrSucik/thesync
 cd thesync 
 sudo git pull
 
-# Update /etc/rc.local to run Python script on startup
-# mkdir -p /home/pi/.config/autostart
-# read -r -d '' PYTHON_STARTUP << EOM
-# [Desktop Entry]
-# Type=Application
-# Name=Blink
-# Exec=/usr/bin/python3 /home/pi/Desktop/thesync/client/autoupdate.py
-# EOM
-
-# sudo echo "$PYTHON_STARTUP" | sudo tee /home/pi/.config/autostart/blink.desktop
-
 # Enable autologin from raspi-config
 
 # Update ~/.config/lxsession/LXDE/autostart to auto-start Chromium
