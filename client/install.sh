@@ -30,6 +30,7 @@ sudo bash -c 'echo "$PYTHON_STARTUP" > "/home/pi/.config/autostart/blink.desktop
 read -r -d '' CHROME_STARTUP << EOM
 @lxpanel --profile LXDE-pi
 @pcmanfm --desktop --profile LXDE-pi
+@xscreensaver -no-splash
 @xset s off
 @xset -dpms
 @xset s noblank
@@ -37,8 +38,8 @@ read -r -d '' CHROME_STARTUP << EOM
 @chromium-browser --noerrdialogs --kiosk https://thesync.web.app/preview/m2TW95XRoJod3tVT8ly5 --incognito --disable-translate
 EOM
 
-sudo mkdir -p /home/pi/.config/lxsession/LXDE/
+# sudo mkdir -p /home/pi/.config/lxsession/LXDE/
 sudo mkdir -p /etc/xdg/lxsession/LXDE-pi/
 
 sudo bash -c 'echo "$CHROME_STARTUP" > "/etc/xdg/lxsession/LXDE-pi/autostart"'
-sudo bash -c 'echo "$CHROME_STARTUP" > "/home/pi/.config/lxsession/LXDE/autostart"'
+# sudo bash -c 'echo "$CHROME_STARTUP" > "/home/pi/.config/lxsession/LXDE/autostart"'
