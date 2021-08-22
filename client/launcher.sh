@@ -2,5 +2,5 @@
 
 cd /
 cd home/pi/Desktop/thesync/client
-sudo python autoupdate.py
+sudo python3 autoupdate.py
 cd /

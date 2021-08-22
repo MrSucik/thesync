@@ -7,6 +7,7 @@
 
 # Install unclutter to hide the cursor and lxde for its dependencies 
 sudo apt-get install chromium-browser unclutter lxde git --yes
+# sudo pip3 install urllib
 
 # Download Python script from GitHub
 cd /home/pi/Desktop/
