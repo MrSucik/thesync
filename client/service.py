@@ -15,6 +15,7 @@ def read_file(path):
 
 SLEEP_INTERVAL = 10
 DEVICE_ID = read_file(DEVICE_ID_FILE)
+print("Device ID: " + DEVICE_ID)
 ENDPOINT = "https://us-central1-thesync.cloudfunctions.net/"
 POWER_CONTROL_ENDPOINT = ENDPOINT + "endpoint?deviceId=" + DEVICE_ID
 LOG_ENDPOINT = ENDPOINT + "log"

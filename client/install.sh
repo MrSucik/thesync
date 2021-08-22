@@ -32,5 +32,5 @@ sudo echo "$CHROME_STARTUP" | sudo tee /etc/xdg/lxsession/LXDE-pi/autostart
 # Create scheduled start for Python script
 cd /home/pi/Desktop/thesync/client/
 sudo chmod 755 launcher.sh
-sudo mkdir -p logs
-sudo crontab -l | { cat; echo "@reboot sh /home/pi/Desktop/thesync/client/launcher.sh >/home/pi/logs/cronlog 2>&1"; } | crontab -
+sudo touch /home/pi/Desktop/cronlog
+sudo crontab -l | { cat; echo "@reboot sh /home/pi/Desktop/thesync/client/launcher.sh >/home/pi/Desktop/cronlog 2>&1"; } | crontab -
