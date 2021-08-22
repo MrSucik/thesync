@@ -18,7 +18,7 @@ read -r -d '' PYTHON_STARTUP << EOM
 [Desktop Entry]
 Type=Application
 Name=Blink
-Exec=/usr/bin/python3 /home/pi/blink.py
+Exec=/usr/bin/python3 /home/pi/Desktop/thesync/client/autoupdate.py
 EOM
 
 sudo echo "$PYTHON_STARTUP" | sudo tee /home/pi/.config/autostart/blink.desktop
@@ -43,3 +43,10 @@ sudo mkdir -p /etc/xdg/lxsession/LXDE-pi/
 
 sudo echo "$CHROME_STARTUP" | sudo tee /etc/xdg/lxsession/LXDE-pi/autostart
 # sudo bash -c 'echo "$CHROME_STARTUP" > "/home/pi/.config/lxsession/LXDE/autostart"'
+
+# Create scheduled start for Python script
+
+cd /home/pi/Desktop/thesync/client/
+sudo chmod 755 launcher.sh
+sudo mkdir -p logs
+crontab -l | { cat; echo "@reboot sh /home/pi/Desktop/thesync/client/launcher.sh >/home/pi/logs/cronlog 2>&1"; } | crontab -
