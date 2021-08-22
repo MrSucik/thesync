@@ -10,8 +10,10 @@ sudo apt-get install chromium-browser unclutter lxde git --yes
 
 # Download Python script from GitHub
 cd /home/pi/Desktop/
-sudo rm thesync -r -d
 git clone https://github.com/MrSucik/thesync
+cd thesync
+git fetch --all
+git reset --hard origin/master
 
 # Update ~/.config/lxsession/LXDE/autostart to auto-start Chromium
 read -r -d '' CHROME_STARTUP << EOM

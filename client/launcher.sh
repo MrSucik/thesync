@@ -3,7 +3,8 @@
 cd /
 
 cd home/pi/Desktop/thesync
-git pull
+git fetch --all
+git reset --hard origin/master
 
 cd client
 sudo python3 autoupdate.py
