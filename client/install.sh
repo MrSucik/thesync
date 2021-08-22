@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # Ensure everything is up-to-date
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get dist-upgrade
+# sudo apt-get update
+# sudo apt-get upgrade
+# sudo apt-get dist-upgrade
 
 # Install unclutter to hide the cursor and lxde for its dependencies 
 sudo apt-get install chromium-browser unclutter lxde git --yes
