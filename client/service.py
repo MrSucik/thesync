@@ -6,7 +6,7 @@ from subprocess import call
 import datetime
 
 interval = 10
-deviceId = "a7T7cDqYwxOmplfSnFii"
+deviceId = "m2TW95XRoJod3tVT8ly5"
 endpoint = "https://us-central1-thesync.cloudfunctions.net/"
 power_control_endpoint = endpoint + "endpoint?deviceId=" + deviceId
 log_endpoint = endpoint + "log"
