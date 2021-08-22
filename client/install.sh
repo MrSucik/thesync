@@ -21,7 +21,7 @@ Name=Blink
 Exec=/usr/bin/python3 /home/pi/blink.py
 EOM
 
-sudo bash -c 'echo "$PYTHON_STARTUP" > "/home/pi/.config/autostart/blink.desktop"'
+sudo echo "$PYTHON_STARTUP" | sudo tee /home/pi/.config/autostart/blink.desktop
 
 # Enable autologin from raspi-config
 
@@ -41,5 +41,5 @@ EOM
 # sudo mkdir -p /home/pi/.config/lxsession/LXDE/
 sudo mkdir -p /etc/xdg/lxsession/LXDE-pi/
 
-sudo bash -c 'echo "$CHROME_STARTUP" > "/etc/xdg/lxsession/LXDE-pi/autostart"'
+sudo echo "$CHROME_STARTUP" | sudo tee /etc/xdg/lxsession/LXDE-pi/autostart
 # sudo bash -c 'echo "$CHROME_STARTUP" > "/home/pi/.config/lxsession/LXDE/autostart"'
