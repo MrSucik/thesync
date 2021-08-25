@@ -194,6 +194,7 @@ export const endpoint = functions.https.onRequest((request, response) => {
     } else if (data?.forceReboot) {
       deviceDoc.update({ forceReboot: false });
     }
+    deviceDoc.update({ lastUpdateRequest: moment().format() });
     const schedule = await firestore
       .collection("powersettings")
       .orderBy("updated", "desc")
