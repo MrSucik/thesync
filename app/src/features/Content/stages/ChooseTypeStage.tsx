@@ -15,11 +15,11 @@ interface Option {
 }
 
 const options: Option[] = [
-  {
-    type: "existing",
-    name: "Vybrat existující",
-    icon: <Avatar src={getIconSource("plus")} />,
-  },
+  // {
+  //   type: "existing",
+  //   name: "Vybrat existující",
+  //   icon: <Avatar src={getIconSource("plus")} />,
+  // },
   {
     type: "upload",
     name: "Nahrát soubor",

@@ -13,6 +13,7 @@ import { useSelector } from "../../../store";
 import {
   setActiveStep,
   setDurationVisible,
+  setLayoutVisible,
   updateUpdatingMediaLmao,
 } from "../contentSlice";
 import { v4 as uuid } from "uuid";
@@ -20,6 +21,7 @@ import { useSnackbar } from "notistack";
 import NextBackButtons from "../NextBackButtons";
 import { useFirestore } from "react-redux-firebase";
 import client from "../../../utils/client";
+import { useCurrentScene } from "../../../hooks/useCurrentScene";
 
 const getFileType = (type: string) => {
   console.log(type);
@@ -70,6 +72,7 @@ const Label = withStyles({
 })(Typography);
 
 const FileUploadStage = () => {
+  const scene = useCurrentScene();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const media = useSelector((state) => state.content.updatingMedia);
@@ -108,16 +111,18 @@ const FileUploadStage = () => {
           // reader.readAsDataURL(file);
         } else if (fileType === "image") {
           dispatch(setDurationVisible(true));
+          dispatch(setLayoutVisible(true));
         }
         const response = await client.getImageSize(remoteFileName);
-        console.log(response);
-
         const newMedia = {
           name: "Nový soubor",
           duration: 7,
           file: remoteFile.fullPath,
           fileType,
           author,
+          width: response.data.width,
+          height: response.data.height,
+          backgroundColor: scene.backgroundColor
         };
         const { id } = await firestore.add("media", {
           ...newMedia,

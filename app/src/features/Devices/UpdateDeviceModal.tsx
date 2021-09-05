@@ -1,5 +1,6 @@
 import { Modal, Paper, createStyles, makeStyles } from "@material-ui/core";
 import { useDispatch } from "react-redux";
+import { DeviceModel } from "../../definitions";
 import { useSelector } from "../../store";
 import { setConfigureDevice } from "./deviceConfigurationSlice";
 import UpdateDeviceForm from "./UpdateDeviceForm";
@@ -18,8 +19,8 @@ const UpdateDeviceModal = () => {
   const classes = useStyles();
   const updateDeviceId = useSelector(
     (state) => state.deviceConfiguration.updateDevice
-  );
-  const updateDevice = useSelector(
+  ) as string;
+  const updateDevice: DeviceModel = useSelector(
     (state) => state.firestore.data.devices[updateDeviceId + ""]
   );
   const dispatch = useDispatch();

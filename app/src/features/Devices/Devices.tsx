@@ -7,6 +7,8 @@ import DeviceChangeSceneButton from "./DeviceChangeSceneButton";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import DeviceScheduleButton from "./DeviceSchedule/DeviceScheduleButton";
 import DeviceScheduleDialog from "./DeviceSchedule/DeviceScheduleDialog";
+import { useDispatch } from "react-redux";
+import { setDeviceSceneUpdate } from "../../store/slices/app";
 
 const Container = withStyles({
   root: {
@@ -20,6 +22,8 @@ const Container = withStyles({
 
 const Device = () => {
   const user = useCurrentUser();
+  const dispatch = useDispatch();
+  const handleChangeScene = () => dispatch(setDeviceSceneUpdate("all"));
   return (
     <>
       <ConfirmationDialog />
@@ -31,7 +35,10 @@ const Device = () => {
           {user?.bigD && (
             <Box>
               <DeviceScheduleButton />
-              <DeviceChangeSceneButton deviceId="all" />
+              <DeviceChangeSceneButton
+                deviceId="all"
+                onClick={handleChangeScene}
+              />
             </Box>
           )}
         </Box>

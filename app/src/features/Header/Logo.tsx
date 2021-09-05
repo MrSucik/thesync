@@ -8,6 +8,6 @@ const LogoTypography = withStyles(() => ({
   },
 }))(Typography);
 
-const Logo = () => <LogoTypography>the sync</LogoTypography>;
+const Logo = () => <LogoTypography>syncoli</LogoTypography>;
 
 export default Logo;

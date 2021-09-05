@@ -24,11 +24,8 @@ const MediaListItemActions: React.FC<{ media: MediaModel }> = ({ media }) => {
     dispatch(setActiveStep(2));
     dispatch(
       setUpdatingMedia({
-        name: media.name,
-        duration: media.duration,
-        file: media.file,
-        fileType: media.fileType,
-        id: media.id,
+        ...media,
+        backgroundColor: media.backgroundColor || scene.backgroundColor,
       })
     );
   };

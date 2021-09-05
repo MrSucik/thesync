@@ -14,6 +14,7 @@ export interface ContentState {
   type?: ContentType;
   bakalariDates: string[];
   durationVisible: boolean;
+  layoutVisible: boolean;
   previewMediaId: string;
   bakalariFileLoading: boolean;
   bakalariSelectedOption: "auto" | string;
@@ -25,11 +26,13 @@ const initialState: ContentState = {
   bakalariDates: [],
   previewMediaId: "",
   durationVisible: false,
+  layoutVisible: false,
   bakalariSelectedOption: "auto",
   bakalariFileLoading: false,
   updatingMedia: {
     duration: 7,
     name: "",
+    layout: "center",
   },
 };
 
@@ -42,11 +45,13 @@ const contentSlice = createSlice({
       if (!action.payload) {
         state.activeStep = 0;
         state.durationVisible = false;
+        state.layoutVisible = false;
         state.previewMediaId = "";
         state.type = undefined;
         state.updatingMedia = {
           duration: 7,
           name: "",
+          layout: "center"
         };
         state.bakalariFileLoading = false;
         state.bakalariSelectedOption = "auto";
@@ -61,6 +66,9 @@ const contentSlice = createSlice({
     },
     setDurationVisible(state, action: PayloadAction<boolean>) {
       state.durationVisible = action.payload;
+    },
+    setLayoutVisible(state, action: PayloadAction<boolean>) {
+      state.layoutVisible = action.payload;
     },
     setPreviewMediaId(state, action: PayloadAction<string>) {
       state.previewMediaId = action.payload;
@@ -92,6 +100,7 @@ export const {
   setActiveStep,
   setContentType,
   setDurationVisible,
+  setLayoutVisible,
   setPreviewMediaId,
   setSelectedBakalariOption,
   setBakalariDates,

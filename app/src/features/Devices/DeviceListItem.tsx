@@ -18,6 +18,9 @@ import Tooltip from "../../components/Tooltip";
 import { useFirestore } from "react-redux-firebase";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
+import { setDeviceSceneUpdate } from "../../store/slices/app";
+import moment from "moment";
+import { useStatus } from "../../hooks/useStatus";
 
 interface Device extends DeviceModel {
   sceneName: string;
@@ -25,7 +28,9 @@ interface Device extends DeviceModel {
 
 const DeviceListItem: React.FC<{
   device: Device;
-}> = ({ device: { id, name, sceneName, status, icon } }) => {
+}> = ({ device: { id, name, sceneName, icon, lastUpdateRequest } }) => {
+  const status = useStatus(lastUpdateRequest);
+
   const [hovering, setHovering] = useState(false);
   const userDevices = useSelector(
     (state) =>
@@ -45,22 +50,38 @@ const DeviceListItem: React.FC<{
     await firestore.update(`devices/${id}`, { forceReboot: true });
     enqueueSnackbar("Příkaz k restartování odeslán", { variant: "success" });
   };
+  const handleChangeScene = () => dispatch(setDeviceSceneUpdate(id));
   return (
     <ListItem
       style={{
         paddingRight: hovering && userDevices.includes(id) ? 34 * 4 : 0,
+        userSelect: "none",
       }}
       disabled={!userDevices.includes(id)}
       key={id}
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
-      <ListItemAvatar>
-        <StatusBadge status={status}>
-          <Avatar alt={name} src={getIconSource(icon)} />
-        </StatusBadge>
-      </ListItemAvatar>
-      <ListItemText primary={name} secondary={`Přehrává: ${sceneName}`} />
+      <Tooltip
+        title={`Poslední update ze zařízení: ${
+          !lastUpdateRequest
+            ? "nikdy"
+            : moment(lastUpdateRequest).format("DD. MM. YYYY HH:mm:ss")
+        }`}
+      >
+        <ListItemAvatar>
+          <StatusBadge status={status}>
+            <Avatar alt={name} src={getIconSource(icon)} />
+          </StatusBadge>
+        </ListItemAvatar>
+      </Tooltip>
+      <ListItemText
+        style={{ cursor: "pointer" }}
+        primary={name}
+        primaryTypographyProps={{ onClick: createConfigureClickHandler(id) }}
+        secondary={`Přehrává: ${sceneName}`}
+        secondaryTypographyProps={{ onClick: handleChangeScene }}
+      />
       {userDevices.includes(id) && (
         <ListItemSecondaryAction
           style={{
@@ -70,7 +91,7 @@ const DeviceListItem: React.FC<{
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
         >
-          <DeviceChangeSceneButton deviceId={id} />
+          <DeviceChangeSceneButton deviceId={id} onClick={handleChangeScene} />
           <Tooltip title="Konfigurovat zařízení">
             <IconButton onClick={createConfigureClickHandler(id)} size="small">
               <Icon style={{ color: "#c4c4c4" }}>settings</Icon>

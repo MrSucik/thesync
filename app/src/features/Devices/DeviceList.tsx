@@ -24,7 +24,7 @@ const DeviceList = () => {
       {devices
         .sort((a) => (userDevices.includes(a) ? 1 : 0))
         .map((device) => (
-          <DeviceListItem device={device} />
+          <DeviceListItem key={device.id} device={device} />
         ))}
     </List>
   );

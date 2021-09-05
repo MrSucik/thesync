@@ -1,5 +1,5 @@
 const fps = 25;
-const displayHeight = 1920;
+const displayHeight = 1760;
 const displayWidth = 1080;
 
 export const needsProcessing = (url: string, type: "image" | "video") =>

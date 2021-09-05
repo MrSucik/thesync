@@ -9,7 +9,7 @@ import {
   Switch,
   withStyles,
 } from "@material-ui/core";
-import moment, { Moment } from "moment";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
@@ -26,22 +26,29 @@ import {
 } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
 import { useSnackbar } from "notistack";
+import {
+  czechDateFormat,
+  czechShortDateFormat,
+  internalDateFormat,
+} from "../../../utils/constants";
+import { useCurrentScene } from "../../../hooks/useCurrentScene";
 
-const generateName = (bakalariType: string, manualDate: Moment) =>
-  bakalariType === "bakalari-suplovani"
-    ? `Suplování (${manualDate.format("DD. MM.")})`
-    : `Plán Akcí (${manualDate
-        .startOf("isoWeek")
-        .format("DD. MM.")} - ${manualDate
-        .startOf("isoWeek")
-        .add(5, "days")
-        .format("DD. MM.")})`;
+const generateName = (type: ContentType, date: string) =>
+  `${type === "bakalari-suplovani" ? "Suplování" : "Plán Akcí"} (${
+    type === "bakalari-suplovani"
+      ? moment(date).format(czechDateFormat)
+      : moment(date).format(czechShortDateFormat) +
+        " - " +
+        moment(date).add(4, "days").format(czechShortDateFormat)
+  })`;
 
 const FormContainer = withStyles({
   root: { width: "min(80%, 240px)", margin: "auto" },
 })(FormGroup);
 
 const BakalariConfigurationStage = () => {
+  const scene = useCurrentScene();
+  const [defaultDate, setDefaultDate] = useState("");
   const bakalariType = useSelector<ContentType>(
     (state) => state.content.type as ContentType
   );
@@ -59,31 +66,42 @@ const BakalariConfigurationStage = () => {
       bakalariType === "bakalari-planakci"
         ? await client.bakalariPlanAkciDates()
         : await client.bakalariSuplovaniDates();
-    dispatch(
-      setBakalariDates(
-        response.data.map((x) => moment(x, "DD-MM-YYYY").format())
-      )
-    );
+    dispatch(setBakalariDates(response.data.dates));
+    setDefaultDate(response.data.selected);
     setDatesLoading(false);
   };
   const updateFile = async () => {
     try {
       dispatch(setBakalariFileLoading(true));
+      const formattedDate =
+        selectedOption === "auto"
+          ? selectedOption
+          : moment(selectedOption, internalDateFormat).format();
       const response =
         bakalariType === "bakalari-planakci"
-          ? await client.bakalariProcessPlan(selectedOption)
-          : await client.bakalariProcessSupl(selectedOption);
-      const file = response.data;
+          ? await client.bakalariProcessPlan(formattedDate)
+          : await client.bakalariProcessSupl(formattedDate);
+      const { file, date } = response.data;
+      const {
+        data: { width, height },
+      } = await client.getImageSize(file);
+      const name = generateName(bakalariType, date);
       dispatch(
         updateUpdatingMediaLmao({
           file,
           fileType: "image",
+          width,
+          height,
         })
       );
       dispatch(setBakalariFileLoading(false));
+      return name;
     } catch (error) {
       enqueueSnackbar("Nepodařilo se načíst Bakaláře", { variant: "error" });
       dispatch(setContentOpen(false));
+      setTimeout(() => {
+        dispatch(setContentOpen(false));
+      }, 1000);
     }
   };
   useEffect(() => void fetchDates(), []);
@@ -91,16 +109,14 @@ const BakalariConfigurationStage = () => {
   const firestore = useFirestore();
   const author = useSelector((state) => state.firebase.auth.email);
   const handleNextClick = async () => {
-    await updateFile();
+    const name = await updateFile();
     const newMedia = {
       ...media,
+      name: name + "",
       bakalariConfiguration: selectedOption,
       bakalariType,
-      author,
-      name: generateName(
-        bakalariType,
-        manualDate ? moment(selectedOption) : moment()
-      ),
+      author: author + "",
+      backgroundColor: scene.backgroundColor,
     };
     const { id } = await firestore.add("media", {
       ...newMedia,
@@ -108,6 +124,12 @@ const BakalariConfigurationStage = () => {
     });
     dispatch(updateUpdatingMediaLmao({ ...newMedia, id }));
   };
+  const handleSwitchChanged = (
+    _event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => dispatch(setSelectedBakalariOption(checked ? "auto" : defaultDate));
+  console.log(selectedOption, defaultDate);
+
   return (
     <>
       <FormContainer>
@@ -117,12 +139,7 @@ const BakalariConfigurationStage = () => {
         <FormControlLabel
           label="Automaticky"
           control={
-            <Switch
-              checked={!manualDate}
-              onChange={(_, checked) =>
-                dispatch(setSelectedBakalariOption(checked ? "auto" : dates[0]))
-              }
-            />
+            <Switch checked={!manualDate} onChange={handleSwitchChanged} />
           }
         />
         {manualDate &&
@@ -141,7 +158,7 @@ const BakalariConfigurationStage = () => {
             >
               {dates.map((date) => (
                 <MenuItem key={date} value={date}>
-                  {moment(date).format("DD. MM.")}
+                  {moment(date).format(czechShortDateFormat)}
                 </MenuItem>
               ))}
             </Select>

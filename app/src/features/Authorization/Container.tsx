@@ -32,9 +32,9 @@ const Container: React.FC = ({ children }) => {
   return (
     <Box className={classes.container}>
       <Typography className={classes.title}>
-        the sync the sync the sync the sync the sync the sync the sync the sync
-        the sync the sync the sync the sync the sync the sync the sync the sync
-        the sync the sync the sync the sync
+        the syncoli the syncoli the syncoli the syncoli the syncoli the syncoli the syncoli the syncoli
+        the syncoli the syncoli the syncoli the syncoli the syncoli the syncoli the syncoli the syncoli
+        the syncoli the syncoli the syncoli the syncoli
       </Typography>
       {children}
       <video className={classes.video} autoPlay loop muted>

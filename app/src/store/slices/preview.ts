@@ -10,12 +10,14 @@ interface ChangePreviewAction {
 export interface PreviewState {
   previewMediaList: string[];
   activeMediaIndex: number;
+  activeInnerMediaIndex: number;
   type: PreviewTypes;
 }
 
 const initialState: PreviewState = {
   previewMediaList: [],
   activeMediaIndex: 0,
+  activeInnerMediaIndex: 0,
   type: "closed",
 };
 
@@ -29,12 +31,14 @@ const previewSlice = createSlice({
       state.activeMediaIndex = 0;
     },
     nextMedia(state, _action: PayloadAction) {
+      state.activeInnerMediaIndex = 0;
       state.activeMediaIndex =
         state.activeMediaIndex + 1 >= state.previewMediaList.length
           ? 0
           : state.activeMediaIndex + 1;
     },
     previousMedia(state, _action: PayloadAction) {
+      state.activeInnerMediaIndex = 0;
       state.activeMediaIndex =
         state.activeMediaIndex - 1 < 0
           ? state.previewMediaList.length - 1
@@ -42,6 +46,9 @@ const previewSlice = createSlice({
     },
     setActiveMediaIndex(state, action: PayloadAction<number>) {
       state.activeMediaIndex = action.payload;
+    },
+    nextInnerMedia(state) {
+      state.activeInnerMediaIndex = state.activeInnerMediaIndex + 1;
     },
   },
 });
@@ -51,6 +58,7 @@ export const {
   previousMedia,
   setPreviewMediaList,
   setActiveMediaIndex,
+  nextInnerMedia,
 } = previewSlice.actions;
 
 export default previewSlice.reducer;

@@ -64,7 +64,7 @@ const MediaPreview: React.FC<Props> = ({ media, visible }) => {
 
   return (
     <>
-      {media.fileType === "image" && (
+      {media.fileType.startsWith("image") && (
         <ScrollingImage
           ref={ref}
           src={downloadURL}

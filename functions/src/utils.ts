@@ -9,6 +9,7 @@ import {
   createThumbnailFromImage,
   createThumbnailFromVideo,
 } from "./thumbnails";
+import { ensureDirSync } from "fs-extra";
 
 export const tempFilePath = (name: string) => path.join(os.tmpdir(), name);
 
@@ -91,3 +92,17 @@ const processScrollingVideo = (
       .on("end", handleConversionEnd)
       .save(tempPath);
   });
+
+export const getImageMetadata = async (requestedFile: string) => {
+  const destination = tempFilePath(requestedFile);
+  const directory = path.dirname(destination)
+  ensureDirSync(directory);
+  const file = bucket.file(requestedFile);
+  const [exists] = await file.exists();
+  console.log(exists);
+  const response = await file.download({ destination });
+  console.log(response);
+
+  const { width, height } = await sharp(destination).metadata();
+  return { width, height, destination };
+};

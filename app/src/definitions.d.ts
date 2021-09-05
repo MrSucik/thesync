@@ -22,9 +22,14 @@ export interface MediaModel extends FirestoreDocument {
   name: string;
   duration: number;
   file: string;
-  fileType: "image" | "video";
+  files?: string[];
+  fileType: "images" | "image" | "video";
   backgroundColor?: string;
   bakalariConfiguration?: string | "auto";
+  layout: "fill-width" | "fill-height" | "center";
+  author: string;
+  height: number;
+  width: number;
 }
 
 export interface DeviceModel extends FirestoreDocument {
@@ -33,6 +38,7 @@ export interface DeviceModel extends FirestoreDocument {
   scene: string;
   icon: string;
   status: "online" | "offline";
+  lastUpdateRequest: Moment;
 }
 
 export interface SceneModel extends FirestoreDocument {

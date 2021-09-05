@@ -1,7 +1,14 @@
 import * as puppeteer from "puppeteer";
 import * as moment from "moment";
 import { tempFilePath } from "./utils";
-import { bakaSuplRoute, bakaSuffix, bakaPlanRoute } from "./constants";
+import {
+  bakaSuplRoute,
+  bakaSuffix,
+  bakaPlanRoute,
+  internalDateFormat as internalDateFormat,
+  bakaDateFormat,
+  czechShortDateFormat,
+} from "./constants";
 import { firestore, uploadFile } from "./fire";
 import { v4 as uuid } from "uuid";
 
@@ -55,8 +62,7 @@ export const scrapeSupl = async (page: puppeteer.Page, date: moment.Moment) => {
 };
 
 export const scrapePlan = async (page: puppeteer.Page, date: moment.Moment) => {
-  const nearMonday = moment(date).startOf("isoWeek");
-  const url = bakaPlanRoute + getUrl(nearMonday) + bakaSuffix;
+  const url = bakaPlanRoute + getUrl(date) + bakaSuffix;
   console.log(url);
   await page.goto(url);
   const html = await page.evaluate(() => {
@@ -72,25 +78,48 @@ export const scrapePlan = async (page: puppeteer.Page, date: moment.Moment) => {
 };
 
 export const getAvailableDates = async (page: puppeteer.Page) => {
-  const dates = await page.evaluate(() => {
+  const result = await page.evaluate(() => {
+    const extractDate = (htm: string) => htm.substr(2, 6);
     const options = Array.from(document.getElementsByTagName("option"));
-    return Promise.resolve(options.map((x) => x.value.substr(2, 6)));
+    const formattedOptions = options.map((x) => extractDate(x.value));
+    const selectedValue = extractDate(
+      document.getElementsByTagName("select")[0].value
+    );
+    return Promise.resolve({
+      dates: formattedOptions,
+      selected: selectedValue,
+    });
   });
-  return dates.map((date) => moment(date, "YYMMDD").format("DD-MM-YYYY"));
+  return {
+    selected: moment(result.selected, bakaDateFormat).format(
+      internalDateFormat
+    ),
+    dates: result.dates.map((x) =>
+      moment(x, bakaDateFormat).format(internalDateFormat)
+    ),
+  };
 };
 
-const getUrl = (date: moment.Moment) => moment(date).format("YYMMDD");
+const getUrl = (date: moment.Moment) => moment(date).format(bakaDateFormat);
 
 const generateName = (bakalariType: string, date: moment.Moment) =>
   bakalariType === "bakalari-suplovani"
-    ? `Suplování (${date.format("DD. MM.")})`
-    : `Plán Akcí (${date.startOf("isoWeek").format("DD. MM.")} - ${date
+    ? `Suplování (${date.format(czechShortDateFormat)})`
+    : `Plán Akcí (${date
         .startOf("isoWeek")
-        .add(5, "days")
-        .format("DD. MM.")})`;
-
+        .format(czechShortDateFormat)} - ${date
+        .startOf("isoWeek")
+        .add(4, "days")
+        .format(czechShortDateFormat)})`;
+export const generateBakalariFileName = (type: string) =>
+  `bakalari/${type}-${uuid()}.png`;
 export const exportCurrentBakalari = async () => {
-  const desiredDay = moment().add(8, "hours");
+  let desiredDay = moment().add(8, "hours");
+  if (desiredDay.weekday() === 5) {
+    desiredDay = desiredDay.add(2, "days");
+  } else if (desiredDay.weekday() === 6) {
+    desiredDay = desiredDay.add(1, "day");
+  }
   const { docs } = await firestore
     .collection("media")
     .where("bakalariConfiguration", "==", "auto")
@@ -102,10 +131,7 @@ export const exportCurrentBakalari = async () => {
       | "bakalari-suplovani";
     const scrape = type === "bakalari-planakci" ? scrapePlan : scrapeSupl;
     const local = await scrape(page, desiredDay);
-    const remote = await uploadFile(
-      local,
-      `bakalari/${type}-${uuid()}-${desiredDay.format()}.png`
-    );
+    const remote = await uploadFile(local, generateBakalariFileName(type));
     await doc.ref.update({
       file: remote[0].metadata.name,
       bakalariUpdated: moment().format(),
