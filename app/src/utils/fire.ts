@@ -4,6 +4,18 @@ import "firebase/auth";
 import "firebase/storage";
 import "firebase/performance";
 import "firebase/database";
+import { firebaseApiKey, firebaseAppId } from "./constants";
+
+const firebaseConfig = {
+  apiKey: firebaseApiKey,
+  authDomain: "thesync.firebaseapp.com",
+  databaseURL: "https://thesync-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "thesync",
+  storageBucket: "thesync.appspot.com",
+  messagingSenderId: "25996675772",
+  appId: firebaseAppId,
+};
+console.log(firebaseApiKey, process.env);
 
 export const app = firebase.initializeApp(firebaseConfig);
 export const firestore = app.firestore();
