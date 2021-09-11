@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="749.221" height="693.811" viewBox="0 0 749.221 693.811">
+  <defs>
+    <linearGradient id="linear-gradient" x1="-0.131" y1="0.547" x2="1.44" y2="0.475" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fbfbfd"/>
+      <stop offset="0" stop-color="#48b7aa"/>
+      <stop offset="0.107" stop-color="#49b0aa"/>
+      <stop offset="0.255" stop-color="#4e9eac"/>
+      <stop offset="0.426" stop-color="#5581af"/>
+      <stop offset="0.521" stop-color="#5a6eb2"/>
+      <stop offset="0.691" stop-color="#46548d"/>
+      <stop offset="1" stop-color="#1d2141"/>
+    </linearGradient>
+  </defs>
+  <path id="Subtraction_3" data-name="Subtraction 3" d="M748.221,944H14.6a516.4,516.4,0,0,1,14.07-291.752,532.286,532.286,0,0,1,21.447-52.443,547.322,547.322,0,0,1,26.856-49.9,565.177,565.177,0,0,1,31.946-47.063c11.392-15.091,23.745-29.875,36.715-43.943,12.956-14.045,26.805-27.684,41.164-40.536,14.376-12.866,29.614-25.26,45.293-36.837,15.712-11.605,32.231-22.661,49.1-32.86,16.944-10.244,34.636-19.863,52.585-28.59,18.1-8.8,36.853-16.882,55.752-24.035,19.106-7.231,38.821-13.689,58.6-19.194,20.014-5.57,40.579-10.3,61.123-14.065,20.843-3.812,42.15-6.722,63.328-8.65,21.58-1.956,43.52-2.948,65.211-2.948s43.631.992,65.211,2.948c15.08,1.373,30.294,3.25,45.22,5.581V944Z" transform="translate(0.5 -250.689)" stroke="rgba(0,0,0,0)" stroke-miterlimit="10" stroke-width="1" opacity="0.87" fill="url(#linear-gradient)"/>
+</svg>

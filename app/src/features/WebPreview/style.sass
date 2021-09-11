@@ -1,0 +1,73 @@
+$breakpoint-mobile: 1280px
+
+$bubble-width-ratio: 1.2777036
+$bubble-height-ratio: 1.38248848
+
+$bubble-width: 40vw
+$bubble-height: 40vh
+
+$fs-primary: clamp(2rem, calc(3vw + 1rem), 3rem)
+$fs-secondary: clamp(1rem, calc(1vw + 1rem), 1.5rem)
+
+.logo
+  width: clamp(12rem, 40%, 19rem)
+
+.title
+  font-family: Quicksand Medium
+  font-size: $fs-primary
+  margin: clamp(4rem, 16%, 6rem) 0 1rem 0
+
+.subtitle
+  font-family: Quicksand Medium
+  font-size: $fs-secondary
+  margin-bottom: clamp(4rem, 16%, 6rem)
+
+.container
+  display: flex
+  align-items: center
+  background-image: url(assets/background.svg)
+  min-height: 100vh
+  padding: 5% 10% 2rem 10%
+  @media (max-width: $breakpoint-mobile)
+    flex-direction: column
+
+.column
+  z-index: 1
+  display: flex
+  flex-direction: column
+  &-left
+    flex: 2
+    align-items: flex-start
+    @media (max-width: $breakpoint-mobile)
+      align-items: center
+      text-align: center
+  &-right
+    flex: 1
+    justify-content: center
+    width: clamp(10rem, 20%, 30rem)
+
+.social
+  display: flex
+  gap: 1rem
+  margin-bottom: 1rem
+  a 
+    color: white
+    text-decoration: none
+    font-family: Quicksand SemiBold
+
+.bubble
+  position: fixed
+  bottom: 0
+  right: 0
+  &-1
+    width: $bubble-width-ratio * $bubble-width
+  &-2
+    width: $bubble-width
+  @media (orientation: landscape) 
+    &-1
+      width: auto
+      height: $bubble-height
+    &-2
+      width: auto
+      height: $bubble-height-ratio * $bubble-height
+  

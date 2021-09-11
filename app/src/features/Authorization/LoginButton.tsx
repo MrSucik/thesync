@@ -15,7 +15,7 @@ const LoginButton: React.FC = () => {
       onClick={handleClick}
       startIcon={<Avatar src="./google-icon.svg" />}
     >
-      Přihlásit se pomocí Účtu Google
+      Přihlásit se
     </Button>
   );
 };

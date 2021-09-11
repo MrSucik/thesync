@@ -64,7 +64,7 @@ const MediaPreview: React.FC<Props> = ({ media, visible }) => {
 
   return (
     <>
-      {media.fileType.startsWith("image") && (
+      {media.fileType?.startsWith("image") && (
         <ScrollingImage
           ref={ref}
           src={downloadURL}
@@ -76,7 +76,7 @@ const MediaPreview: React.FC<Props> = ({ media, visible }) => {
       {media.fileType === "video" && (
         <video autoPlay loop>
           <source
-            src={`https://firebasestorage.googleapis.com/v0/b/thesync.appspot.com/o/output.mp4?alt=media&token=c2e8b86c-0f83-40d2-8dbf-60656803762d`}
+            src={downloadURL}
             type="video/mp4"
           />
           Your browser does not support the video tag.
