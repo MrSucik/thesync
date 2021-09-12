@@ -128,7 +128,7 @@ const BakalariConfigurationStage = () => {
     _event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean
   ) => dispatch(setSelectedBakalariOption(checked ? "auto" : defaultDate));
-  console.log(selectedOption, defaultDate);
+  console.log(selectedOption, defaultDate, dates);
 
   return (
     <>
@@ -158,7 +158,9 @@ const BakalariConfigurationStage = () => {
             >
               {dates.map((date) => (
                 <MenuItem key={date} value={date}>
-                  {moment(date).format(czechShortDateFormat)}
+                  {moment(date, internalDateFormat).format(
+                    czechShortDateFormat
+                  )}
                 </MenuItem>
               ))}
             </Select>
