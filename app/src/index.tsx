@@ -15,9 +15,9 @@ import { BrowserRouter } from "react-router-dom";
 import ErrorContainer from "./components/ErrorContainer";
 import "moment/locale/cs";
 import moment from "moment";
+import StatCounter from "./components/StatCounter";
 // import "./features/FPS/index";
 moment.locale("cs");
-
 
 ReactDOM.render(
   <React.StrictMode>
@@ -37,6 +37,7 @@ ReactDOM.render(
                   <App />
                 </ErrorContainer>
               </MuiPickersUtilsProvider>
+              <StatCounter />
             </ThemeProvider>
           </SnackbarProvider>
         </ReactReduxFirebaseProvider>
