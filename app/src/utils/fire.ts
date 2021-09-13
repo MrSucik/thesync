@@ -23,7 +23,8 @@ export const auth = app.auth();
 export const storage = app.storage();
 export const performance = app.performance();
 export const analytics = app.analytics();
-console.log(analytics);
+
+analytics.logEvent("Application started");
 
 export const getDownloadURL = (path: string) =>
   storage.ref(path).getDownloadURL();
