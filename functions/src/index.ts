@@ -5,6 +5,7 @@ import {
   exportCurrentBakalari,
   generateBakalariFileName,
   getAvailableDates,
+  getNearestDate,
   initialize,
   scrapePlan,
   scrapeSupl,
@@ -129,11 +130,10 @@ const createProcessDateHandler = (type: "supl" | "plan") =>
               return;
             }
           }
-          const date = (
+          const date =
             dateQuery === "auto"
-              ? moment(selected, internalDateFormat)
-              : moment(dateQuery)
-          ).add(8, "hours");
+              ? getNearestDate()
+              : moment(dateQuery).add(8, "hours");
           const page = await initialize();
           const screen =
             type === "supl"

@@ -56,7 +56,7 @@ export const scrapeSupl = async (page: puppeteer.Page, date: moment.Moment) => {
       .forEach((table) => (tables += table.outerHTML));
     return tables
       ? Promise.resolve(tables)
-      : Promise.reject(`Cannot find baka supl page from!`);
+      : Promise.reject(`Cannot find baka supl page!`);
   });
   return await takeScreenshot(page, html, "bakalari-suplovani.png");
 };
@@ -113,29 +113,43 @@ const generateName = (bakalariType: string, date: moment.Moment) =>
         .format(czechShortDateFormat)})`;
 export const generateBakalariFileName = (type: string) =>
   `bakalari/${type}-${uuid()}.png`;
-export const exportCurrentBakalari = async () => {
+
+export const getNearestDate = () => {
   let desiredDay = moment().add(8, "hours");
   if (desiredDay.weekday() === 5) {
     desiredDay = desiredDay.add(2, "days");
   } else if (desiredDay.weekday() === 6) {
     desiredDay = desiredDay.add(1, "day");
   }
-  const { docs } = await firestore
-    .collection("media")
-    .where("bakalariConfiguration", "==", "auto")
-    .get();
-  const page = await initialize();
-  for (const doc of docs) {
-    const type = doc.data().bakalariType as
-      | "bakalari-planakci"
-      | "bakalari-suplovani";
-    const scrape = type === "bakalari-planakci" ? scrapePlan : scrapeSupl;
-    const local = await scrape(page, desiredDay);
-    const remote = await uploadFile(local, generateBakalariFileName(type));
-    await doc.ref.update({
-      file: remote[0].metadata.name,
-      bakalariUpdated: moment().format(),
-      name: generateName(type, desiredDay),
+  return desiredDay;
+}
+
+export const exportCurrentBakalari = async () => {
+  const desiredDay = getNearestDate();
+  try {
+    const { docs } = await firestore
+      .collection("media")
+      .where("bakalariConfiguration", "==", "auto")
+      .get();
+    const page = await initialize();
+    for (const doc of docs) {
+      const type = doc.data().bakalariType as
+        | "bakalari-planakci"
+        | "bakalari-suplovani";
+      const scrape = type === "bakalari-planakci" ? scrapePlan : scrapeSupl;
+      const local = await scrape(page, desiredDay);
+      const remote = await uploadFile(local, generateBakalariFileName(type));
+      await doc.ref.update({
+        file: remote[0].metadata.name,
+        bakalariUpdated: moment().format(),
+        name: generateName(type, desiredDay),
+      });
+    }
+  } catch (error) {
+    firestore.collection("logs").add({
+      ...error,
+      created: moment().format(),
+      endpoint: "scheduledBakalariUpdate",
     });
   }
 };
