@@ -4,6 +4,7 @@ import "firebase/auth";
 import "firebase/storage";
 import "firebase/performance";
 import "firebase/database";
+import "firebase/analytics";
 import { firebaseApiKey, firebaseAppId } from "./constants";
 
 const firebaseConfig = {
@@ -21,6 +22,8 @@ export const firestore = app.firestore();
 export const auth = app.auth();
 export const storage = app.storage();
 export const performance = app.performance();
+export const analytics = app.analytics();
+console.log(analytics);
 
 export const getDownloadURL = (path: string) =>
   storage.ref(path).getDownloadURL();
