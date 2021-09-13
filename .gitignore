@@ -64,3 +64,5 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+functions/thesync-firebase-adminsdk-zze06-035f9585f2.json
