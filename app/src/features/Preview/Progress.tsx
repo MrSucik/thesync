@@ -1,27 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { styled } from "@material-ui/core/styles";
 import { LinearProgress } from "@mui/material";
-import createStyles from "@mui/styles/createStyles";
-import makeStyles from "@mui/styles/makeStyles";
 import moment from "moment";
-
-const PREFIX = "Progress";
-
-const classes = {
-  progress: `${PREFIX}-progress`,
-};
-
-const StyledLinearProgress = styled(LinearProgress)(() => ({
-  [`& .${classes.progress}`]: {
-    zIndex: 99,
-    height: 2,
-    background: "rgba(100, 100, 100, 0.7)",
-    "& div": {
-      background: "white",
-    },
-  },
-}));
-
 interface Props {
   duration: number;
   state: "empty" | "full" | "running";
@@ -60,7 +39,14 @@ const Progress: React.FC<Props> = ({ duration, state }) => {
   }, [duration, state, completed]);
   return (
     <LinearProgress
-      className={classes.progress}
+      sx={{
+        zIndex: 99,
+        height: 2,
+        background: "rgba(100, 100, 100, 0.7)",
+        "& div": {
+          background: "white",
+        },
+      }}
       variant="determinate"
       value={state === "full" ? 100 : state === "empty" ? 0 : progress}
     />

@@ -10,27 +10,6 @@ import PlayNextPrevious from "./PlayNext";
 import MediaPreviewPlayer from "./MediaPreviewPlayer";
 import { useCurrentScene } from "../../hooks/useCurrentScene";
 
-const PREFIX = "Preview";
-
-const classes = {
-  root: `${PREFIX}-root`,
-};
-
-const StyledPreviewContainer = styled(Box)({
-  [`& .${classes.root}`]: {
-    height: "100%",
-    maxWidth: "100%",
-    aspectRatio: "9 / 16",
-    margin: "auto",
-    boxSizing: "border-box",
-    color: "#e6e6e6",
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    flex: 1,
-  },
-});
-
 interface Props {
   disableControls?: boolean;
 }
@@ -48,8 +27,18 @@ const Preview: React.FC<Props> = ({ disableControls }) => {
   );
   const media = mediaList[activeMediaIndex];
   return !media ? null : (
-    <StyledPreviewContainer
-      style={{
+    <Box
+      sx={{
+        width: "100%",
+        maxHeight: "100%",
+        aspectRatio: "9 / 16",
+        margin: "auto",
+        boxSizing: "border-box",
+        color: "#e6e6e6",
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
         backgroundColor: media.backgroundColor || selectedScene.backgroundColor,
         transition: "all 300ms ease-in-out",
       }}
@@ -62,7 +51,7 @@ const Preview: React.FC<Props> = ({ disableControls }) => {
         </>
       )}
       <MediaPreviewPlayer />
-    </StyledPreviewContainer>
+    </Box>
   );
 };
 
