@@ -1,4 +1,6 @@
-import { Avatar, withStyles } from "@material-ui/core";
+import { Avatar } from "@mui/material";
+
+import withStyles from "@mui/styles/withStyles";
 
 export default withStyles({
   root: { width: 32, height: 32, borderRadius: 8 },

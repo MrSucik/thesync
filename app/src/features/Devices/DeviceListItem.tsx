@@ -4,7 +4,7 @@ import {
   IconButton,
   ListItemAvatar,
   ListItemSecondaryAction,
-} from "@material-ui/core";
+} from "@mui/material";
 import { getIconSource } from "../../utils/icons";
 import { DeviceModel } from "../../definitions";
 import { useSelector } from "../../store";
@@ -53,8 +53,8 @@ const DeviceListItem: React.FC<{
   const handleChangeScene = () => dispatch(setDeviceSceneUpdate(id));
   return (
     <ListItem
-      style={{
-        paddingRight: hovering && userDevices.includes(id) ? 34 * 4 : 0,
+      sx={{
+        paddingRight: hovering && userDevices.includes(id) ? 34 * 4 + "px" : 0,
         userSelect: "none",
       }}
       disabled={!userDevices.includes(id)}
@@ -76,7 +76,7 @@ const DeviceListItem: React.FC<{
         </ListItemAvatar>
       </Tooltip>
       <ListItemText
-        style={{ cursor: "pointer" }}
+        sx={{ cursor: "pointer" }}
         primary={name}
         primaryTypographyProps={{ onClick: createConfigureClickHandler(id) }}
         secondary={`Přehrává: ${sceneName}`}
@@ -84,7 +84,7 @@ const DeviceListItem: React.FC<{
       />
       {userDevices.includes(id) && (
         <ListItemSecondaryAction
-          style={{
+          sx={{
             transition: "all 200ms ease-in-out",
             opacity: hovering ? 1 : 0,
           }}

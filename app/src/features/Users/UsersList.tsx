@@ -9,7 +9,7 @@ const UsersList = () => {
     (state) => state.firestore.ordered.users
   );
   return (
-    <List style={{ width: 500 }}>
+    <List sx={{ width: 500 }}>
       {[...users]
         .sort((a, b) => (a.bigD === b.bigD ? 0 : a.bigD ? -1 : 1))
         .map((user) => (

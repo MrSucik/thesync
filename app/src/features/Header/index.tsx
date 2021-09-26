@@ -1,13 +1,20 @@
-import React from "react";
 import Logo from "./Logo";
-import Container from "./Container";
 import HeaderButtons from "./HeaderButtons";
+import { Box } from "@mui/system";
 
 const Header = () => (
-  <Container>
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "space-between",
+      padding: "16px 32px",
+      backgroundColor: "background.paper",
+      height: 86,
+    }}
+  >
     <Logo />
     <HeaderButtons />
-  </Container>
+  </Box>
 );
 
 export default Header;

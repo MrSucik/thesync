@@ -51,7 +51,7 @@ const contentSlice = createSlice({
         state.updatingMedia = {
           duration: 7,
           name: "",
-          layout: "center"
+          layout: "center",
         };
         state.bakalariFileLoading = false;
         state.bakalariSelectedOption = "auto";

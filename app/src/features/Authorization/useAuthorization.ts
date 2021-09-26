@@ -28,7 +28,7 @@ export const useAuthorization = () => {
       return;
     }
     if (auth.isEmpty) {
-      push("/")
+      push("/");
       dispatch(setAuthorized(false));
       return;
     }
@@ -42,7 +42,7 @@ export const useAuthorization = () => {
         if (isAuthorized) {
           push("/app");
         } else {
-          push("/")
+          push("/");
           enqueueSnackbar(`Přístup zamítnut pro: ${auth.email}`, {
             variant: "error",
           });

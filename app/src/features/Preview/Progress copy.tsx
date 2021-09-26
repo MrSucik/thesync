@@ -1,19 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
-import { createStyles, LinearProgress, makeStyles } from "@material-ui/core";
+import { styled } from "@material-ui/core/styles";
+import { LinearProgress } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import moment from "moment";
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    progress: {
-      zIndex: 99,
-      height: 2,
-      background: "rgba(100, 100, 100, 0.7)",
-      "& div": {
-        background: "white",
-      },
-    },
-  })
-);
+const PREFIX = "Progress";
+
+const classes = {
+  progress: `${PREFIX}-progress`,
+};
+
+// const Root = styled(
+//   'inearProgress\n      className={classes.progress}\n      variant="determinate"\n      value={\n        state === "full"\n          ? 100\n          : state === "empty"\n          ? 0\n          : progress '
+// )(() => ({
+//   [`& .${classes.progress}`]: {
+//     zIndex: 99,
+//     height: 2,
+//     background: "rgba(100, 100, 100, 0.7)",
+//     "& div": {
+//       background: "white",
+//     },
+//   },
+// }));
 
 interface Props {
   duration: number;
@@ -21,7 +30,6 @@ interface Props {
 }
 
 const Progress: React.FC<Props> = ({ duration, state }) => {
-  const classes = useStyles();
   const [progress, setProgress] = useState(0);
   const interval = useRef<NodeJS.Timeout>();
 

@@ -20,7 +20,7 @@ const DeviceList = () => {
   );
 
   return (
-    <List style={{ paddingRight: 16 }}>
+    <List sx={{ paddingRight: 2 }}>
       {devices
         .sort((a) => (userDevices.includes(a) ? 1 : 0))
         .map((device) => (

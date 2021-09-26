@@ -26,6 +26,7 @@ export interface MediaModel extends FirestoreDocument {
   fileType: "images" | "image" | "video";
   backgroundColor?: string;
   bakalariConfiguration?: string | "auto";
+  bakalariType?: "bakalari-planakci" | "bakalari-suplovani";
   layout: "fill-width" | "fill-height" | "center";
   author: string;
   height: number;
@@ -48,6 +49,8 @@ export interface SceneModel extends FirestoreDocument {
   author: string;
   backgroundColor: string;
   mediaList: string[];
+  hideWeather: boolean;
+  hideProgress: boolean;
 }
 
 export interface Scene extends FirestoreDocument {

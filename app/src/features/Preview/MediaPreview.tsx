@@ -75,10 +75,7 @@ const MediaPreview: React.FC<Props> = ({ media, visible }) => {
       )}
       {media.fileType === "video" && (
         <video autoPlay loop>
-          <source
-            src={downloadURL}
-            type="video/mp4"
-          />
+          <source src={downloadURL} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       )}

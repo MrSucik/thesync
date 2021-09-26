@@ -1,4 +1,4 @@
-import { Icon, ListItem, ListItemAvatar, Popover } from "@material-ui/core";
+import { Icon, ListItem, ListItemAvatar, Popover } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import Action from "../../components/Action";
@@ -21,7 +21,7 @@ const UsersAdministrationIconButton = () => {
         icon="settings"
         onClick={handleClickList}
         iconProps={{
-          style: { color: "rgba(241, 241, 241, 0.73)", fontSize: 32 },
+          sx: { color: "rgba(241, 241, 241, 0.73)", fontSize: 32 },
         }}
       />
       <Popover

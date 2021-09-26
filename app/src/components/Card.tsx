@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import { Box, BoxProps } from "@material-ui/core";
+import { Box, BoxProps } from "@mui/material";
 import Glowing from "./Glowing";
 import Disabled from "./Disabled";
 
@@ -23,12 +23,12 @@ const Card: React.FC<Props> = forwardRef<any, Props>(
       >
         <Box
           position="relative"
-          style={{
+          sx={{
             backgroundColor: fill ? "rgb(66, 96, 143)" : "transparent",
             cursor: clickable ? "pointer" : "auto",
             borderRadius: 4,
             overflow: "auto",
-            paddingTop: fill ? 0 : 8,
+            paddingTop: fill ? 0 : 1,
           }}
         >
           {clickable && <Glowing />}

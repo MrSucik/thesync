@@ -8,7 +8,7 @@ import { RootState } from "../../store";
 import { setOptimisticReorderUpdate } from "../../store/slices/app";
 import MediaListItem from "./MediaListItem";
 import { PrimaryButton } from "../../components/PrimaryButton";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import { setContentOpen } from "../../features/Content/contentSlice";
 
 const reorder = (list: any[], startIndex: number, endIndex: number) => {
@@ -53,7 +53,7 @@ const Content = () => {
   };
   const handleAddContentClick = () => dispatch(setContentOpen(true));
   return (
-    <Box display="flex" flexDirection="column">
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       <PrimaryButton onClick={handleAddContentClick}>
         přidat obsah
       </PrimaryButton>

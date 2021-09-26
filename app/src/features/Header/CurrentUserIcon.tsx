@@ -4,7 +4,7 @@ import {
   ListItem,
   ListItemAvatar,
   Popover,
-} from "@material-ui/core";
+} from "@mui/material";
 import { useRef, useState } from "react";
 import { useFirebase } from "react-redux-firebase";
 import RoundedImage from "../../components/RoundedImage";
@@ -24,7 +24,7 @@ const CurrentUserIcon = () => {
   const anchor = useRef<HTMLElement | null>(null);
   return !user ? null : (
     <span ref={anchor}>
-      <IconButton onClick={handleClick}>
+      <IconButton onClick={handleClick} size="large">
         <RoundedImage src={user.photoURL} />
       </IconButton>
       <Popover

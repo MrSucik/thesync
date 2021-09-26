@@ -1,5 +1,5 @@
 import DeviceList from "./DeviceList";
-import { Box, withStyles } from "@material-ui/core";
+import { Box } from "@mui/material";
 import Title from "../../components/Title";
 import ConfirmationDialog from "./DeviceChangeSceneDialog";
 import UpdateDeviceModal from "./UpdateDeviceModal";
@@ -10,16 +10,6 @@ import DeviceScheduleDialog from "./DeviceSchedule/DeviceScheduleDialog";
 import { useDispatch } from "react-redux";
 import { setDeviceSceneUpdate } from "../../store/slices/app";
 
-const Container = withStyles({
-  root: {
-    minWidth: "20rem",
-    flex: 2,
-    display: "flex",
-    flexDirection: "column",
-    overflow: "auto",
-  },
-})(Box);
-
 const Device = () => {
   const user = useCurrentUser();
   const dispatch = useDispatch();
@@ -29,8 +19,22 @@ const Device = () => {
       <ConfirmationDialog />
       <DeviceScheduleDialog />
       <UpdateDeviceModal />
-      <Container>
-        <Box display="flex" justifyContent="space-between" pr={2}>
+      <Box
+        sx={{
+          minWidth: "20rem",
+          flex: 2,
+          display: "flex",
+          flexDirection: "column",
+          overflow: "auto",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            paddingRight: 2,
+          }}
+        >
           <Title>zařízení</Title>
           {user?.bigD && (
             <Box>
@@ -43,7 +47,7 @@ const Device = () => {
           )}
         </Box>
         <DeviceList />
-      </Container>
+      </Box>
     </>
   );
 };

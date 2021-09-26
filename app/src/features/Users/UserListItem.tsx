@@ -12,8 +12,8 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   Switch,
-  withStyles,
-} from "@material-ui/core";
+} from "@mui/material";
+import { styled } from "@material-ui/core/styles";
 import React, { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
 import { List } from "../../components/List";
@@ -23,14 +23,20 @@ import { useSelector } from "../../store";
 import { getIconSource } from "../../utils/icons";
 import moment from "moment";
 
-const BeatifulSwitch = withStyles({
-  switchBase: {
+const PREFIX = "UserListItem";
+
+const classes = {
+  switchBase: `${PREFIX}-switchBase`,
+};
+
+const StyledAccordion = styled(Accordion)({
+  [`& .${classes.switchBase}`]: {
     "&$checked": { color: "#74aa44" },
     "&$checked + $track": { backgroundColor: "#74aa44" },
   },
-  track: {},
-  checked: {},
-})(Switch);
+});
+
+const BeatifulSwitch = Switch;
 
 const DeviceListItem: React.FC<{
   isChecked: boolean;
@@ -61,23 +67,25 @@ const DeviceList: React.FC<{ user: string }> = ({ user }) => {
   const checkedDevices = useSelector<string[]>(
     (state) => state.firestore.data.users[user]?.devices || []
   );
-  const createChangeHandler = (id: string) => (
-    _event: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean
-  ) => {
-    if (checked) {
-      firestore.update(`users/${user}`, {
-        devices: [...checkedDevices, id],
-      });
-    } else {
-      firestore.update(`users/${user}`, {
-        devices: checkedDevices.filter((x) => x !== id),
-      });
-    }
-  };
+  const createChangeHandler =
+    (id: string) =>
+    (_event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+      if (checked) {
+        firestore.update(`users/${user}`, {
+          devices: [...checkedDevices, id],
+        });
+      } else {
+        firestore.update(`users/${user}`, {
+          devices: checkedDevices.filter((x) => x !== id),
+        });
+      }
+    };
   return (
     <>
-      <FormLabel style={{ textAlign: "center" }} component="legend">
+      <FormLabel
+        sx={{ textAlign: "center", color: "rgba(255, 255, 255, .54)" }}
+        component="legend"
+      >
         Uživatel je oprávněn ovládat následující zařízení
       </FormLabel>
       <List>
@@ -99,10 +107,10 @@ const UserListItem: React.FC<{ user: UserModel }> = ({ user }) => {
   const firestore = useFirestore();
   const handleDeleteClick = () => firestore.delete(`users/${user.email}`);
   return (
-    <Accordion
+    <StyledAccordion
       expanded={user.bigD ? false : expanded}
       onChange={() => setExpanded(!expanded)}
-      style={{ backgroundColor: "#323232" }}
+      sx={{ backgroundColor: "#323232" }}
     >
       <AccordionSummary
         style={{ cursor: user.bigD ? "default" : "pointer" }}
@@ -143,7 +151,7 @@ const UserListItem: React.FC<{ user: UserModel }> = ({ user }) => {
           </Button>
         </Box>
       </AccordionDetails>
-    </Accordion>
+    </StyledAccordion>
   );
 };
 

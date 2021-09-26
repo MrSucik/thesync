@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
+import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setUserAdministrationOpen } from "../../store/slices/settings";

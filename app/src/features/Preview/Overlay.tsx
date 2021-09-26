@@ -1,20 +1,28 @@
 import React from "react";
-import { Box, createStyles, makeStyles } from "@material-ui/core";
+import { styled } from "@material-ui/core/styles";
+import { Box } from "@mui/material";
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    overlay: (props: Props) => ({
-      // background: `linear-gradient(${
-      //   props.position === "top" ? "0" : "180deg"
-      // }, rgba(0, 0, 0, 0.01) 0%, rgba(0, 0, 0, 0.7) 100%)`,
-      height: props.height,
-      display: "flex",
-      alignItems: "center",
-      padding: 16,
-      zIndex: 99,
-    }),
-  })
-);
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+
+const PREFIX = "Overlay";
+
+const classes = {
+  overlay: `${PREFIX}-overlay`,
+};
+// TODO: add props height
+const StyledBox = styled(Box)(() => ({
+  [`&.${classes.overlay}`]: {
+    // background: `linear-gradient(${
+    //   props.position === "top" ? "0" : "180deg"
+    // }, rgba(0, 0, 0, 0.01) 0%, rgba(0, 0, 0, 0.7) 100%)`,
+    // height: props.height,
+    display: "flex",
+    alignItems: "center",
+    padding: 16,
+    zIndex: 99,
+  },
+}));
 
 interface Props {
   height?: number;
@@ -26,8 +34,7 @@ const Overlay: React.FC<Props> = ({
   height = 64,
   position = "top",
 }) => {
-  const classes = useStyles({ height, position });
-  return <Box className={classes.overlay}>{children}</Box>;
+  return <StyledBox className={classes.overlay}>{children}</StyledBox>;
 };
 
 export default Overlay;

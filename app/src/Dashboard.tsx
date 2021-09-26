@@ -6,16 +6,8 @@ import { useFirestoreSubscribe } from "./hooks/useFirestoreSubscribe";
 import UsersModal from "./features/Users/UsersModal";
 import ModalPreview from "./features/Preview/ModalPreview";
 import SceneDetail from "./features/SceneDetail";
-import { Box, Theme, withStyles } from "@material-ui/core";
 import Content from "./features/Content/Content";
-
-const Container = withStyles((theme: Theme) => ({
-  root: {
-    height: "calc(100vh - 86px)",
-    display: "flex",
-    backgroundColor: theme.palette.background.paper,
-  },
-}))(Box);
+import { Box } from "@mui/system";
 
 const Dashboard = () => {
   const dataLoaded = useFirestoreSubscribe();
@@ -25,11 +17,17 @@ const Dashboard = () => {
       <ModalPreview />
       <Content />
       <Header />
-      <Container>
+      <Box
+        sx={{
+          height: "calc(100vh - 86px)",
+          display: "flex",
+          backgroundColor: "background.paper",
+        }}
+      >
         <Scenes />
         <SceneDetail />
         <Devices />
-      </Container>
+      </Box>
     </>
   ) : (
     <Loading />

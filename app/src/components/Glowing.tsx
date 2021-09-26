@@ -1,9 +1,19 @@
 import React from "react";
-import { Box, makeStyles, Theme } from "@material-ui/core";
+import { styled } from "@mui/styles";
+import { Box, Theme } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import clsx from "clsx";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  "@keyframes glow": {
+const PREFIX = "Glowing";
+
+const classes = {
+  "@keyframes glow": `${PREFIX}-undefined`,
+  glowing: `${PREFIX}-glowing`,
+  sideMargin: `${PREFIX}-sideMargin`,
+};
+
+const StyledBox = styled(Box)(({ theme }) => ({
+  [`& .${classes["@keyframes glow"]}`]: {
     from: {
       boxShadow: "0 0 20px 4px #b79797",
     },
@@ -11,13 +21,15 @@ const useStyles = makeStyles((theme: Theme) => ({
       boxShadow: "0 0 20px 2px #b79797",
     },
   },
-  glowing: {
+
+  [`&.${classes.glowing}`]: {
     position: "absolute",
     inset: 0,
     boxShadow: "0 0 20px 4px #b79797",
     animation: "$glow 1s infinite alternate",
   },
-  sideMargin: {
+
+  [`& .${classes.sideMargin}`]: {
     margin: theme.spacing(0, 1),
   },
 }));
@@ -27,9 +39,10 @@ interface Props {
 }
 
 const Glowing: React.FC<Props> = ({ sideMargin }) => {
-  const classes = useStyles();
   return (
-    <Box className={clsx(classes.glowing, sideMargin && classes.sideMargin)} />
+    <StyledBox
+      className={clsx(classes.glowing, sideMargin && classes.sideMargin)}
+    />
   );
 };
 

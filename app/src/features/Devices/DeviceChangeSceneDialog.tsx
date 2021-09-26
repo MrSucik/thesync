@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import Button from "@material-ui/core/Button";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Dialog from "@material-ui/core/Dialog";
+import Button from "@mui/material/Button";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Dialog from "@mui/material/Dialog";
 import { useScenesWithChildren } from "../Scenes/useScenesWithChildren";
 import SceneListItem from "../Scenes/SceneListItem";
 import { List } from "../../components/List";
@@ -44,7 +44,7 @@ const DeviceChangeSceneDialog = () => {
     }
   };
   return (
-    <Dialog disableBackdropClick disableEscapeKeyDown open={Boolean(deviceId)}>
+    <Dialog disableEscapeKeyDown open={Boolean(deviceId)}>
       <DialogTitle>
         Vybrat scénu pro
         <b>{deviceId === "all" ? " všechna zařízení" : ": " + device.name}</b>

@@ -1,26 +1,25 @@
-import { withStyles, Theme, Paper, Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import Title from "../../components/Title";
 import { useCurrentScene } from "../../hooks/useCurrentScene";
 import Tabs from "./Tabs";
 
-const SceneDetailContainer = withStyles((theme: Theme) => ({
-  root: {
-    flex: 3,
-    margin: theme.spacing(1, 2),
-    display: "flex",
-    flexDirection: "column",
-    backgroundColor: theme.palette.background.default,
-    minWidth: "20rem",
-  },
-}))(Paper);
-
 const SceneDetail = () => {
   const scene = useCurrentScene();
   return (
-    <SceneDetailContainer>
+    <Box
+      sx={{
+        flex: 3,
+        margin: "8px 16px",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "background.default",
+        minWidth: "20rem",
+      }}
+    >
       {!scene ? (
         <Typography
-          style={{
+          sx={{
             alignSelf: "center",
             color: "gray",
             lineHeight: "calc(100vh - 100px)",
@@ -34,7 +33,7 @@ const SceneDetail = () => {
           <Tabs />
         </>
       )}
-    </SceneDetailContainer>
+    </Box>
   );
 };
 

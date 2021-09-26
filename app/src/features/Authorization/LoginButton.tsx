@@ -1,7 +1,7 @@
 import React from "react";
 import { useFirebase } from "react-redux-firebase";
 import firebase from "firebase/app";
-import { Avatar, Button } from "@material-ui/core";
+import { Avatar, Button } from "@mui/material";
 
 const LoginButton: React.FC = () => {
   const { auth } = useFirebase();

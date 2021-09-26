@@ -8,7 +8,7 @@ import {
   Divider,
   Icon,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import React from "react";
 import firebase from "firebase/app";
 import { firestore } from "../utils/fire";

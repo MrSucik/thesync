@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, CircularProgress } from "@material-ui/core";
+import { Box, CircularProgress } from "@mui/material";
 
 interface Props {
   color?: "primary" | "secondary" | "inherit";
@@ -7,7 +7,7 @@ interface Props {
 
 const Loading: React.FC<Props> = ({ color = "inherit" }) => (
   <Box
-    style={{
+    sx={{
       position: "absolute",
       transform: "translate(-50%, -50%)",
       top: "50%",

@@ -1,8 +1,11 @@
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import { useRef } from "react";
 import Weather from "./Weather";
+import { useCurrentScene } from "../../hooks/useCurrentScene";
 
 const Footer = () => {
+  const scene = useCurrentScene();
+
   const weatherRef = useRef<HTMLDivElement>(null);
   return (
     <Box
@@ -12,7 +15,7 @@ const Footer = () => {
         alignItems: "center",
         justifyContent: "space-between",
         padding: 8,
-        position: "relative"
+        position: "relative",
       }}
     >
       <img
@@ -25,7 +28,7 @@ const Footer = () => {
         src="https://thesync.web.app/wigym-logo.svg"
         alt="wigym logo"
       />
-      <Weather />
+      {!scene.hideWeather && <Weather />}
     </Box>
   );
 };

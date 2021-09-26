@@ -1,14 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   FormControlLabel,
-  FormGroup,
   FormLabel,
   LinearProgress,
   MenuItem,
   Select,
   Switch,
-  withStyles,
-} from "@material-ui/core";
+} from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -32,6 +30,7 @@ import {
   internalDateFormat,
 } from "../../../utils/constants";
 import { useCurrentScene } from "../../../hooks/useCurrentScene";
+import { Box } from "@mui/system";
 
 const generateName = (type: ContentType, date: string) =>
   `${type === "bakalari-suplovani" ? "Suplování" : "Plán Akcí"} (${
@@ -41,10 +40,6 @@ const generateName = (type: ContentType, date: string) =>
         " - " +
         moment(date).add(4, "days").format(czechShortDateFormat)
   })`;
-
-const FormContainer = withStyles({
-  root: { width: "min(80%, 240px)", margin: "auto" },
-})(FormGroup);
 
 const BakalariConfigurationStage = () => {
   const scene = useCurrentScene();
@@ -114,7 +109,7 @@ const BakalariConfigurationStage = () => {
       ...media,
       name: name + "",
       bakalariConfiguration: selectedOption,
-      bakalariType,
+      bakalariType: bakalariType as "bakalari-suplovani" | "bakalari-planakci",
       author: author + "",
       backgroundColor: scene.backgroundColor,
     };
@@ -132,8 +127,8 @@ const BakalariConfigurationStage = () => {
 
   return (
     <>
-      <FormContainer>
-        <FormLabel style={{ marginTop: 24 }} component="legend">
+      <Box sx={{ width: "min(80%, 240px)", margin: "auto" }}>
+        <FormLabel sx={{ marginTop: 3 }} component="legend">
           Nastavit datum
         </FormLabel>
         <FormControlLabel
@@ -165,7 +160,7 @@ const BakalariConfigurationStage = () => {
               ))}
             </Select>
           ))}
-      </FormContainer>
+      </Box>
       <NextBackButtons onNextClick={handleNextClick} />
     </>
   );

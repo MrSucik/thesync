@@ -1,21 +1,33 @@
 import React from "react";
+import { styled } from "@material-ui/core/styles";
 import { icons } from "../icons/icons.json";
-import { Box, Avatar, makeStyles, Theme } from "@material-ui/core";
+import { Box, Avatar, Theme } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import { getIconSource } from "../utils/icons";
 import clsx from "clsx";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
+const PREFIX = "IconSelect";
+
+const classes = {
+  container: `${PREFIX}-container`,
+  icon: `${PREFIX}-icon`,
+  selected: `${PREFIX}-selected`,
+};
+
+const StyledBox = styled(Box)(({ theme }) => ({
+  [`&.${classes.container}`]: {
     width: 40 * 5 + 16 * 4,
     display: "grid",
     margin: "8px auto",
     gridTemplateColumns: "repeat(5, 40px)",
     gap: theme.spacing(1, 2),
   },
-  icon: {
+
+  [`& .${classes.icon}`]: {
     cursor: "pointer",
   },
-  selected: {
+
+  [`& .${classes.selected}`]: {
     border: `4px solid ${theme.palette.info.main}`,
   },
 }));
@@ -26,10 +38,9 @@ interface Props {
 }
 
 const IconSelect: React.FC<Props> = ({ icon, onChange }) => {
-  const classes = useStyles();
   const sources = icons.map((i) => getIconSource(i));
   return (
-    <Box className={classes.container}>
+    <StyledBox className={classes.container}>
       {sources.map((source, index) => (
         <Avatar
           key={index}
@@ -41,7 +52,7 @@ const IconSelect: React.FC<Props> = ({ icon, onChange }) => {
           onClick={() => onChange(icons[index])}
         />
       ))}
-    </Box>
+    </StyledBox>
   );
 };
 export default IconSelect;

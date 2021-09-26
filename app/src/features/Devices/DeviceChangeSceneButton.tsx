@@ -1,4 +1,4 @@
-import { Icon, IconButton } from "@material-ui/core";
+import { Icon, IconButton } from "@mui/material";
 import Tooltip from "../../components/Tooltip";
 
 const DeviceChangeSceneButton: React.FC<{
@@ -11,7 +11,7 @@ const DeviceChangeSceneButton: React.FC<{
     }`}
   >
     <IconButton onClick={onClick} size="small">
-      <Icon style={{ color: "#c4c4c4" }}>swap_vert</Icon>
+      <Icon sx={{ color: "#c4c4c4" }}>swap_vert</Icon>
     </IconButton>
   </Tooltip>
 );

@@ -6,6 +6,7 @@ import "firebase/performance";
 import "firebase/database";
 import "firebase/analytics";
 import { firebaseApiKey, firebaseAppId } from "./constants";
+import { SceneModel } from "../definitions";
 
 const firebaseConfig = {
   apiKey: firebaseApiKey,
@@ -35,10 +36,14 @@ export const uploadFile = async (file: File) => {
   return path;
 };
 
-export const createNewScene = () =>
+export const createNewScene = (author: string) =>
   firestore.collection("scenes").add({
     name: "Nová Scéna",
     mediaList: [],
     backgroundColor: "#1a1a1a",
     created: firebase.firestore.FieldValue.serverTimestamp(),
-  });
+    author,
+    footer: "",
+    hideProgress: false,
+    hideWeather: false,
+  } as Partial<SceneModel>);

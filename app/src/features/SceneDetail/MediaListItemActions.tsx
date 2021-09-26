@@ -1,4 +1,4 @@
-import { IconButton, ListItemSecondaryAction } from "@material-ui/core";
+import { IconButton, ListItemSecondaryAction } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";

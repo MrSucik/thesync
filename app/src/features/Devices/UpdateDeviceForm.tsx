@@ -1,7 +1,5 @@
 import {
   Box,
-  createStyles,
-  makeStyles,
   TextField,
   CircularProgress,
   Button,
@@ -9,7 +7,7 @@ import {
   Card,
   CardContent,
   CardHeader,
-} from "@material-ui/core";
+} from "@mui/material";
 import { icons } from "../../icons/icons.json";
 import React, { ChangeEvent, useState } from "react";
 import { useFirestore } from "react-redux-firebase";
@@ -19,19 +17,9 @@ import { DeviceModel } from "../../definitions";
 import IconSelect from "../../components/IconSelect";
 import { setConfigureDevice } from "./deviceConfigurationSlice";
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    nameField: {
-      flex: 1,
-      margin: "0 8px",
-    },
-  })
-);
-
 const UpdateDeviceForm: React.FC<{ updateDevice: DeviceModel }> = ({
   updateDevice,
 }) => {
-  const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const firestore = useFirestore();
@@ -80,7 +68,7 @@ const UpdateDeviceForm: React.FC<{ updateDevice: DeviceModel }> = ({
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className={classes.nameField}
+            sx={{ flex: 1, margin: "0 8px" }}
             label="Název zařízení"
             placeholder="Zadejte název zařízení"
           />
@@ -90,7 +78,7 @@ const UpdateDeviceForm: React.FC<{ updateDevice: DeviceModel }> = ({
           onChange={(value) => setFormData({ ...formData, icon: value })}
         />
       </CardContent>
-      <CardActions style={{ flexDirection: "row-reverse" }}>
+      <CardActions sx={{ flexDirection: "row-reverse" }}>
         <Button variant="contained" color="primary" onClick={handleSubmit}>
           {loading ? <CircularProgress color="inherit" size={24} /> : "Uložit"}
         </Button>

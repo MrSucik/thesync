@@ -1,4 +1,4 @@
-import { Icon, IconButton } from "@material-ui/core";
+import { Icon, IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setDeviceScheduleOpen } from "../../../store/slices/app";
 import Tooltip from "../../../components/Tooltip";

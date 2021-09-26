@@ -1,14 +1,13 @@
-import Button from "@material-ui/core/Button";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Dialog from "@material-ui/core/Dialog";
+import Button from "@mui/material/Button";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Dialog from "@mui/material/Dialog";
 import { useDispatch } from "react-redux";
 import { useSelector } from "../../../store";
 import { setDeviceScheduleOpen } from "../../../store/slices/app";
 import { useFirestore } from "react-redux-firebase";
-import { KeyboardTimePicker } from "@material-ui/pickers";
-import moment from "moment";
+import moment, { Moment } from "moment";
 import {
   Box,
   FormControlLabel,
@@ -16,8 +15,10 @@ import {
   MenuItem,
   Select,
   Switch,
-} from "@material-ui/core";
-import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
+  TextField,
+  SelectChangeEvent,
+} from "@mui/material";
+import { TimePicker } from "@mui/lab";
 
 const DeviceScheduleDialog = () => {
   const dispatch = useDispatch();
@@ -34,12 +35,11 @@ const DeviceScheduleDialog = () => {
       ...changes,
     });
 
-  const handleTimeChange = (date: MaterialUiPickersDate) =>
-    updateSettings({ time: moment(date).format() });
+  const handleTimeChange = (date: unknown) =>
+    updateSettings({ time: moment(date as string).format() });
 
-  const handleActionChange = (
-    event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
-  ) => updateSettings({ action: event.target.value });
+  const handleActionChange = (event: SelectChangeEvent<any>) =>
+    updateSettings({ action: event.target.value });
 
   const handleEnabledChange = (
     _event: React.ChangeEvent<HTMLInputElement>,
@@ -72,14 +72,16 @@ const DeviceScheduleDialog = () => {
             marginTop: "1rem",
           }}
         >
-          <KeyboardTimePicker
-            margin="none"
-            label="Vybrat čas"
+          <TimePicker
+            // margin="none"
             value={settings.time}
             ampm={false}
             onChange={handleTimeChange}
-            style={{ flex: 1 }}
+            // style={{ flex: 1 }}
             disabled={!settings.enabled}
+            renderInput={(props) => (
+              <TextField label="Vybrat čas" helperText="Something" />
+            )}
           />
           <Box flex={1}>
             <InputLabel id="select-label" shrink>

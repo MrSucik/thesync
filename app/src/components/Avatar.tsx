@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Avatar as MuiAvatar, AvatarProps } from "@material-ui/core";
+import { Avatar as MuiAvatar, AvatarProps } from "@mui/material";
 import { getDownloadURL } from "../utils/fire";
 
 interface Props extends AvatarProps {

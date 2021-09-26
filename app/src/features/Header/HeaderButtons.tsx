@@ -1,15 +1,8 @@
-import { Box, withStyles } from "@material-ui/core";
+import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import CurrentUserIcon from "./CurrentUserIcon";
 import { RootState } from "../../store";
 import UsersAdministrationIconButton from "./SettingsButton";
-
-const Container = withStyles(() => ({
-  root: {
-    display: "flex",
-    alignItems: "center",
-  },
-}))(Box);
 
 const HeaderButtons = () => {
   const isEmpty = useSelector<RootState, boolean>(
@@ -19,10 +12,15 @@ const HeaderButtons = () => {
     (state) => state.settings.openSettingsButtonVisible
   );
   return !isEmpty ? (
-    <Container>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
       {settingsButtonVisible && <UsersAdministrationIconButton />}
       <CurrentUserIcon />
-    </Container>
+    </Box>
   ) : null;
 };
 

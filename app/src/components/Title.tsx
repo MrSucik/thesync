@@ -1,4 +1,6 @@
-import { Typography, withStyles } from "@material-ui/core";
+import { Typography } from "@mui/material";
+
+import withStyles from "@mui/styles/withStyles";
 
 export default withStyles(() => ({
   root: {

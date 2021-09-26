@@ -1,10 +1,5 @@
-import {
-  Avatar,
-  FormGroup,
-  FormLabel,
-  ListItemAvatar,
-  withStyles,
-} from "@material-ui/core";
+import { Avatar, FormGroup, FormLabel, ListItemAvatar } from "@mui/material";
+import { Box } from "@mui/system";
 import firebase from "firebase/app";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
@@ -16,10 +11,6 @@ import { useDownloadURL } from "../../../hooks/useDownloadURL";
 import { useSelector } from "../../../store";
 import { setActiveStep, setUpdatingMedia } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
-
-const Container = withStyles({
-  root: { padding: "0 32px" },
-})(FormGroup);
 
 const ListIt: React.FC<{
   media: MediaModel;
@@ -58,8 +49,8 @@ const ChooseExistingStage = () => {
     dispatch(setActiveStep(2));
   };
   return (
-    <>
-      <Container>
+    <Box sx={{ padding: "0 32px" }}>
+      <FormGroup>
         <FormLabel component="legend">Kopírovat položku</FormLabel>
         <List>
           {media
@@ -72,9 +63,9 @@ const ChooseExistingStage = () => {
               />
             ))}
         </List>
-      </Container>
+      </FormGroup>
       <NextBackButtons nextHidden />
-    </>
+    </Box>
   );
 };
 

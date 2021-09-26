@@ -1,18 +1,9 @@
-import { Box, Button, CircularProgress, withStyles } from "@material-ui/core";
+import { Box, Button, CircularProgress } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "../../store";
 import { steps } from "./Content";
 import { setActiveStep, setContentOpen } from "./contentSlice";
-
-const Container = withStyles({
-  root: {
-    display: "flex",
-    justifyContent: "flex-end",
-    padding: 24,
-    gap: 8,
-  },
-})(Box);
 
 const NextBackButtons: React.FC<{
   nextHidden?: boolean;
@@ -40,7 +31,9 @@ const NextBackButtons: React.FC<{
     onBackClick();
   };
   return (
-    <Container>
+    <Box
+      sx={{ display: "flex", justifyContent: "flex-end", padding: 3, gap: 1 }}
+    >
       {!backHidden && <Button onClick={handleBackClick}>zpět</Button>}
       {!nextHidden && (
         <Button
@@ -58,7 +51,7 @@ const NextBackButtons: React.FC<{
           )}
         </Button>
       )}
-    </Container>
+    </Box>
   );
 };
 

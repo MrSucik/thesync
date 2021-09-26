@@ -5,39 +5,23 @@ import {
   MenuItem,
   Select,
   TextField,
-  withStyles,
-} from "@material-ui/core";
-import ColorPicker from "material-ui-color-picker";
-import { useEffect, useRef } from "react";
+} from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
+import CustomColorPicker from "../../../components/CustomColorPicker";
+import { useCurrentScene } from "../../../hooks/useCurrentScene";
 import { useSelector } from "../../../store";
 import { setPreviewMediaList } from "../../../store/slices/preview";
 import { screenHeight } from "../../../utils/constants";
 import { setPreviewMediaId, updateUpdatingMediaLmao } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
 
-const Container = withStyles({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 16,
-    alignItems: "center",
-    padding: "1rem 3rem",
-  },
-})(Box);
-
 const MediaUpdateStage = () => {
   const dispatch = useDispatch();
+  const defaultBackground = useCurrentScene().backgroundColor;
   const type = useSelector((state) => state.content.type);
   const media = useSelector((state) => state.content.updatingMedia);
   const firestore = useFirestore();
-  const ref = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.value = "IIIIIIIIIIIIIIIIIIIIIIIIIIII";
-    }
-  }, []);
   const hanleNextClick = () => {
     const mediaId = media.id + "";
     firestore.update(`media/${mediaId}`, media);
@@ -50,11 +34,18 @@ const MediaUpdateStage = () => {
     updateMedia(event.target.name, event.target.value);
 
   const overflow = media?.height && media.height > screenHeight;
-  console.log(overflow, media);
 
   return (
-    <>
-      <Container>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        alignItems: "center",
+        padding: "1rem 3rem",
+      }}
+    >
+      <Box>
         <TextField
           name="name"
           label="Název"
@@ -91,19 +82,15 @@ const MediaUpdateStage = () => {
             </Select>
           </FormControl>
         )}
-        <ColorPicker
-          inputRef={ref}
-          value={media.backgroundColor}
-          onChange={(color) =>
-            color && updateMedia("backgroundColor", color + "")
-          }
-          variant="filled"
+        <CustomColorPicker
+          name="backgroundColor"
+          value={media.backgroundColor || defaultBackground}
+          onChange={handleChange}
           label="Barva pozadí"
-          fullWidth
         />
-      </Container>
+      </Box>
       <NextBackButtons backHidden onNextClick={hanleNextClick} />
-    </>
+    </Box>
   );
 };
 

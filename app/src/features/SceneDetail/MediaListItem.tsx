@@ -1,4 +1,4 @@
-import { Avatar, ListItemAvatar } from "@material-ui/core";
+import { Avatar, ListItemAvatar } from "@mui/material";
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import ListItem from "../../components/ListItem";

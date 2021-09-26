@@ -1,10 +1,6 @@
-import {
-  Box,
-  CircularProgress,
-  Icon,
-  Typography,
-  withStyles,
-} from "@material-ui/core";
+import { Box, CircularProgress, Icon, Typography } from "@mui/material";
+import { styled } from "@material-ui/core/styles";
+import withStyles from "@mui/styles/withStyles";
 import firebase from "firebase/app";
 import { useState } from "react";
 import { DropEvent, useDropzone } from "react-dropzone";
@@ -38,38 +34,15 @@ const getFileType = (type: string) => {
   }
 };
 
-const Container = withStyles({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 16,
-    alignItems: "center",
-    padding: 8,
-  },
-})(Box);
+// const Container = (Box);
 
-const Dropzone = withStyles({
-  root: {
-    cursor: "pointer",
-    minWidth: 206,
-    maxWidth: 300,
-    backgroundColor: "#444",
-    borderRadius: 8,
-    textAlign: "center",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 24,
-    padding: "16px 32px",
-    "&:hover": {
-      backgroundColor: "rgba(255, 255, 255, 0.13)",
-    },
-  },
-})(Box);
+// const Dropzone = ",
+//     },
+//   },
+// })(Box);
 
-const Label = withStyles({
-  root: { fontSize: 14, color: "rgb(200, 200, 200)" },
-})(Typography);
+// const Label = " },
+// })(Typography);
 
 const FileUploadStage = () => {
   const scene = useCurrentScene();
@@ -122,7 +95,7 @@ const FileUploadStage = () => {
           author,
           width: response.data.width,
           height: response.data.height,
-          backgroundColor: scene.backgroundColor
+          backgroundColor: scene.backgroundColor,
         };
         const { id } = await firestore.add("media", {
           ...newMedia,
@@ -147,24 +120,49 @@ const FileUploadStage = () => {
     multiple: false,
   });
   return (
-    <>
-      <Container>
-        <Dropzone {...getRootProps()}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 1,
+        alignItems: "center",
+        padding: 1,
+      }}
+    >
+      <Box
+        sx={{
+          cursor: "pointer",
+          minWidth: 206,
+          maxWidth: 300,
+          backgroundColor: "#444",
+          borderRadius: 8,
+          textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 24,
+          padding: "16px 32px",
+          "&:hover": {
+            backgroundColor: "rgba(255, 255, 255, 0.13)",
+          },
+        }}
+      >
+        <Box {...getRootProps()}>
           <input {...getInputProps()} />
           {loading ? <CircularProgress size="20px" /> : <Icon>upload</Icon>}
-          <Box>
+          <Box >
             <Typography>
               Nahrát soubor <br />
               <Typography style={{ opacity: 0.8 }} variant="caption">
                 (pro optimální zobrazení použijte rozlišení - 1080x1760)
               </Typography>
             </Typography>
-            {media.file && <Label>Soubor: {media.file}</Label>}
+            {media.file && <span>Soubor: {media.file}</span>}
           </Box>
-        </Dropzone>
-      </Container>
+        </Box>
+      </Box>
       <NextBackButtons nextHidden />
-    </>
+    </Box>
   );
 };
 

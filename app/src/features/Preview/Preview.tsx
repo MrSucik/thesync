@@ -1,4 +1,5 @@
-import { Box, withStyles } from "@material-ui/core";
+import { Box } from "@mui/material";
+import { styled } from "@material-ui/core/styles";
 import React from "react";
 import { useSelector } from "react-redux";
 import { MediaModel } from "../../definitions";
@@ -9,12 +10,14 @@ import PlayNextPrevious from "./PlayNext";
 import MediaPreviewPlayer from "./MediaPreviewPlayer";
 import { useCurrentScene } from "../../hooks/useCurrentScene";
 
-interface Props {
-  disableControls?: boolean;
-}
+const PREFIX = "Preview";
 
-const PreviewContainer = withStyles({
-  root: {
+const classes = {
+  root: `${PREFIX}-root`,
+};
+
+const StyledPreviewContainer = styled(Box)({
+  [`& .${classes.root}`]: {
     height: "100%",
     maxWidth: "100%",
     aspectRatio: "9 / 16",
@@ -26,7 +29,11 @@ const PreviewContainer = withStyles({
     flexDirection: "column",
     flex: 1,
   },
-})(Box);
+});
+
+interface Props {
+  disableControls?: boolean;
+}
 
 const Preview: React.FC<Props> = ({ disableControls }) => {
   const { activeMediaIndex, previewMediaList } = useSelector<
@@ -41,13 +48,13 @@ const Preview: React.FC<Props> = ({ disableControls }) => {
   );
   const media = mediaList[activeMediaIndex];
   return !media ? null : (
-    <PreviewContainer
+    <StyledPreviewContainer
       style={{
         backgroundColor: media.backgroundColor || selectedScene.backgroundColor,
         transition: "all 300ms ease-in-out",
       }}
     >
-      <ProgressBar />
+      {!selectedScene.hideProgress && <ProgressBar />}
       {!disableControls && previewMediaList.length !== 1 && (
         <>
           <PlayNextPrevious type="previous" />
@@ -55,7 +62,7 @@ const Preview: React.FC<Props> = ({ disableControls }) => {
         </>
       )}
       <MediaPreviewPlayer />
-    </PreviewContainer>
+    </StyledPreviewContainer>
   );
 };
 

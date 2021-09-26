@@ -1,33 +1,8 @@
-import { withStyles, Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import React from "react";
 import { MediaModel } from "../../definitions";
 import { useDownloadURL } from "../../hooks/useDownloadURL";
 import { getIconSource } from "../../utils/icons";
-
-const StackedMediaContainer = withStyles({
-  root: {
-    display: "flex",
-    marginLeft: -16,
-    overflow: "hidden",
-  },
-})(Box);
-const StackedMediaListItem = withStyles({
-  root: {
-    height: 100,
-    width: 71,
-    borderRadius: 8,
-    overflow: "hidden",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    "&:nth-of-type(even)": {
-      backgroundColor: "rgba(88, 88, 88, 1)",
-    },
-    "&:nth-of-type(odd)": {
-      backgroundColor: "rgba(31, 31, 31, 1)",
-    },
-  },
-})(Box);
 
 const Media: React.FC<{ media: MediaModel; src?: string }> = ({
   media,
@@ -38,18 +13,30 @@ const Media: React.FC<{ media: MediaModel; src?: string }> = ({
 };
 
 const StackedMedia: React.FC<{ mediaList: MediaModel[] }> = ({ mediaList }) => (
-  <StackedMediaContainer>
-    {mediaList.map((media, i) => (
-      <StackedMediaListItem key={media.id} style={{ marginLeft: !i ? 0 : -32 }}>
+  <Box sx={{ display: "flex", marginLeft: -2, overflow: "hidden" }}>
+    {mediaList.map((media, index) => (
+      <Box
+        key={media.id}
+        sx={{
+          height: 100,
+          width: 71,
+          borderRadius: 1,
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          marginLeft: index === 0 ? 0 : -2,
+          ":nth-of-type(even)": { backgroundColor: "rgba(88, 88, 88, 1)" },
+          ":nth-of-type(odd)": { backgroundColor: "rgba(31, 31, 31, 1)" },
+        }}
+      >
         <Media
           media={media}
-          src={
-            media.id?.startsWith("bakalari") ? getIconSource("bakalari") : null
-          }
+          src={media.bakalariType ? getIconSource("bakalari") : null}
         />
-      </StackedMediaListItem>
+      </Box>
     ))}
-  </StackedMediaContainer>
+  </Box>
 );
 
 export default StackedMedia;

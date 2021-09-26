@@ -1,4 +1,5 @@
-import { Avatar, ListItemAvatar, withStyles } from "@material-ui/core";
+import { Avatar, ListItemAvatar } from "@mui/material";
+import { Box } from "@mui/system";
 import { useDispatch } from "react-redux";
 import { List } from "../../../components/List";
 import ListItem from "../../../components/ListItem";
@@ -37,9 +38,7 @@ const options: Option[] = [
   },
 ];
 
-const OptionsList = withStyles({
-  root: { width: "80%", margin: "auto", overflow: "visible" },
-})(List);
+const OptionsList = List;
 
 const ChooseTypeStage = () => {
   // const selectedOption = useSelector<ContentType | undefined>(
@@ -51,7 +50,7 @@ const ChooseTypeStage = () => {
     dispatch(setActiveStep(1));
   };
   return (
-    <>
+    <Box sx={{ width: "80%", margin: "auto", overflow: "visible" }}>
       <OptionsList>
         {options.map((option) => (
           <ListItem
@@ -71,7 +70,7 @@ const ChooseTypeStage = () => {
         ))}
       </OptionsList>
       <NextBackButtons backHidden nextHidden />
-    </>
+    </Box>
   );
 };
 

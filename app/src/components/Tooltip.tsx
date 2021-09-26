@@ -1,6 +1,8 @@
-import { withStyles, Theme, Tooltip } from "@material-ui/core";
+import { Tooltip } from "@mui/material";
 
-export default withStyles((theme: Theme) => ({
+import withStyles from "@mui/styles/withStyles";
+
+export default withStyles((theme) => ({
   tooltip: {
     boxShadow: theme.shadows[1],
     fontSize: 14,
