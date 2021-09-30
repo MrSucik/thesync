@@ -1,5 +1,5 @@
 import moment = require("moment");
-import { czechShortDateFormat } from "../constants";
+import { czechShortDateFormat, maxHeight } from "../constants";
 import { getMonday, getNearestWeekday } from "../utils/date";
 import { bakaDateFormat, internalDateFormat } from "./constants";
 import { v4 as uuid } from "uuid";
@@ -14,6 +14,10 @@ import {
   updateBakalariDoc,
 } from "./firestore";
 import { uploadFile } from "../firebase/storage";
+import {
+  cutImageToSlicesInternal,
+  downloadWithMetadata,
+} from "../images/utils";
 
 export const processBakalariDate = async (
   type: BakalariType,
@@ -93,11 +97,19 @@ const exportBakalariMediaDocument = async (
   doc: FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>
 ) => {
   const type = doc.data().bakalariType as BakalariType;
+  const name = generateBakalariName(type, date);
   const remote = await processBakalariDate(type, date);
   const newFile = remote[0].metadata.name;
-  const newName = generateBakalariName(type, date);
-
-  console.log("New file: ", newFile);
-
-  await updateBakalariDoc(doc.ref, { file: newFile, name: newName });
+  const { height, width } = await downloadWithMetadata(newFile);
+  const update = { name, height, width };
+  if (height < maxHeight) {
+    await updateBakalariDoc(doc.ref, {
+      ...update,
+      file: newFile,
+      fileType: "image",
+    });
+  } else {
+    const files = await cutImageToSlicesInternal(newFile);
+    await updateBakalariDoc(doc.ref, { ...update, files, fileType: "images" });
+  }
 };

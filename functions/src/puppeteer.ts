@@ -1,11 +1,12 @@
 import * as puppeteer from "puppeteer";
+import { screenWidth } from "./constants";
 import { tempFilePath } from "./utils/os";
 
 const defaultLaunchOptions = {
   headless: true,
   args: ["--no-sandbox"],
   // Window will expand in height as possible - this reduces redundant space around the content
-  defaultViewport: { width: 1080, height: 100 },
+  defaultViewport: { width: screenWidth, height: 100 },
 };
 
 export const initializePage = async () => {

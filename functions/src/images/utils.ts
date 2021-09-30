@@ -8,7 +8,7 @@ export const cutImageToSlicesInternal = async (file: string) => {
   const { destination, height, width } = await downloadWithMetadata(file);
   const image = sharp(destination);
   const neededSlices = Math.ceil(height / maxHeight);
-  const sliceHeight = height / neededSlices;
+  const sliceHeight = Math.floor(height / neededSlices);
   const files: string[] = [];
   for (let index = 0; index < neededSlices; index++) {
     const sliceFileName = `cropped_${index}_${path.basename(file)}`;
@@ -28,10 +28,14 @@ export const cutImageToSlicesInternal = async (file: string) => {
   return files;
 };
 
+export const getImageMetadata = async (localFile: string) => {
+  const { width, height } = await sharp(localFile).metadata();
+  return { width: width || 0, height: height || 0, destination: localFile };
+};
+
 export const downloadWithMetadata = async (requestedFile: string) => {
   const destination = await downloadFile(requestedFile);
-  const { width, height } = await sharp(destination).metadata();
-  return { width: width || 0, height: height || 0, destination };
+  return await getImageMetadata(destination);
 };
 
 // const processLocalImage = async (
