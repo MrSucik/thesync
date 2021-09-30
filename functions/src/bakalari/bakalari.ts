@@ -1,11 +1,10 @@
 import moment = require("moment");
 import { czechShortDateFormat } from "../constants";
-import { getMonday, getNearestWeekday } from "../date";
+import { getMonday, getNearestWeekday } from "../utils/date";
 import { bakaDateFormat, internalDateFormat } from "./constants";
 import { v4 as uuid } from "uuid";
-import { handleError } from "../error";
+import { handleError } from "../utils/error";
 import { BakalariType } from "../definitions";
-import { uploadFile } from "../fire";
 import { initializePage } from "../puppeteer";
 import { scrapePlan } from "./planakci";
 import { scrapeSupl } from "./suplovani";
@@ -14,6 +13,7 @@ import {
   getAllBakalariMediaDocumentsForExport,
   updateBakalariDoc,
 } from "./firestore";
+import { uploadFile } from "../firebase/storage";
 
 export const processBakalariDate = async (
   type: BakalariType,

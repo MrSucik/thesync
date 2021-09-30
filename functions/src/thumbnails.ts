@@ -1,8 +1,8 @@
 import * as ffmpeg from "fluent-ffmpeg";
 import { spawn } from "child-process-promise";
 import * as ffmpegPath from "ffmpeg-static";
-import { uploadFile } from "./fire";
-import { tempFilePath } from "./utils";
+import { tempFilePath } from "./utils/os";
+import { uploadFile } from "./firebase/storage";
 
 export const createThumbnailFromImage = async (
   name: string,

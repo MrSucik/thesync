@@ -1,7 +1,7 @@
 import * as puppeteer from "puppeteer";
-import { getMonday } from "../date";
+import { getMonday } from "../utils/date";
 import { executeFunctionOnUrl, takeScreenshot } from "../puppeteer";
-import { removeNewLines } from "../string";
+import { removeNewLines } from "../utils/string";
 import { getDateInUrlFormat } from "./bakalari";
 import { bakaPlanRoute, bakaSuffix } from "./constants";
 

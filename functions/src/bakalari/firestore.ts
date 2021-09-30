@@ -1,5 +1,5 @@
 import moment = require("moment");
-import { firestore } from "../fire";
+import { firestore } from "../firebase/fire";
 
 export const getAllBakalariMediaDocumentsForExport = async () =>
   await firestore

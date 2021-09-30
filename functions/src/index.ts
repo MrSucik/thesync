@@ -1,15 +1,14 @@
 import * as functions from "firebase-functions";
 import { validateDeviceId, createDeviceToken } from "./auth";
-import { bucket, firestore } from "./fire";
+import { bucket, firestore } from "./firebase/fire";
 import moment = require("moment");
 import * as path from "path";
 import * as os from "os";
 import * as fs from "fs";
 import { spawn } from "child-process-promise";
 import { createThumbnailFromVideo } from "./thumbnails";
-import { getImageMetadata } from "./utils";
-import { handleError } from "./error";
-import { corsHandler } from "./corsHandler";
+import { handleError } from "./utils/error";
+import { corsHandler } from "./utils/corsHandler";
 
 export {
   manualBakalariUpdate,
@@ -19,6 +18,8 @@ export {
   bakalariProcessPlan,
   bakalariProcessSupl,
 } from "./bakalari/endpoints";
+
+export { cutImageToSlices, getImageSize } from "./images/endpoints";
 
 export const generateDeviceToken = functions
   .region("europe-west3")
@@ -110,20 +111,6 @@ export const onFileCreated = functions
     return fs.unlinkSync(tempFilePath);
   });
 
-export const getImageSize = functions
-  .region("europe-west3")
-  .https.onRequest(async (request, response) => {
-    corsHandler(request, response, async () => {
-      try {
-        const requestedFile = request.query.file as string;
-        const metadata = await getImageMetadata(requestedFile);
-        response.send(metadata);
-      } catch (error) {
-        handleError(error, "getImageSize", response);
-      }
-    });
-  });
-
 export const echoDevice = functions
   .region("europe-west3")
   .https.onRequest((request, response) => {
@@ -134,7 +121,7 @@ export const echoDevice = functions
           startup: moment().add(3, "minutes"),
         });
       } catch (error) {
-        handleError(error, "getImageSize", response);
+        handleError(error, "echoDevice", response);
       }
     });
   });
@@ -175,7 +162,7 @@ export const endpoint = functions.https.onRequest((request, response) => {
         startup: false,
       });
     } catch (error) {
-      handleError(error, "getImageSize", response);
+      handleError(error, "endpoint", response);
     }
   });
 });

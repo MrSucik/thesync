@@ -1,16 +1,16 @@
-import { RuntimeOptions } from "firebase-functions/v1";
-import { handleError } from "../error";
+import { handleError } from "../utils/error";
 import {
   exportNearestBakalari,
   loadDatesFromUrl,
   processBakalariDate,
 } from "./bakalari";
 import * as functions from "firebase-functions";
-import { corsHandler } from "../corsHandler";
+import { corsHandler } from "../utils/corsHandler";
 import moment = require("moment");
-import { getNearestWeekday } from "../date";
+import { getNearestWeekday } from "../utils/date";
 import { bakaSuplDatesRoute, bakaPlanDatesRoute } from "./constants";
 import { BakalariType, DateQuery } from "../definitions";
+import { RuntimeOptions } from "firebase-functions";
 
 const bakalariRuntimeOptions: RuntimeOptions = {
   timeoutSeconds: 300,

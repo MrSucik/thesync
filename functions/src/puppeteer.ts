@@ -1,5 +1,5 @@
 import * as puppeteer from "puppeteer";
-import { tempFilePath } from "./utils";
+import { tempFilePath } from "./utils/os";
 
 const defaultLaunchOptions = {
   headless: true,

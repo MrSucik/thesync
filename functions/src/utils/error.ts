@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { firestore } from "./fire";
+import { firestore } from "../firebase/fire";
 import moment = require("moment");
 
 export const handleError = (
