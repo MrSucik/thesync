@@ -22,9 +22,15 @@ const MediaUpdateStage = () => {
   const type = useSelector((state) => state.content.type);
   const media = useSelector((state) => state.content.updatingMedia);
   const firestore = useFirestore();
-  const hanleNextClick = () => {
+  const hanleNextClick = async () => {
     const mediaId = media.id + "";
-    firestore.update(`media/${mediaId}`, media);
+    await firestore.update(`media/${mediaId}`, {
+      ...media,
+      backgroundColor:
+        media.backgroundColor === defaultBackground
+          ? ""
+          : media.backgroundColor,
+    });
     dispatch(setPreviewMediaId(mediaId));
     dispatch(setPreviewMediaList({ mediaList: [mediaId], type: "tab" }));
   };
@@ -66,7 +72,7 @@ const MediaUpdateStage = () => {
             fullWidth
           />
         )}
-        {!overflow && !type?.startsWith("bakalari") && (
+        {false && !overflow && !type?.startsWith("bakalari") && (
           <FormControl variant="filled" fullWidth>
             <InputLabel id="layout-select-label">Rozložení</InputLabel>
             <Select
