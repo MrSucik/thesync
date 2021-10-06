@@ -1,9 +1,11 @@
-import { InputAdornment, TextField } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 import { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
 import firebase from "firebase/app";
 import { useSnackbar } from "notistack";
 import Action from "../../components/Action";
+import { Field } from "../../components/Field";
+import { useSelector } from "../../store";
 
 const regex =
   // eslint-disable-next-line no-control-regex
@@ -13,6 +15,9 @@ const AddUserButton = () => {
   const [email, setEmail] = useState("");
   const [valid, setValid] = useState(false);
   const firestore = useFirestore();
+  const devices = useSelector((state) =>
+    Object.keys(state.firestore.data.devices)
+  );
   const { enqueueSnackbar } = useSnackbar();
   const handleClick = async () => {
     try {
@@ -28,8 +33,8 @@ const AddUserButton = () => {
       }
       await doc.set({
         email,
+        devices,
         created: firebase.firestore.FieldValue.serverTimestamp(),
-        devices: [],
       });
       setEmail("");
       setValid(false);
@@ -48,30 +53,14 @@ const AddUserButton = () => {
     setValid(regex.test(event.target.value));
   };
   return (
-    <TextField
+    <Field
       label="Přidat uživatele"
       value={email}
       onChange={handleChange}
       sx={{
         flex: 1,
         marginRight: 2,
-        color: "white",
-        "& input": {
-          color: "white",
-          paddingLeft: 2,
-        },
-        "& input::placeholder": {
-          color: "white",
-        },
-        "& .MuiInput-underline:before": {
-          borderBottomColor: "#fff8",
-        },
-        "& .MuiInput-underline:hover:before": {
-          borderBottomColor: "#fff",
-        },
-        "& .MuiInput-underline:after": {
-          borderBottomColor: "#fff",
-        },
+        "& input": { paddingLeft: 2 },
       }}
       placeholder="Zadejte emailovou adresu"
       type="email"

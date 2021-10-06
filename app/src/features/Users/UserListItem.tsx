@@ -11,9 +11,7 @@ import {
   ListItemAvatar,
   ListItemSecondaryAction,
   ListItemText,
-  Switch,
 } from "@mui/material";
-import { styled } from "@material-ui/core/styles";
 import React, { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
 import { List } from "../../components/List";
@@ -22,21 +20,7 @@ import { DeviceModel, UserModel } from "../../definitions";
 import { useSelector } from "../../store";
 import { getIconSource } from "../../utils/icons";
 import moment from "moment";
-
-const PREFIX = "UserListItem";
-
-const classes = {
-  switchBase: `${PREFIX}-switchBase`,
-};
-
-const StyledAccordion = styled(Accordion)({
-  [`& .${classes.switchBase}`]: {
-    "&$checked": { color: "#74aa44" },
-    "&$checked + $track": { backgroundColor: "#74aa44" },
-  },
-});
-
-const BeatifulSwitch = Switch;
+import { CustomSwitch } from "../../components/CustomSwitch";
 
 const DeviceListItem: React.FC<{
   isChecked: boolean;
@@ -55,7 +39,7 @@ const DeviceListItem: React.FC<{
       </ListItemAvatar>
       <ListItemText primary={device.name} />
       <ListItemSecondaryAction>
-        <BeatifulSwitch edge="end" onChange={onChange} checked={isChecked} />
+        <CustomSwitch label="" onChange={onChange} checked={isChecked} />
       </ListItemSecondaryAction>
     </ListItem>
   );
@@ -86,7 +70,7 @@ const DeviceList: React.FC<{ user: string }> = ({ user }) => {
         sx={{ textAlign: "center", color: "rgba(255, 255, 255, .54)" }}
         component="legend"
       >
-        Uživatel je oprávněn ovládat následující zařízení
+        Uživatel je oprávněn ovládat pouze vybraná zařízení
       </FormLabel>
       <List>
         {devices.map((device) => (
@@ -107,7 +91,7 @@ const UserListItem: React.FC<{ user: UserModel }> = ({ user }) => {
   const firestore = useFirestore();
   const handleDeleteClick = () => firestore.delete(`users/${user.email}`);
   return (
-    <StyledAccordion
+    <Accordion
       expanded={user.bigD ? false : expanded}
       onChange={() => setExpanded(!expanded)}
       sx={{ backgroundColor: "#323232" }}
@@ -151,7 +135,7 @@ const UserListItem: React.FC<{ user: UserModel }> = ({ user }) => {
           </Button>
         </Box>
       </AccordionDetails>
-    </StyledAccordion>
+    </Accordion>
   );
 };
 

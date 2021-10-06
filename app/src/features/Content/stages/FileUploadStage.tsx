@@ -34,16 +34,6 @@ const getFileType = (type: string) => {
   }
 };
 
-// const Container = (Box);
-
-// const Dropzone = ",
-//     },
-//   },
-// })(Box);
-
-// const Label = " },
-// })(Typography);
-
 const FileUploadStage = () => {
   const scene = useCurrentScene();
   const dispatch = useDispatch();
@@ -135,12 +125,12 @@ const FileUploadStage = () => {
           minWidth: 206,
           maxWidth: 300,
           backgroundColor: "#444",
-          borderRadius: 8,
+          borderRadius: 2,
           textAlign: "center",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: 24,
+          gap: 3,
           padding: "16px 32px",
           "&:hover": {
             backgroundColor: "rgba(255, 255, 255, 0.13)",
