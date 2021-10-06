@@ -48,7 +48,12 @@ const MediaPreviewPlayer: React.FC = () => {
       }}
     >
       <Box
-        sx={{ display: "flex", flexDirection: "column", overflow: "hidden" }}
+        sx={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
+        }}
       >
         {mediaList.map((media, index) => (
           <TimedPreview

@@ -37,6 +37,7 @@ const Weather = forwardRef((_props, ref) => {
       <Typography
         variant="caption"
         style={{
+          fontSize: "1rem",
           fontWeight: "bold",
           textAlign: "right",
           textTransform: "capitalize",
@@ -47,7 +48,7 @@ const Weather = forwardRef((_props, ref) => {
         <br />
         {description} {currentTemperature} ({maxTemperature})
       </Typography>
-      <img src={icon} alt="weather" style={{ height: 40 }} />
+      <img src={icon} alt="weather" style={{ height: 64 }} />
     </Box>
   );
 });

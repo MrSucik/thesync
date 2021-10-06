@@ -15,7 +15,10 @@ const Footer = () => {
         alignItems: "center",
         justifyContent: "space-between",
         padding: 8,
-        position: "relative",
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
       }}
     >
       <img

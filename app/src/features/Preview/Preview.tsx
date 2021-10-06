@@ -29,16 +29,19 @@ const Preview: React.FC<Props> = ({ disableControls }) => {
   return !media ? null : (
     <Box
       sx={{
-        width: "100%",
-        maxHeight: "100%",
-        aspectRatio: "9 / 16",
+        width: 1080,
+        height: 1920,
+        transformOrigin: "left top",
+        transform:
+          window.innerHeight < 1500
+            ? `scale(${(window.innerHeight - 200) / 1920})`
+            : undefined,
         margin: "auto",
         boxSizing: "border-box",
         color: "#e6e6e6",
         position: "relative",
         display: "flex",
         flexDirection: "column",
-        flex: 1,
         backgroundColor: media.backgroundColor || selectedScene.backgroundColor,
         transition: "all 300ms ease-in-out",
       }}

@@ -24,7 +24,7 @@ const TabPanel = (props: TabPanelProps) => {
   return (
     <Box role="tabpanel" hidden={value !== index} {...other}>
       {value === index && (
-        <Box sx={{ overflow: "auto", padding: 1, flexGrow: 1 }}>{children}</Box>
+        <Box sx={{ overflow: "auto", padding: 1 }}>{children}</Box>
       )}
     </Box>
   );

@@ -26,7 +26,7 @@ const scroll = (props: { offset: number }) => keyframes`
 
 const animation = (props: { offset: number }) =>
   css`
-    ${scroll(props)} 80s linear
+    ${scroll(props)} 30s linear
   `;
 
 const ScrollingImage = styled.img`

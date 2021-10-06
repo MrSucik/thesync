@@ -43,6 +43,7 @@ const Progress: React.FC<Props> = ({ duration, state }) => {
         zIndex: 99,
         height: 2,
         background: "rgba(100, 100, 100, 0.7)",
+        borderRadius: 1,
         "& div": {
           background: "white",
         },

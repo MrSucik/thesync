@@ -7,6 +7,7 @@ import { RootState } from "../../store";
 import { setActiveMediaIndex } from "../../store/slices/preview";
 
 import styled, { keyframes, css } from "styled-components";
+import Progress from "./Progress";
 
 interface Props {
   media: MediaModel;
@@ -56,8 +57,17 @@ const ProgressBarItem: React.FC<Props> = ({ index, media }) => {
   };
   return (
     <Box onClick={handleClick}>
-      {/* <Progress duration={media.duration} state={state} /> */}
-      <ProgressAnimation state={state + ""} duration={media.duration} />
+      <Progress duration={media.duration} state={state} />
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 2,
+          background: "rgba(255, 255, 255, 0.1)",
+        }}
+      />
       <Typography
         style={{
           cursor: "pointer",
@@ -65,7 +75,7 @@ const ProgressBarItem: React.FC<Props> = ({ index, media }) => {
           textAlign: "center",
           fontWeight: 500,
           padding: 4,
-          fontSize: window.outerHeight > 1080 ? 18 : 10,
+          fontSize: 21,
           color: state === "running" ? "white" : "rgba(220, 220, 220, 0.5)",
           overflow: "hidden",
         }}
