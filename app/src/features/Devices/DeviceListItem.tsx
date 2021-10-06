@@ -28,8 +28,8 @@ interface Device extends DeviceModel {
 
 const DeviceListItem: React.FC<{
   device: Device;
-}> = ({ device: { id, name, sceneName, icon, lastUpdateRequest } }) => {
-  const status = useStatus(lastUpdateRequest);
+}> = ({ device: { id, name, sceneName, icon, lastUpdateRequest, status } }) => {
+  const pythonStatus = useStatus(lastUpdateRequest);
 
   const [hovering, setHovering] = useState(false);
   const userDevices = useSelector(
@@ -70,8 +70,13 @@ const DeviceListItem: React.FC<{
         }`}
       >
         <ListItemAvatar>
-          <StatusBadge status={status}>
-            <Avatar alt={name} src={getIconSource(icon)} />
+          <StatusBadge
+            status={pythonStatus}
+            origin={{ vertical: "bottom", horizontal: "left" }}
+          >
+            <StatusBadge status={status}>
+              <Avatar alt={name} src={getIconSource(icon)} />
+            </StatusBadge>
           </StatusBadge>
         </ListItemAvatar>
       </Tooltip>

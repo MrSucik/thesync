@@ -1,4 +1,4 @@
-import { Badge } from "@mui/material";
+import { Badge, BadgeOrigin } from "@mui/material";
 import { keyframes } from "@mui/styled-engine";
 
 // TODO: Fix animation
@@ -15,8 +15,14 @@ const ripple = keyframes`
 const online = { color: "#44b700", backgroundColor: "#44b700" };
 const offline = { color: "#de4646", backgroundColor: "#de4646" };
 
-const StatusBadge: React.FC<{ status: "online" | "offline" }> = ({
+const StatusBadge: React.FC<{
+  status: "online" | "offline";
+  small?: boolean;
+  origin?: BadgeOrigin;
+}> = ({
   status,
+  small,
+  origin = { vertical: "bottom", horizontal: "right" },
   children,
 }) => {
   return (
@@ -24,6 +30,8 @@ const StatusBadge: React.FC<{ status: "online" | "offline" }> = ({
       sx={{
         ".MuiBadge-badge": {
           ...(status === "online" ? online : offline),
+          height: small ? 6 : 8,
+          minWidth: small ? 6 : 8,
           boxShadow: (theme) => `0 0 0 2px ${theme.palette.background.default}`,
           "::after": {
             position: "absolute",
@@ -40,7 +48,7 @@ const StatusBadge: React.FC<{ status: "online" | "offline" }> = ({
       }}
       variant="dot"
       overlap="circular"
-      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      anchorOrigin={origin}
     >
       {children}
     </Badge>

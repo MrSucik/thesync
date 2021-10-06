@@ -11,12 +11,18 @@ const SceneDevice: React.FC<{ device: DeviceModel }> = ({ device }) => {
   return (
     <Tooltip title={device.name}>
       <span>
-        <StatusBadge status={status}>
-          <Avatar
-            sx={{ height: 24, width: 24 }}
-            alt={device.name}
-            src={getIconSource(device.icon)}
-          />
+        <StatusBadge
+          small
+          status={status}
+          origin={{ vertical: "bottom", horizontal: "left" }}
+        >
+          <StatusBadge small status={device.status}>
+            <Avatar
+              sx={{ height: 24, width: 24 }}
+              alt={device.name}
+              src={getIconSource(device.icon)}
+            />
+          </StatusBadge>
         </StatusBadge>
       </span>
     </Tooltip>
