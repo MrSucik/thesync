@@ -1,3 +1,4 @@
+import { Box } from "@mui/system";
 import { useFirestore } from "react-redux-firebase";
 import { useCurrentScene } from "../../../hooks/useCurrentScene";
 import { useSelector } from "../../../store";
@@ -19,8 +20,10 @@ const PreviewStage = () => {
 
   return (
     <>
+      <Box display="flex" justifyContent="center">
+        <NextBackButtons onNextClick={handleNextClick} />
+      </Box>
       <Preview />
-      <NextBackButtons onNextClick={handleNextClick} />
     </>
   );
 };
