@@ -5,11 +5,12 @@ import ScrollingPreview from "./features/CanvasPreview/Scrolling";
 import SpringPreview from "./features/CanvasPreview/Spring";
 import CanvasPreview from "./features/CanvasPreview/Canvas";
 import WebPreview from "./features/WebPreview/WebPreview";
+import AuthenticatedRoute from "./features/Authorization/AuthonticatedRoute";
 
 const Router = () => (
   <Switch>
     <Route exact path="/" component={WebPreview} />
-    <Route path="/app" component={Dashboard} />
+    <AuthenticatedRoute path="/app" component={Dashboard} />
     <Route path="/preview/scrolling/:deviceId" component={ScrollingPreview} />
     <Route path="/preview/spring/:deviceId" component={SpringPreview} />
     <Route path="/preview/canvas/:deviceId" component={CanvasPreview} />
