@@ -1,10 +1,13 @@
 import * as admin from "firebase-admin";
 import { ConfigurationModel } from "../definitions";
-
-const serviceAccount = require("../../thesync-firebase-adminsdk-zze06-035f9585f2.json");
+import serviceAccount from "../../thesync-firebase-adminsdk-zze06-035f9585f2.json";
 
 export const app = admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert({
+    clientEmail: serviceAccount.client_email,
+    privateKey: serviceAccount.private_key,
+    projectId: serviceAccount.project_id,
+  }),
 });
 
 export const firestore = app.firestore();
@@ -19,4 +22,3 @@ export const getConfiguration = async () =>
       .limit(1)
       .get()
   ).docs[0].data() as ConfigurationModel;
-

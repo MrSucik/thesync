@@ -29,7 +29,7 @@ export const createThumbnailFromVideo = (
   inputPath: string,
   frameIntervalInSeconds: number
 ) =>
-  new Promise<string>(async (resolve, reject) => {
+  new Promise<string>((resolve, reject) => {
     const outputPath = tempFilePath(`thumbnail_${name}.mp4`);
     const thumbnailPath = `thumbnails/${name}.mp4`;
     const handleConversionEnd = async () => {

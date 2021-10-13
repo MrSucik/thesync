@@ -75,7 +75,7 @@ export const onFileCreated = functions
   .region("europe-west3")
   .runWith({ memory: "1GB" })
   .storage.object()
-  .onFinalize(async (object) => {
+  .onFinalize(async object => {
     const filePath = object.name;
     const contentType = object.contentType;
     if (!contentType || !filePath) {
@@ -86,7 +86,7 @@ export const onFileCreated = functions
       return functions.logger.log("Already a Thumbnail.");
     }
 
-    let tempFilePath = path.join(os.tmpdir(), fileName);
+    const tempFilePath = path.join(os.tmpdir(), fileName);
     const metadata = { contentType: contentType };
     await bucket.file(filePath).download({ destination: tempFilePath });
     let thumbPath = "";

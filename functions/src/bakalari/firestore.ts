@@ -9,7 +9,7 @@ export const getAllBakalariMediaDocumentsForExport = async () =>
 
 export const updateBakalariDoc = async (
   ref: FirebaseFirestore.DocumentReference,
-  updateData: any
+  updateData: Record<string, unknown>
 ) =>
   await ref.update({
     bakalariUpdated: moment().format(),
