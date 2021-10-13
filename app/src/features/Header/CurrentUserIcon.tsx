@@ -31,8 +31,7 @@ const CurrentUserIcon = () => {
         open={open}
         onClose={() => setOpen(false)}
         anchorEl={anchor.current}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
         <List>
           <ListItem selected>
             <ListItemText primary={`Přihlášen jako: ${user.email}`} />

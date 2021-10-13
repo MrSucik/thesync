@@ -15,16 +15,14 @@ const SceneDetail = () => {
         flexDirection: "column",
         backgroundColor: "background.default",
         minWidth: "20rem",
-      }}
-    >
+      }}>
       {!scene ? (
         <Typography
           sx={{
             alignSelf: "center",
             color: "gray",
             lineHeight: "calc(100vh - 100px)",
-          }}
-        >
+          }}>
           Vyberte scénu
         </Typography>
       ) : (

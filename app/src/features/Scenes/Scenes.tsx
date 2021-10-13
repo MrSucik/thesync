@@ -31,8 +31,7 @@ const Scenes = () => {
         paddingLeft: 2,
         overflowY: "auto",
         minWidth: 300,
-      }}
-    >
+      }}>
       <Title>scény</Title>
       <PrimaryButton onClick={handleAddScene}>přidat scénu</PrimaryButton>
       <ScenesList />

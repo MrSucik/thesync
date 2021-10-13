@@ -19,8 +19,8 @@ import NextBackButtons from "../NextBackButtons";
 const MediaUpdateStage = () => {
   const dispatch = useDispatch();
   const defaultBackground = useCurrentScene().backgroundColor;
-  const type = useSelector((state) => state.content.type);
-  const media = useSelector((state) => state.content.updatingMedia);
+  const type = useSelector(state => state.content.type);
+  const media = useSelector(state => state.content.updatingMedia);
   const firestore = useFirestore();
   const hanleNextClick = async () => {
     const mediaId = media.id + "";
@@ -49,8 +49,7 @@ const MediaUpdateStage = () => {
         gap: 2,
         alignItems: "center",
         padding: "1rem 3rem",
-      }}
-    >
+      }}>
       <Box>
         <TextField
           name="name"
@@ -78,10 +77,9 @@ const MediaUpdateStage = () => {
             <Select
               labelId="layout-select-label"
               value={media.layout}
-              onChange={(event) =>
+              onChange={event =>
                 updateMedia("layout", event.target.value as string)
-              }
-            >
+              }>
               <MenuItem value="center">Na střed</MenuItem>
               <MenuItem value="fill-width">Vyplnit na šířku</MenuItem>
               <MenuItem value="fill-height">Vyplnit na výšku</MenuItem>

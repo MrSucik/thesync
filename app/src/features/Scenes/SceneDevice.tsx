@@ -14,8 +14,7 @@ const SceneDevice: React.FC<{ device: DeviceModel }> = ({ device }) => {
         <StatusBadge
           small
           status={status}
-          origin={{ vertical: "bottom", horizontal: "left" }}
-        >
+          origin={{ vertical: "bottom", horizontal: "left" }}>
           <StatusBadge small status={device.status}>
             <Avatar
               sx={{ height: 24, width: 24 }}

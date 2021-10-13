@@ -9,7 +9,7 @@ const ModalPreview = () => {
   const handleClose = () =>
     dispatch(setPreviewMediaList({ mediaList: [], type: "closed" }));
   const isOpen = useSelector<RootState, boolean>(
-    (state) => state.preview.type === "modal"
+    state => state.preview.type === "modal"
   );
   return (
     <Modal open={isOpen} onClose={handleClose}>
@@ -18,8 +18,7 @@ const ModalPreview = () => {
           width: "100%",
           height: "100%",
           backgroundColor: "rgba(0, 0, 0, 0.5)",
-        }}
-      >
+        }}>
         <Preview />
       </Box>
     </Modal>

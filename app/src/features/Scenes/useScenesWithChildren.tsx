@@ -3,8 +3,8 @@ import { DeviceModel, Scene } from "../../definitions";
 import { RootState } from "../../store";
 
 export const useScenesWithChildren = () => {
-  const scenes = useSelector<RootState, Scene[]>((state) =>
-    state.firestore.ordered.scenes.map((scene) => {
+  const scenes = useSelector<RootState, Scene[]>(state =>
+    state.firestore.ordered.scenes.map(scene => {
       const mediaList = (
         (state.app.optimisticReorderUpdate?.sceneId === scene.id
           ? state.app.optimisticReorderUpdate?.mediaList

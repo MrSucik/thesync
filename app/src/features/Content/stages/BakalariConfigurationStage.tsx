@@ -45,15 +45,15 @@ const BakalariConfigurationStage = () => {
   const scene = useCurrentScene();
   const [defaultDate, setDefaultDate] = useState("");
   const bakalariType = useSelector<ContentType>(
-    (state) => state.content.type as ContentType
+    state => state.content.type as ContentType
   );
   const dispatch = useDispatch();
-  const dates = useSelector((state) => state.content.bakalariDates);
+  const dates = useSelector(state => state.content.bakalariDates);
   const selectedOption = useSelector(
-    (state) => state.content.bakalariSelectedOption
+    state => state.content.bakalariSelectedOption
   );
   const [datesLoading, setDatesLoading] = useState(true);
-  const media = useSelector((state) => state.content.updatingMedia);
+  const media = useSelector(state => state.content.updatingMedia);
   const { enqueueSnackbar } = useSnackbar();
   const fetchDates = async () => {
     dispatch(setSelectedBakalariOption("auto"));
@@ -102,7 +102,7 @@ const BakalariConfigurationStage = () => {
   useEffect(() => void fetchDates(), []);
   const manualDate = selectedOption !== "auto";
   const firestore = useFirestore();
-  const author = useSelector((state) => state.firebase.auth.email);
+  const author = useSelector(state => state.firebase.auth.email);
   const handleNextClick = async () => {
     const name = await updateFile();
     const newMedia = {
@@ -145,13 +145,12 @@ const BakalariConfigurationStage = () => {
               margin="none"
               variant="outlined"
               value={selectedOption}
-              onChange={(event) =>
+              onChange={event =>
                 dispatch(
                   setSelectedBakalariOption(event.target.value as string)
                 )
-              }
-            >
-              {dates.map((date) => (
+              }>
+              {dates.map(date => (
                 <MenuItem key={date} value={date}>
                   {moment(date, internalDateFormat).format(
                     czechShortDateFormat

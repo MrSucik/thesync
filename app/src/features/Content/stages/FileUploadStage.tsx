@@ -38,8 +38,8 @@ const FileUploadStage = () => {
   const scene = useCurrentScene();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const media = useSelector((state) => state.content.updatingMedia);
-  const author = useSelector((state) => state.firebase.auth.email);
+  const media = useSelector(state => state.content.updatingMedia);
+  const author = useSelector(state => state.firebase.auth.email);
   const { enqueueSnackbar } = useSnackbar();
   const firestore = useFirestore();
   const handleDropAccepted = <T extends File>(files: T[]) => {
@@ -112,8 +112,7 @@ const FileUploadStage = () => {
         gap: 1,
         alignItems: "center",
         padding: 1,
-      }}
-    >
+      }}>
       <Box
         sx={{
           cursor: "pointer",
@@ -130,8 +129,7 @@ const FileUploadStage = () => {
           "&:hover": {
             backgroundColor: "rgba(255, 255, 255, 0.13)",
           },
-        }}
-      >
+        }}>
         <Box {...getRootProps()}>
           <input {...getInputProps()} />
           {loading ? <CircularProgress size="20px" /> : <Icon>upload</Icon>}

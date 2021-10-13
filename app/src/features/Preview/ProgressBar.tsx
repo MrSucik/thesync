@@ -9,10 +9,10 @@ import ProgressBarItem from "./ProgressBarItem";
 
 const ProgressBar: React.FC = () => {
   const { previewMediaList } = useSelector<RootState, PreviewState>(
-    (state) => state.preview
+    state => state.preview
   );
-  const mediaList = useSelector<RootState, MediaModel[]>((state) =>
-    previewMediaList.map((id) => state.firestore.data.media[id])
+  const mediaList = useSelector<RootState, MediaModel[]>(state =>
+    previewMediaList.map(id => state.firestore.data.media[id])
   );
   return (
     <Overlay height={96}>
@@ -23,8 +23,7 @@ const ProgressBar: React.FC = () => {
           gridTemplateColumns: `repeat(${mediaList.length}, minmax(0, 1fr))`,
           columnGap: 8,
           padding: 16,
-        }}
-      >
+        }}>
         {mediaList.map((media, index) => (
           <ProgressBarItem
             key={previewMediaList[index]}

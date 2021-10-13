@@ -19,8 +19,7 @@ const Footer = () => {
         bottom: 0,
         left: 0,
         right: 0,
-      }}
-    >
+      }}>
       <img
         style={{
           height: "2rem",

@@ -22,8 +22,7 @@ const Card: React.FC<Props> = forwardRef<unknown, Props>(
             borderRadius: 4,
             overflow: "auto",
             paddingTop: fill ? 0 : 1,
-          }}
-        >
+          }}>
           {clickable && <Glowing />}
           {disabled && <Disabled />}
           {children}

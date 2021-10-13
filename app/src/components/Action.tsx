@@ -25,8 +25,7 @@ const Action: React.FC<Props> = ({
         ":hover": { backgroundColor: "rgba(100, 100, 100, 0.5)" },
       }}
       onClick={onClick}
-      {...iconButtonProps}
-    >
+      {...iconButtonProps}>
       <Icon {...iconProps}>{icon}</Icon>
     </IconButton>
   );

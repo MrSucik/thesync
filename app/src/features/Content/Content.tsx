@@ -13,12 +13,10 @@ export const steps = ["VÝBĚR TYPU", "SOUBOR", "KONFIGURACE", "NÁHLED"];
 
 const Content = () => {
   const type = useSelector<ContentType | undefined>(
-    (state) => state.content.type
+    state => state.content.type
   );
-  const contentOpen = useSelector<boolean>(
-    (state) => state.content.contentOpen
-  );
-  const activeStep = useSelector<number>((state) => state.content.activeStep);
+  const contentOpen = useSelector<boolean>(state => state.content.contentOpen);
+  const activeStep = useSelector<number>(state => state.content.activeStep);
   const dispatch = useDispatch();
   return (
     <Modal
@@ -31,14 +29,12 @@ const Content = () => {
         maxHeight: "calc(100% - 128px)",
       }}
       open={contentOpen}
-      onClose={() => dispatch(setContentOpen(false))}
-    >
+      onClose={() => dispatch(setContentOpen(false))}>
       <Paper
         sx={{
           paddingTop: 2,
           paddingInline: 2,
-        }}
-      >
+        }}>
         <Stepper sx={{ margin: 2 }} activeStep={activeStep}>
           {steps.map((label, index) => (
             <Step active={index === activeStep} key={label}>

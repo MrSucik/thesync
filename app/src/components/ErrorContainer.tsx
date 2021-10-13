@@ -71,12 +71,10 @@ export default class ErrorContainer extends React.Component<Props, State> {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-          }}
-        >
+          }}>
           <Card
             variant="outlined"
-            style={{ minWidth: 250, maxWidth: 500, background: "#7a2b2b" }}
-          >
+            style={{ minWidth: 250, maxWidth: 500, background: "#7a2b2b" }}>
             <CardHeader title="Nastala chyba" />
             <Divider />
             <CardContent>
@@ -89,8 +87,7 @@ export default class ErrorContainer extends React.Component<Props, State> {
             <CardActions style={{ flexDirection: "row-reverse" }}>
               <Button
                 startIcon={<Icon>reload</Icon>}
-                style={{ textTransform: "none" }}
-              >
+                style={{ textTransform: "none" }}>
                 OBNOVIT STRÁNKU (AUTOMATICKY ZA {this.state.timeout}s)
               </Button>
             </CardActions>

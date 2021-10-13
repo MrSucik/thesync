@@ -15,12 +15,11 @@ const MediaListItem: React.FC<{ media: MediaModel; index: number }> = ({
   const url = useDownloadURL(media.file);
   return (
     <Draggable draggableId={media.id} index={index}>
-      {(provided) => (
+      {provided => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
+          {...provided.dragHandleProps}>
           <ListItem style={{ paddingRight: 86 }}>
             <ListItemAvatar>
               <Avatar src={url} />

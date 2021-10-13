@@ -15,9 +15,9 @@ import Footer from "../Footer/Footer";
 const MediaPreviewPlayer: React.FC = () => {
   const dispatch = useDispatch();
   const { activeMediaIndex, activeInnerMediaIndex, previewMediaList } =
-    useSelector<RootState, PreviewState>((state) => state.preview);
-  const mediaList = useSelector<RootState, MediaModel[]>((state) =>
-    previewMediaList.map((id) => state.firestore.data.media[id])
+    useSelector<RootState, PreviewState>(state => state.preview);
+  const mediaList = useSelector<RootState, MediaModel[]>(state =>
+    previewMediaList.map(id => state.firestore.data.media[id])
   );
   const handleMediaEnded = useCallback(() => dispatch(nextMedia()), [dispatch]);
   const handleInnerMediaEnded = useCallback(
@@ -45,22 +45,19 @@ const MediaPreviewPlayer: React.FC = () => {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
-      }}
-    >
+      }}>
       <Box
         sx={{
           flex: 1,
           display: "flex",
           flexDirection: "column",
           overflow: "hidden",
-        }}
-      >
+        }}>
         {mediaList.map((media, index) => (
           <TimedPreview
             key={media.id}
             timeout={media.duration}
-            onTimeoutEnd={index === activeMediaIndex ? handleMediaEnded : null}
-          >
+            onTimeoutEnd={index === activeMediaIndex ? handleMediaEnded : null}>
             <MediaPreview
               key={previewMediaList[index]}
               media={{

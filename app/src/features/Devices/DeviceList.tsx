@@ -8,22 +8,22 @@ interface Device extends DeviceModel {
 }
 
 const DeviceList = () => {
-  const devices = useSelector<Device[]>((state) =>
-    state.firestore.ordered.devices.map((d) => ({
+  const devices = useSelector<Device[]>(state =>
+    state.firestore.ordered.devices.map(d => ({
       ...d,
       sceneName: state.firestore.data.scenes[d.scene]?.name,
     }))
   );
   const userDevices = useSelector(
-    (state) =>
+    state =>
       state.firestore.data.users[state.firebase.auth.email + ""]?.devices || []
   );
 
   return (
     <List sx={{ paddingRight: 2 }}>
       {devices
-        .sort((a) => (userDevices.includes(a) ? 1 : 0))
-        .map((device) => (
+        .sort(a => (userDevices.includes(a) ? 1 : 0))
+        .map(device => (
           <DeviceListItem key={device.id} device={device} />
         ))}
     </List>

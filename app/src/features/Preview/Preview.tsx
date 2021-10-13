@@ -17,12 +17,12 @@ const Preview: React.FC<Props> = ({ disableControls }) => {
   const { activeMediaIndex, previewMediaList } = useSelector<
     RootState,
     PreviewState
-  >((state) => state.preview);
+  >(state => state.preview);
   const selectedScene = useCurrentScene();
-  const mediaList = useSelector<RootState, MediaModel[]>((state) =>
+  const mediaList = useSelector<RootState, MediaModel[]>(state =>
     previewMediaList
-      .filter((x) => Object.keys(state.firestore.data.media).includes(x))
-      .map((id) => state.firestore.data.media[id])
+      .filter(x => Object.keys(state.firestore.data.media).includes(x))
+      .map(id => state.firestore.data.media[id])
   );
   const media = mediaList[activeMediaIndex];
   return !media ? null : (
@@ -43,8 +43,7 @@ const Preview: React.FC<Props> = ({ disableControls }) => {
         flexDirection: "column",
         backgroundColor: media.backgroundColor || selectedScene.backgroundColor,
         transition: "all 300ms ease-in-out",
-      }}
-    >
+      }}>
       {!selectedScene.hideProgress && <ProgressBar />}
       {!disableControls && previewMediaList.length !== 1 && (
         <>

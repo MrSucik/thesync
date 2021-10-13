@@ -9,10 +9,10 @@ import { Box } from "@mui/material";
 const ClientPreview: React.FC<{ deviceId: string }> = ({ deviceId }) => {
   const dispatch = useDispatch();
   const scene = useSelector<RootState, string>(
-    (state) => state.firestore.data.devices[deviceId].scene
+    state => state.firestore.data.devices[deviceId].scene
   );
   const mediaList = useSelector<RootState, string[]>(
-    (state) => state.firestore.data.scenes[scene].mediaList
+    state => state.firestore.data.scenes[scene].mediaList
   );
   useEffect(() => {
     dispatch(setSelectedScene(scene));

@@ -42,8 +42,7 @@ ReactDOM.render(
           firebase={firebase}
           config={{}}
           dispatch={store.dispatch}
-          createFirestoreInstance={createFirestoreInstance}
-        >
+          createFirestoreInstance={createFirestoreInstance}>
           <SnackbarProvider>
             <StyledEngineProvider injectFirst>
               <ThemeProvider theme={theme}>

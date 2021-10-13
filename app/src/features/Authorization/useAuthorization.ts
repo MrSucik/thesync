@@ -17,7 +17,7 @@ export const useAuthorization = () => {
   const updateAuthorization = useCallback(
     async (email: string | null) => {
       const users = await firestore.collection("users").get();
-      const user = users.docs.find((x) => x.id === email);
+      const user = users.docs.find(x => x.id === email);
       const authorized = Boolean(email && user?.exists);
       dispatch(setAuthorized(authorized));
       dispatch(setOpenSettingsButtonVisible(authorized && user?.data().bigD));

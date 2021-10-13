@@ -6,8 +6,7 @@ const Logo = () => (
       fontSize: 32,
       color: "rgba(241, 241, 241, 0.73)",
       fontFamily: "Rubik",
-    }}
-  >
+    }}>
     syncoli
   </Typography>
 );

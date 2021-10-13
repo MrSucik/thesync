@@ -17,7 +17,7 @@ const darkTab = {
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState(0);
   const selectedScene = useSelector<RootState, string | null>(
-    (state) => state.app.selectedScene
+    state => state.app.selectedScene
   );
   const dispatch = useDispatch();
   const scene = useCurrentScene();
@@ -35,8 +35,7 @@ const Tabs = () => {
         value={activeTab}
         onChange={(_, value) => setActiveTab(value)}
         textColor="primary"
-        variant="fullWidth"
-      >
+        variant="fullWidth">
         <Tab sx={darkTab} label="obsah" />
         <Tab sx={darkTab} label="náhled" disabled={!scene?.mediaList?.length} />
         <Tab sx={darkTab} label="nastavení" />

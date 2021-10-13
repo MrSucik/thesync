@@ -9,7 +9,7 @@ interface Props {
 }
 
 const IconSelect: React.FC<Props> = ({ icon, onChange }) => {
-  const sources = icons.map((i) => getIconSourceSvg(i));
+  const sources = icons.map(i => getIconSourceSvg(i));
   return (
     <Box
       sx={{
@@ -18,8 +18,7 @@ const IconSelect: React.FC<Props> = ({ icon, onChange }) => {
         margin: "8px auto",
         gridTemplateColumns: "repeat(5, 40px)",
         gap: "8px 16px",
-      }}
-    >
+      }}>
       {sources.map((source, index) => (
         <Avatar
           key={index}

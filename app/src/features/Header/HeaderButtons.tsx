@@ -6,18 +6,17 @@ import UsersAdministrationIconButton from "./SettingsButton";
 
 const HeaderButtons = () => {
   const isEmpty = useSelector<RootState, boolean>(
-    (state) => state.firebase.auth.isEmpty
+    state => state.firebase.auth.isEmpty
   );
   const settingsButtonVisible = useSelector<RootState, boolean>(
-    (state) => state.settings.openSettingsButtonVisible
+    state => state.settings.openSettingsButtonVisible
   );
   return !isEmpty ? (
     <Box
       sx={{
         display: "flex",
         alignItems: "center",
-      }}
-    >
+      }}>
       {settingsButtonVisible && <UsersAdministrationIconButton />}
       <CurrentUserIcon />
     </Box>

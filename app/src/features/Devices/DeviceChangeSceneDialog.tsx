@@ -16,19 +16,19 @@ const DeviceChangeSceneDialog = () => {
   const dispatch = useDispatch();
   const handleCancel = () => dispatch(setDeviceSceneUpdate(""));
   const firestore = useFirestore();
-  const deviceId = useSelector((state) => state.app.deviceSceneUpdate);
-  const device = useSelector((state) => ({
+  const deviceId = useSelector(state => state.app.deviceSceneUpdate);
+  const device = useSelector(state => ({
     id: deviceId,
     ...state.firestore.data.devices[deviceId],
   }));
-  const allDevices = useSelector((state) =>
+  const allDevices = useSelector(state =>
     Object.keys(state.firestore.data.devices)
   );
   const scenes = useScenesWithChildren();
   const [selectedIndex, setSelectedIndex] = useState(0);
   useEffect(() => {
     if (deviceId) {
-      setSelectedIndex(scenes.findIndex((x) => x.id === device.scene));
+      setSelectedIndex(scenes.findIndex(x => x.id === device.scene));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deviceId, setSelectedIndex]);
@@ -36,9 +36,7 @@ const DeviceChangeSceneDialog = () => {
     handleCancel();
     const updatedScene = { scene: scenes[selectedIndex].id };
     if (deviceId === "all") {
-      allDevices.forEach((id) =>
-        firestore.update(`devices/${id}`, updatedScene)
-      );
+      allDevices.forEach(id => firestore.update(`devices/${id}`, updatedScene));
     } else {
       firestore.update(`devices/${device.id}`, updatedScene);
     }

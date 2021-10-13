@@ -17,8 +17,7 @@ const NextIcon = () => {
         fontSize: 16,
         alignSelf: "center",
         animation: slide + " 1s alternate infinite ease-in-out",
-      }}
-    >
+      }}>
       arrow_forward_ios
     </Icon>
   );

@@ -33,7 +33,7 @@ const DeviceListItem: React.FC<{
 
   const [hovering, setHovering] = useState(false);
   const userDevices = useSelector(
-    (state) =>
+    state =>
       state.firestore.data.users[state.firebase.auth.email + ""]?.devices || []
   );
   const dispatch = useDispatch();
@@ -60,20 +60,17 @@ const DeviceListItem: React.FC<{
       disabled={!userDevices.includes(id)}
       key={id}
       onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}
-    >
+      onMouseLeave={() => setHovering(false)}>
       <Tooltip
         title={`Poslední update ze zařízení: ${
           !lastUpdateRequest
             ? "nikdy"
             : moment(lastUpdateRequest).format("DD. MM. YYYY HH:mm:ss")
-        }`}
-      >
+        }`}>
         <ListItemAvatar>
           <StatusBadge
             status={pythonStatus}
-            origin={{ vertical: "bottom", horizontal: "left" }}
-          >
+            origin={{ vertical: "bottom", horizontal: "left" }}>
             <StatusBadge status={status}>
               <Avatar alt={name} src={getIconSourceSvg(icon)} />
             </StatusBadge>
@@ -94,8 +91,7 @@ const DeviceListItem: React.FC<{
             opacity: hovering ? 1 : 0,
           }}
           onMouseEnter={() => setHovering(true)}
-          onMouseLeave={() => setHovering(false)}
-        >
+          onMouseLeave={() => setHovering(false)}>
           <DeviceChangeSceneButton deviceId={id} onClick={handleChangeScene} />
           <Tooltip title="Konfigurovat zařízení">
             <IconButton onClick={createConfigureClickHandler(id)} size="small">

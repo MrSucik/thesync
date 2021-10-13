@@ -10,8 +10,7 @@ const Header = () => (
       padding: "16px 32px",
       backgroundColor: "background.paper",
       height: 86,
-    }}
-  >
+    }}>
     <Logo />
     <HeaderButtons />
   </Box>

@@ -32,7 +32,7 @@ const StatusBadge: React.FC<{
           ...(status === "online" ? online : offline),
           height: small ? 6 : 8,
           minWidth: small ? 6 : 8,
-          boxShadow: (theme) => `0 0 0 2px ${theme.palette.background.default}`,
+          boxShadow: theme => `0 0 0 2px ${theme.palette.background.default}`,
           "::after": {
             position: "absolute",
             top: 0,
@@ -48,8 +48,7 @@ const StatusBadge: React.FC<{
       }}
       variant="dot"
       overlap="circular"
-      anchorOrigin={origin}
-    >
+      anchorOrigin={origin}>
       {children}
     </Badge>
   );

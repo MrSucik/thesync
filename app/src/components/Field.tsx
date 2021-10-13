@@ -21,6 +21,6 @@ const StyledTextField = styled(TextField)({
   "& label, label.Mui-focused": { color: "white" },
 });
 
-export const Field: React.FC<TextFieldProps> = (props) => (
+export const Field: React.FC<TextFieldProps> = props => (
   <StyledTextField variant="filled" {...props} />
 );

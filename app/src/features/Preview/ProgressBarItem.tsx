@@ -40,9 +40,9 @@ const ProgressAnimation = styled.img`
 
 const ProgressBarItem: React.FC<Props> = ({ index, media }) => {
   const activeMediaIndex = useSelector<RootState, number>(
-    (state) => state.preview.activeMediaIndex
+    state => state.preview.activeMediaIndex
   );
-  const currentMediaIndex = useSelector<RootState, number>((state) =>
+  const currentMediaIndex = useSelector<RootState, number>(state =>
     state.preview.previewMediaList.indexOf(media.id)
   );
   const state =
@@ -78,8 +78,7 @@ const ProgressBarItem: React.FC<Props> = ({ index, media }) => {
           fontSize: 21,
           color: state === "running" ? "white" : "rgba(220, 220, 220, 0.5)",
           overflow: "hidden",
-        }}
-      >
+        }}>
         {media.name.length > 32 ? (
           <Tooltip title={media.name}>
             <span>{media.name.substr(0, 32)}...</span>

@@ -10,8 +10,7 @@ const LoginButton: React.FC = () => {
       color="primary"
       size="large"
       onClick={onLogin}
-      startIcon={<Avatar src="./google-icon.svg" />}
-    >
+      startIcon={<Avatar src="./google-icon.svg" />}>
       Přihlásit se
     </Button>
   );

@@ -15,7 +15,7 @@ const AddUserButton = () => {
   const [email, setEmail] = useState("");
   const [valid, setValid] = useState(false);
   const firestore = useFirestore();
-  const devices = useSelector((state) =>
+  const devices = useSelector(state =>
     Object.keys(state.firestore.data.devices)
   );
   const { enqueueSnackbar } = useSnackbar();

@@ -26,15 +26,13 @@ const Device = () => {
           display: "flex",
           flexDirection: "column",
           overflow: "auto",
-        }}
-      >
+        }}>
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
             paddingRight: 2,
-          }}
-        >
+          }}>
           <Title>zařízení</Title>
           {user?.bigD && (
             <Box>

@@ -25,8 +25,7 @@ function Scrolling() {
         height: 1760,
         overflow: "auto",
       }}
-      scrollTop={scroll}
-    >
+      scrollTop={scroll}>
       <img src={long} alt="" />
     </animated.div>
   );

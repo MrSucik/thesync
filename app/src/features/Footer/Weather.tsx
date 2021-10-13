@@ -19,7 +19,7 @@ const Weather = forwardRef((_props, ref) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const { currentTemperature, maxTemperature, icon, description } = useSelector(
-    (state) => state.weather
+    state => state.weather
   );
   return !description ? null : (
     <Box
@@ -31,8 +31,7 @@ const Weather = forwardRef((_props, ref) => {
         alignItems: "center",
         position: "absolute",
         right: 0,
-      }}
-    >
+      }}>
       <Typography
         variant="caption"
         style={{
@@ -41,8 +40,7 @@ const Weather = forwardRef((_props, ref) => {
           textAlign: "right",
           textTransform: "capitalize",
           whiteSpace: "nowrap",
-        }}
-      >
+        }}>
         <CurrentDateTime />
         <br />
         {description} {currentTemperature} ({maxTemperature})

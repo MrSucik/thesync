@@ -22,7 +22,7 @@ const Content = () => {
   const firestore = useFirestore();
   const dispatch = useDispatch();
   const scene = useCurrentScene();
-  const mediaList = useSelector<RootState, MediaModel[]>((state) =>
+  const mediaList = useSelector<RootState, MediaModel[]>(state =>
     scene?.mediaList
       ? scene.mediaList.map((m: string) => ({
           id: m,
@@ -38,7 +38,7 @@ const Content = () => {
       return;
     }
     const reordered = reorder(
-      mediaList.map((x) => x.id),
+      mediaList.map(x => x.id),
       result.source.index,
       result.destination.index
     );
@@ -59,7 +59,7 @@ const Content = () => {
       </PrimaryButton>
       <DragDropContext onDragEnd={handleMediaDragEnd}>
         <Droppable droppableId="scene">
-          {(provided) => (
+          {provided => (
             <List ref={provided.innerRef} {...provided.droppableProps}>
               {mediaList.map((media, index) => (
                 <MediaListItem key={media.id} index={index} media={media} />
@@ -74,4 +74,3 @@ const Content = () => {
 };
 
 export default Content;
-	

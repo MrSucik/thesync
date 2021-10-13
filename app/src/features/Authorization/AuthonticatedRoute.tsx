@@ -10,18 +10,18 @@ const AuthenticatedRoute: React.FC<RouteProps> = ({
 }) => {
   const { updateAuthorization } = useAuthorization();
   const auth = useSelector<FirebaseReducer.AuthState>(
-    (state) => state.firebase.auth
+    state => state.firebase.auth
   );
   useEffect(() => {
     updateAuthorization(auth.email);
   }, [updateAuthorization, auth.email]);
-  const authorized = useSelector((state) => state.auth.authorized);
+  const authorized = useSelector(state => state.auth.authorized);
   console.log(`Is ${auth.email} authorized: ${authorized}`);
 
   return (
     <Route
       {...props}
-      render={(routeProps) =>
+      render={routeProps =>
         // @ts-ignore
         authorized ? <Component {...routeProps} /> : <Redirect to="/" />
       }

@@ -47,9 +47,9 @@ const DeviceListItem: React.FC<{
 
 const DeviceList: React.FC<{ user: string }> = ({ user }) => {
   const firestore = useFirestore();
-  const devices = useSelector((state) => state.firestore.ordered.devices);
+  const devices = useSelector(state => state.firestore.ordered.devices);
   const checkedDevices = useSelector<string[]>(
-    (state) => state.firestore.data.users[user]?.devices || []
+    state => state.firestore.data.users[user]?.devices || []
   );
   const createChangeHandler =
     (id: string) =>
@@ -60,7 +60,7 @@ const DeviceList: React.FC<{ user: string }> = ({ user }) => {
         });
       } else {
         firestore.update(`users/${user}`, {
-          devices: checkedDevices.filter((x) => x !== id),
+          devices: checkedDevices.filter(x => x !== id),
         });
       }
     };
@@ -68,12 +68,11 @@ const DeviceList: React.FC<{ user: string }> = ({ user }) => {
     <>
       <FormLabel
         sx={{ textAlign: "center", color: "rgba(255, 255, 255, .54)" }}
-        component="legend"
-      >
+        component="legend">
         Uživatel je oprávněn ovládat pouze vybraná zařízení
       </FormLabel>
       <List>
-        {devices.map((device) => (
+        {devices.map(device => (
           <DeviceListItem
             key={device.id}
             device={device}
@@ -94,16 +93,14 @@ const UserListItem: React.FC<{ user: UserModel }> = ({ user }) => {
     <Accordion
       expanded={user.bigD ? false : expanded}
       onChange={() => setExpanded(!expanded)}
-      sx={{ backgroundColor: "#323232" }}
-    >
+      sx={{ backgroundColor: "#323232" }}>
       <AccordionSummary
         style={{ cursor: user.bigD ? "default" : "pointer" }}
         expandIcon={
           user.bigD ? null : (
             <Icon>{!expanded ? "expand_more" : "expand_less"}</Icon>
           )
-        }
-      >
+        }>
         <ListItem>
           <ListItemAvatar>
             <Avatar src={user.photoURL} />
@@ -129,8 +126,7 @@ const UserListItem: React.FC<{ user: UserModel }> = ({ user }) => {
             variant="contained"
             color="secondary"
             onClick={handleDeleteClick}
-            fullWidth
-          >
+            fullWidth>
             odstranit uživatele z aplikace
           </Button>
         </Box>

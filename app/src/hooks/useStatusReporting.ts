@@ -17,7 +17,7 @@ export const useStatusReporting = (deviceId: string) => {
     const userStatusDatabaseRef = database().ref("/status/" + deviceId);
     database()
       .ref(".info/connected")
-      .on("value", async (snapshot) => {
+      .on("value", async snapshot => {
         if (snapshot.val()) {
           try {
             await userStatusDatabaseRef

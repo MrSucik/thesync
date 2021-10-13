@@ -29,12 +29,12 @@ const ListIt: React.FC<{
 
 const ChooseExistingStage = () => {
   const media = useSelector<MediaModel[]>(
-    (state) => state.firestore.ordered.media
+    state => state.firestore.ordered.media
   );
   const dispatch = useDispatch();
   const firestore = useFirestore();
   const createClickHandler = (id: string) => async () => {
-    const selected = media.find((x) => x.id === id);
+    const selected = media.find(x => x.id === id);
     const copy = {
       ...selected,
       name: selected?.name + " - kopie",
@@ -54,8 +54,8 @@ const ChooseExistingStage = () => {
         <FormLabel component="legend">Kopírovat položku</FormLabel>
         <List>
           {media
-            .filter((x) => !x.bakalariConfiguration)
-            .map((med) => (
+            .filter(x => !x.bakalariConfiguration)
+            .map(med => (
               <ListIt
                 key={med.id}
                 media={med}

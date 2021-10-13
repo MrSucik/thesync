@@ -7,7 +7,7 @@ import UsersList from "./UsersList";
 
 const UsersModal = () => {
   const open = useSelector<RootState, boolean>(
-    (state) => state.settings.userAdministrationOpen
+    state => state.settings.userAdministrationOpen
   );
   const dispatch = useDispatch();
   const handleClose = () => dispatch(setUserAdministrationOpen(false));

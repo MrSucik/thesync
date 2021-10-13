@@ -6,7 +6,7 @@ import Preview from "../../Preview/Preview";
 import NextBackButtons from "../NextBackButtons";
 
 const PreviewStage = () => {
-  const media = useSelector((state) => state.content.updatingMedia);
+  const media = useSelector(state => state.content.updatingMedia);
   const scene = useCurrentScene();
   const firestore = useFirestore();
   const handleNextClick = () => {

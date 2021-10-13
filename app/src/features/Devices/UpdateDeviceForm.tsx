@@ -75,7 +75,7 @@ const UpdateDeviceForm: React.FC<{ updateDevice: DeviceModel }> = ({
         </Box>
         <IconSelect
           icon={formData.icon}
-          onChange={(value) => setFormData({ ...formData, icon: value })}
+          onChange={value => setFormData({ ...formData, icon: value })}
         />
       </CardContent>
       <CardActions sx={{ flexDirection: "row-reverse" }}>

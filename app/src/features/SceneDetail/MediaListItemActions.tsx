@@ -32,7 +32,7 @@ const MediaListItemActions: React.FC<{ media: MediaModel }> = ({ media }) => {
   const handleDeleteClick = () => {
     firestore.delete(`media/${media.id}`);
     firestore.update(`scenes/${scene.id}`, {
-      mediaList: scene.mediaList.filter((m) => m !== media.id),
+      mediaList: scene.mediaList.filter(m => m !== media.id),
     });
   };
   return (

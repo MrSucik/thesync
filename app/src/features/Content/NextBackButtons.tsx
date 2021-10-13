@@ -17,8 +17,8 @@ const NextBackButtons: React.FC<{
   onBackClick = dummyFunction,
   onNextClick = dummyFunction,
 }) => {
-  const loading = useSelector((state) => state.content.bakalariFileLoading);
-  const activeStep = useSelector((state) => state.content.activeStep);
+  const loading = useSelector(state => state.content.bakalariFileLoading);
+  const activeStep = useSelector(state => state.content.activeStep);
   const dispatch = useDispatch();
   const handleNextClick = async () => {
     await onNextClick();
@@ -33,16 +33,14 @@ const NextBackButtons: React.FC<{
   };
   return (
     <Box
-      sx={{ display: "flex", justifyContent: "flex-end", padding: 3, gap: 1 }}
-    >
+      sx={{ display: "flex", justifyContent: "flex-end", padding: 3, gap: 1 }}>
       {!backHidden && <Button onClick={handleBackClick}>zpět</Button>}
       {!nextHidden && (
         <Button
           disabled={loading}
           variant="contained"
           color="primary"
-          onClick={handleNextClick}
-        >
+          onClick={handleNextClick}>
           {activeStep === steps.length - 1 ? (
             "dokončit"
           ) : loading ? (

@@ -31,8 +31,7 @@ const UsersAdministrationIconButton = () => {
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "center",
-        }}
-      >
+        }}>
         <List>
           <ListItem button onClick={handleClickListItem}>
             <ListItemAvatar>

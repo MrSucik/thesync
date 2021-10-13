@@ -13,8 +13,7 @@ const Loading: React.FC<Props> = ({ color = "inherit" }) => (
       top: "50%",
       left: "50%",
       color: "white",
-    }}
-  >
+    }}>
     <CircularProgress color={color} />
   </Box>
 );

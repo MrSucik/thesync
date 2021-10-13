@@ -23,8 +23,7 @@ const PlayNextPrevious: React.FC<Props> = ({ type }) => {
         color: "white",
       }}
       onClick={handleClick}
-      size="large"
-    >
+      size="large">
       <Icon>{type === "next" ? "chevron_right" : "chevron_left"}</Icon>
     </IconButton>
   );

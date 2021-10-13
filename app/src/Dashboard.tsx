@@ -22,8 +22,7 @@ const Dashboard = () => {
           height: "calc(100vh - 86px)",
           display: "flex",
           backgroundColor: "background.paper",
-        }}
-      >
+        }}>
         <Scenes />
         <SceneDetail />
         <Devices />

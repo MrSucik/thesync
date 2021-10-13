@@ -23,10 +23,10 @@ import { TimePicker } from "@mui/lab";
 const DeviceScheduleDialog = () => {
   const dispatch = useDispatch();
   const settings = useSelector(
-    (state) => state.firestore.ordered.powersettings[0]
+    state => state.firestore.ordered.powersettings[0]
   );
   const firestore = useFirestore();
-  const open = useSelector((state) => state.app.deviceScheduleOpen);
+  const open = useSelector(state => state.app.deviceScheduleOpen);
 
   const updateSettings = (changes: any) =>
     firestore.add("powersettings", {
@@ -70,8 +70,7 @@ const DeviceScheduleDialog = () => {
             alignItems: "flex-end",
             gap: "2rem",
             marginTop: "1rem",
-          }}
-        >
+          }}>
           <TimePicker
             // margin="none"
             value={settings.time}
@@ -90,8 +89,7 @@ const DeviceScheduleDialog = () => {
               style={{ width: "100%" }}
               value={settings.action}
               onChange={handleActionChange}
-              disabled={!settings.enabled}
-            >
+              disabled={!settings.enabled}>
               <MenuItem value="shutdown">Vypnout</MenuItem>
               <MenuItem value="reboot">Restartovat</MenuItem>
             </Select>

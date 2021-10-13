@@ -3,7 +3,7 @@ import { SceneModel } from "../definitions";
 import { RootState } from "../store";
 
 export const useCurrentScene = () =>
-  useSelector<RootState, SceneModel>((state) =>
+  useSelector<RootState, SceneModel>(state =>
     !state.app.selectedScene
       ? null
       : {

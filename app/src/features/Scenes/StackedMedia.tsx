@@ -28,8 +28,7 @@ const StackedMedia: React.FC<{ mediaList: MediaModel[] }> = ({ mediaList }) => (
           marginLeft: index === 0 ? 0 : -2,
           ":nth-of-type(even)": { backgroundColor: "rgba(88, 88, 88, 1)" },
           ":nth-of-type(odd)": { backgroundColor: "rgba(31, 31, 31, 1)" },
-        }}
-      >
+        }}>
         <Media
           media={media}
           src={media.bakalariType ? getIconSourceSvg("bakalari") : null}

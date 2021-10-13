@@ -21,11 +21,9 @@ const SceneListItem: React.FC<{
       width: "auto",
       boxShadow: selected ? "0 0 0 3px #fff" : undefined,
     }}
-    onClick={onClick}
-  >
+    onClick={onClick}>
     <Box
-      sx={{ alignSelf: "stretch", display: "flex", flexDirection: "column" }}
-    >
+      sx={{ alignSelf: "stretch", display: "flex", flexDirection: "column" }}>
       <ListItemText
         primary={name}
         secondary={<SceneDuration mediaList={mediaList} />}

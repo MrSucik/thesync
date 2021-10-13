@@ -46,8 +46,7 @@ const Settings = () => {
           display: "flex",
           flexDirection: "column",
           gap: 2,
-        }}
-      >
+        }}>
         <Field
           name="name"
           value={formik.values.name}
@@ -80,8 +79,7 @@ const Settings = () => {
         <Button
           variant="contained"
           color="secondary"
-          onClick={handleDeleteClick}
-        >
+          onClick={handleDeleteClick}>
           odstranit scénu
         </Button>
       </FormGroup>

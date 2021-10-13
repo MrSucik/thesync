@@ -52,7 +52,7 @@ const ChooseTypeStage = () => {
   return (
     <Box sx={{ width: "80%", margin: "auto", overflow: "visible" }}>
       <OptionsList>
-        {options.map((option) => (
+        {options.map(option => (
           <ListItem
             key={option.type}
             // style={{
@@ -61,8 +61,7 @@ const ChooseTypeStage = () => {
             //       ? "0 0 0 2px rgba(255, 255, 255, 0.7)"
             //       : undefined,
             // }}
-            onClick={createClickHandler(option.type)}
-          >
+            onClick={createClickHandler(option.type)}>
             <ListItemAvatar>{option.icon}</ListItemAvatar>
             <ListItemText primary={option.name} />
           </ListItem>

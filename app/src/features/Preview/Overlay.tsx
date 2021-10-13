@@ -21,8 +21,7 @@ const Overlay: React.FC<Props> = ({
         alignItems: "center",
         padding: 2,
         zIndex: 99,
-      }}
-    >
+      }}>
       {children}
     </Box>
   );
