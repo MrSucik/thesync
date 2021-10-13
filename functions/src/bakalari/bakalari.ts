@@ -14,10 +14,8 @@ import {
   updateBakalariDoc,
 } from "./firestore";
 import { uploadFile } from "../firebase/storage";
-import {
-  cutImageToSlicesInternal,
-  downloadWithMetadata,
-} from "../images/utils";
+import ImageSlicer from "../images/ImageSlicer";
+import Image from "../images/Image";
 
 export const processBakalariDate = async (
   type: BakalariType,
@@ -61,7 +59,7 @@ const getAvailableDatesFromPage = async (page: puppeteer.Page) => {
   const result = await page.evaluate(() => {
     const extractDate = (htm: string) => htm.substr(2, 6);
     const options = Array.from(document.getElementsByTagName("option"));
-    const formattedOptions = options.map((x) => extractDate(x.value));
+    const formattedOptions = options.map(x => extractDate(x.value));
     const selectedValue = extractDate(
       document.getElementsByTagName("select")[0].value
     );
@@ -74,7 +72,7 @@ const getAvailableDatesFromPage = async (page: puppeteer.Page) => {
     selected: moment(result.selected, bakaDateFormat).format(
       internalDateFormat
     ),
-    dates: result.dates.map((date) =>
+    dates: result.dates.map(date =>
       moment(date, bakaDateFormat).format(internalDateFormat)
     ),
   };
@@ -100,7 +98,9 @@ const exportBakalariMediaDocument = async (
   const name = generateBakalariName(type, date);
   const remote = await processBakalariDate(type, date);
   const newFile = remote[0].metadata.name;
-  const { height, width } = await downloadWithMetadata(newFile);
+  const image = new Image(newFile);
+  await image.verifyLoaded();
+  const { height, width } = image.metadata;
   const update = { name, height, width };
   if (height < maxHeight) {
     await updateBakalariDoc(doc.ref, {
@@ -109,7 +109,8 @@ const exportBakalariMediaDocument = async (
       fileType: "image",
     });
   } else {
-    const files = await cutImageToSlicesInternal(newFile);
+    const imageSlicer = new ImageSlicer(newFile);
+    const files = await imageSlicer.createSlices();
     await updateBakalariDoc(doc.ref, { ...update, files, fileType: "images" });
   }
 };

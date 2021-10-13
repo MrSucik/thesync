@@ -1,3 +1,3 @@
-import * as cors from "cors";
+import cors from "cors";
 
 export const corsHandler = cors({ origin: true });

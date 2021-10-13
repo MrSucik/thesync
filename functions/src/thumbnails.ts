@@ -1,4 +1,4 @@
-import * as ffmpeg from "fluent-ffmpeg";
+import ffmpeg from "fluent-ffmpeg";
 import { spawn } from "child-process-promise";
 import * as ffmpegPath from "ffmpeg-static";
 import { tempFilePath } from "./utils/os";

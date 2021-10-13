@@ -1,7 +1,8 @@
 import { corsHandler } from "../utils/corsHandler";
 import { handleError } from "../utils/error";
-import { cutImageToSlicesInternal, downloadWithMetadata } from "./utils";
 import * as functions from "firebase-functions";
+import ImageSlicer from "./ImageSlicer";
+import OnlineImage from "./OnlineImage";
 
 export const cutImageToSlices = functions
   .region("europe-west3")
@@ -10,7 +11,8 @@ export const cutImageToSlices = functions
     corsHandler(request, response, async () => {
       try {
         const file = request.query["file"] as string;
-        const files = await cutImageToSlicesInternal(file);
+        const imageSlicer = new ImageSlicer(file);
+        const files = await imageSlicer.createSlices();
         response.send(files);
       } catch (error) {
         handleError(error, "cutImageToSlices", response);
@@ -24,8 +26,9 @@ export const getImageSize = functions
     corsHandler(request, response, async () => {
       try {
         const requestedFile = request.query.file as string;
-        const metadata = await downloadWithMetadata(requestedFile);
-        response.send(metadata);
+        const image = new OnlineImage(requestedFile);
+        await image.downloadFile();
+        response.send(image.metadata);
       } catch (error) {
         handleError(error, "getImageSize", response);
       }
