@@ -4,7 +4,7 @@ import StatusBadge from "../../components/StatusBadge";
 import Tooltip from "../../components/Tooltip";
 import { DeviceModel } from "../../definitions";
 import { useStatus } from "../../hooks/useStatus";
-import { getIconSource } from "../../utils/icons";
+import { getIconSourceSvg } from "../../utils/icons";
 
 const SceneDevice: React.FC<{ device: DeviceModel }> = ({ device }) => {
   const status = useStatus(device.lastUpdateRequest);
@@ -20,7 +20,7 @@ const SceneDevice: React.FC<{ device: DeviceModel }> = ({ device }) => {
             <Avatar
               sx={{ height: 24, width: 24 }}
               alt={device.name}
-              src={getIconSource(device.icon)}
+              src={getIconSourceSvg(device.icon)}
             />
           </StatusBadge>
         </StatusBadge>

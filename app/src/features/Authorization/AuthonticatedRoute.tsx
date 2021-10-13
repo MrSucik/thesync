@@ -16,7 +16,7 @@ const AuthenticatedRoute: React.FC<RouteProps> = ({
     updateAuthorization(auth.email);
   }, [updateAuthorization, auth.email]);
   const authorized = useSelector((state) => state.auth.authorized);
-  console.log(`Is authorized: ${authorized}`);
+  console.log(`Is ${auth.email} authorized: ${authorized}`);
 
   return (
     <Route

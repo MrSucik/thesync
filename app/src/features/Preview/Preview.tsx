@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { styled } from "@material-ui/core/styles";
 import React from "react";
 import { useSelector } from "react-redux";
 import { MediaModel } from "../../definitions";

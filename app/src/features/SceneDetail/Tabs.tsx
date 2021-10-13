@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Box, Tab, Tabs as MuiTabs } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Tab, Tabs as MuiTabs } from "@mui/material";
 import Content from "./Content";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -7,27 +7,11 @@ import Preview from "../../features/Preview/Preview";
 import Settings from "./Settings";
 import { setPreviewMediaList } from "../../store/slices/preview";
 import { useCurrentScene } from "../../hooks/useCurrentScene";
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
-}
+import TabPanel from "./TabPanel";
 
 const darkTab = {
   color: "rgba(255, 255, 255, 0.7)",
   "&$selected": { color: "primary.main" },
-};
-
-const TabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
-  return (
-    <Box role="tabpanel" hidden={value !== index} {...other}>
-      {value === index && (
-        <Box sx={{ overflow: "auto", padding: 1 }}>{children}</Box>
-      )}
-    </Box>
-  );
 };
 
 const Tabs = () => {
@@ -44,7 +28,6 @@ const Tabs = () => {
         setPreviewMediaList({ mediaList: scene.mediaList, type: "tab" })
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab, selectedScene]);
   return !selectedScene ? null : (
     <>
@@ -55,11 +38,7 @@ const Tabs = () => {
         variant="fullWidth"
       >
         <Tab sx={darkTab} label="obsah" />
-        <Tab
-          sx={darkTab}
-          label="náhled"
-          disabled={!Boolean(scene?.mediaList?.length)}
-        />
+        <Tab sx={darkTab} label="náhled" disabled={!scene?.mediaList?.length} />
         <Tab sx={darkTab} label="nastavení" />
       </MuiTabs>
       <TabPanel value={activeTab} index={0}>

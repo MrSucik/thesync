@@ -1,9 +1,7 @@
 import { Box, CircularProgress, Icon, Typography } from "@mui/material";
-import { styled } from "@material-ui/core/styles";
-import withStyles from "@mui/styles/withStyles";
 import firebase from "firebase/app";
 import { useState } from "react";
-import { DropEvent, useDropzone } from "react-dropzone";
+import { useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
 import { useSelector } from "../../../store";
 import {
@@ -18,6 +16,8 @@ import NextBackButtons from "../NextBackButtons";
 import { useFirestore } from "react-redux-firebase";
 import client from "../../../utils/client";
 import { useCurrentScene } from "../../../hooks/useCurrentScene";
+import { dummyFunction } from "../../../utils/constants";
+import { MediaModel } from "../../../definitions";
 
 const getFileType = (type: string) => {
   console.log(type);
@@ -42,7 +42,7 @@ const FileUploadStage = () => {
   const author = useSelector((state) => state.firebase.auth.email);
   const { enqueueSnackbar } = useSnackbar();
   const firestore = useFirestore();
-  const handleDropAccepted = <T extends File>(files: T[], event: DropEvent) => {
+  const handleDropAccepted = <T extends File>(files: T[]) => {
     setLoading(true);
     const file = files[0];
     const fileType = getFileType(file.type);
@@ -50,53 +50,48 @@ const FileUploadStage = () => {
     const remoteFile = firebase.storage().ref(remoteFileName);
     const task = remoteFile.put(file);
     console.log(task, remoteFile, file);
-    task.on(
-      "state-changed",
-      (snapshot) => {},
-      (error) => {},
-      async () => {
-        if (fileType === "video") {
-          // TODO: Determine video duration
-          // const reader = new FileReader();
-          // reader.onloadend = () => {
-          //   const result = reader.result;
-          //   const audio = new Video(result as string);
-          //   audio.onloadedmetadata = () => {
-          //     console.log("cmon2");
-          //     dispatch(updateUpdatingMediaLmao({ duration: audio.duration }));
-          //   };
-          //   audio.onloadeddata = () => {
-          //     console.log("cmon");
-          //     dispatch(updateUpdatingMediaLmao({ duration: audio.duration }));
-          //   };
-          //   audio.onerror = (e) => console.log(e);
-          // };
-          // reader.readAsDataURL(file);
-        } else if (fileType === "image") {
-          dispatch(setDurationVisible(true));
-          dispatch(setLayoutVisible(true));
-        }
-        const response = await client.getImageSize(remoteFileName);
-        const newMedia = {
-          name: "Nový soubor",
-          duration: 7,
-          file: remoteFile.fullPath,
-          fileType,
-          author,
-          width: response.data.width,
-          height: response.data.height,
-          backgroundColor: scene.backgroundColor,
-        };
-        const { id } = await firestore.add("media", {
-          ...newMedia,
-          created: firebase.firestore.FieldValue.serverTimestamp(),
-        });
-        dispatch(updateUpdatingMediaLmao({ id, ...newMedia } as any));
-        enqueueSnackbar("Soubor úspěšně nahrán!");
-        dispatch(setActiveStep(2));
-        setLoading(false);
+    task.on("state-changed", dummyFunction, dummyFunction, async () => {
+      if (fileType === "video") {
+        // TODO: Determine video duration
+        // const reader = new FileReader();
+        // reader.onloadend = () => {
+        //   const result = reader.result;
+        //   const audio = new Video(result as string);
+        //   audio.onloadedmetadata = () => {
+        //     console.log("cmon2");
+        //     dispatch(updateUpdatingMediaLmao({ duration: audio.duration }));
+        //   };
+        //   audio.onloadeddata = () => {
+        //     console.log("cmon");
+        //     dispatch(updateUpdatingMediaLmao({ duration: audio.duration }));
+        //   };
+        //   audio.onerror = (e) => console.log(e);
+        // };
+        // reader.readAsDataURL(file);
+      } else if (fileType === "image") {
+        dispatch(setDurationVisible(true));
+        dispatch(setLayoutVisible(true));
       }
-    );
+      const response = await client.getImageSize(remoteFileName);
+      const newMedia = {
+        name: "Nový soubor",
+        duration: 7,
+        file: remoteFile.fullPath,
+        fileType,
+        author,
+        width: response.data.width,
+        height: response.data.height,
+        backgroundColor: scene.backgroundColor,
+      } as Partial<MediaModel>;
+      const { id } = await firestore.add("media", {
+        ...newMedia,
+        created: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+      dispatch(updateUpdatingMediaLmao({ id, ...newMedia }));
+      enqueueSnackbar("Soubor úspěšně nahrán!");
+      dispatch(setActiveStep(2));
+      setLoading(false);
+    });
   };
   const handleDropRejected = () =>
     enqueueSnackbar(
@@ -140,7 +135,7 @@ const FileUploadStage = () => {
         <Box {...getRootProps()}>
           <input {...getInputProps()} />
           {loading ? <CircularProgress size="20px" /> : <Icon>upload</Icon>}
-          <Box >
+          <Box>
             <Typography>
               Nahrát soubor <br />
               <Typography style={{ opacity: 0.8 }} variant="caption">

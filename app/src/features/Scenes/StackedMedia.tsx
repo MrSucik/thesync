@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { MediaModel } from "../../definitions";
 import { useDownloadURL } from "../../hooks/useDownloadURL";
-import { getIconSource } from "../../utils/icons";
+import { getIconSourceSvg } from "../../utils/icons";
 
 const Media: React.FC<{ media: MediaModel; src?: string }> = ({
   media,
@@ -32,7 +32,7 @@ const StackedMedia: React.FC<{ mediaList: MediaModel[] }> = ({ mediaList }) => (
       >
         <Media
           media={media}
-          src={media.bakalariType ? getIconSource("bakalari") : null}
+          src={media.bakalariType ? getIconSourceSvg("bakalari") : null}
         />
       </Box>
     ))}

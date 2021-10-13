@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "../../../store";
 import { setDeviceScheduleOpen } from "../../../store/slices/app";
 import { useFirestore } from "react-redux-firebase";
-import moment, { Moment } from "moment";
+import moment from "moment";
 import {
   Box,
   FormControlLabel,
@@ -38,7 +38,7 @@ const DeviceScheduleDialog = () => {
   const handleTimeChange = (date: unknown) =>
     updateSettings({ time: moment(date as string).format() });
 
-  const handleActionChange = (event: SelectChangeEvent<any>) =>
+  const handleActionChange = (event: SelectChangeEvent<unknown>) =>
     updateSettings({ action: event.target.value });
 
   const handleEnabledChange = (
@@ -79,9 +79,7 @@ const DeviceScheduleDialog = () => {
             onChange={handleTimeChange}
             // style={{ flex: 1 }}
             disabled={!settings.enabled}
-            renderInput={(props) => (
-              <TextField label="Vybrat čas" helperText="Something" />
-            )}
+            renderInput={() => <TextField label="Vybrat čas" />}
           />
           <Box flex={1}>
             <InputLabel id="select-label" shrink>

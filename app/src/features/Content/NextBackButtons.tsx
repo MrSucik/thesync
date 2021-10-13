@@ -2,6 +2,7 @@ import { Box, Button, CircularProgress } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "../../store";
+import { dummyFunction } from "../../utils/constants";
 import { steps } from "./Content";
 import { setActiveStep, setContentOpen } from "./contentSlice";
 
@@ -13,8 +14,8 @@ const NextBackButtons: React.FC<{
 }> = ({
   backHidden,
   nextHidden,
-  onBackClick = () => {},
-  onNextClick = () => {},
+  onBackClick = dummyFunction,
+  onNextClick = dummyFunction,
 }) => {
   const loading = useSelector((state) => state.content.bakalariFileLoading);
   const activeStep = useSelector((state) => state.content.activeStep);

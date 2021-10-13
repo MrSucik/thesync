@@ -1,7 +1,7 @@
 import React from "react";
 import { icons } from "../icons/icons.json";
 import { Box, Avatar } from "@mui/material";
-import { getIconSource } from "../utils/icons";
+import { getIconSourceSvg } from "../utils/icons";
 
 interface Props {
   icon: string;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const IconSelect: React.FC<Props> = ({ icon, onChange }) => {
-  const sources = icons.map((i) => getIconSource(i));
+  const sources = icons.map((i) => getIconSourceSvg(i));
   return (
     <Box
       sx={{

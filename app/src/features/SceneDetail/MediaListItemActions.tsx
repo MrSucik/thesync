@@ -6,7 +6,7 @@ import RoundedImage from "../../components/RoundedImage";
 import Tooltip from "../../components/Tooltip";
 import { MediaModel } from "../../definitions";
 import { useCurrentScene } from "../../hooks/useCurrentScene";
-import { getIconSource } from "../../utils/icons";
+import { getIconSourceSvg } from "../../utils/icons";
 import {
   setActiveStep,
   setContentOpen,
@@ -39,12 +39,12 @@ const MediaListItemActions: React.FC<{ media: MediaModel }> = ({ media }) => {
     <ListItemSecondaryAction>
       <Tooltip title="Konfigurovat">
         <IconButton onClick={handleConfigureClick} size="small">
-          <RoundedImage src={getIconSource("settings")} />
+          <RoundedImage src={getIconSourceSvg("settings")} />
         </IconButton>
       </Tooltip>
       <Tooltip title="Odstranit">
         <IconButton onClick={handleDeleteClick} size="small">
-          <RoundedImage src={getIconSource("delete")} />
+          <RoundedImage src={getIconSourceSvg("delete")} />
         </IconButton>
       </Tooltip>
     </ListItemSecondaryAction>

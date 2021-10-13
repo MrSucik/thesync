@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { useFirestoreSubscribe } from "../../hooks/useFirestoreSubscribe";
 import { useStatusReporting } from "../../hooks/useStatusReporting";

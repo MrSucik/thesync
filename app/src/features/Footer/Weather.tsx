@@ -23,7 +23,6 @@ const Weather = forwardRef((_props, ref) => {
   );
   return !description ? null : (
     <Box
-      // @ts-ignore
       ref={ref}
       style={{
         paddingLeft: 4,

@@ -5,7 +5,7 @@ import {
   ListItemAvatar,
   ListItemSecondaryAction,
 } from "@mui/material";
-import { getIconSource } from "../../utils/icons";
+import { getIconSourceSvg } from "../../utils/icons";
 import { DeviceModel } from "../../definitions";
 import { useSelector } from "../../store";
 import StatusBadge from "../../components/StatusBadge";
@@ -75,7 +75,7 @@ const DeviceListItem: React.FC<{
             origin={{ vertical: "bottom", horizontal: "left" }}
           >
             <StatusBadge status={status}>
-              <Avatar alt={name} src={getIconSource(icon)} />
+              <Avatar alt={name} src={getIconSourceSvg(icon)} />
             </StatusBadge>
           </StatusBadge>
         </ListItemAvatar>

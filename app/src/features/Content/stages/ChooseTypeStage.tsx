@@ -5,7 +5,7 @@ import { List } from "../../../components/List";
 import ListItem from "../../../components/ListItem";
 import { ListItemText } from "../../../components/ListItemText";
 // import { useSelector } from "../../../store";
-import { getIconSource } from "../../../utils/icons";
+import { getIconSourceSvg } from "../../../utils/icons";
 import { ContentType, setActiveStep, setContentType } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
 
@@ -24,17 +24,17 @@ const options: Option[] = [
   {
     type: "upload",
     name: "Nahrát soubor",
-    icon: <Avatar src={getIconSource("upload-file")} />,
+    icon: <Avatar src={getIconSourceSvg("upload-file")} />,
   },
   {
     type: "bakalari-suplovani",
     name: "Bakaláři - Suplování",
-    icon: <Avatar src={getIconSource("bakalari")} />,
+    icon: <Avatar src={getIconSourceSvg("bakalari")} />,
   },
   {
     type: "bakalari-planakci",
     name: "Bakaláři - Plán akcí",
-    icon: <Avatar src={getIconSource("bakalari")} />,
+    icon: <Avatar src={getIconSourceSvg("bakalari")} />,
   },
 ];
 
@@ -62,7 +62,6 @@ const ChooseTypeStage = () => {
             //       : undefined,
             // }}
             onClick={createClickHandler(option.type)}
-            button
           >
             <ListItemAvatar>{option.icon}</ListItemAvatar>
             <ListItemText primary={option.name} />

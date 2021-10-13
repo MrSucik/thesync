@@ -34,8 +34,7 @@ const ScrollingImage = styled.img`
   max-width: 100%;
   display: ${(props: { visible: boolean; offset: number }) =>
     props.visible ? "inline" : "none"};
-  max-height: ${(props: { offset: number; visible: boolean }) =>
-    window.innerHeight > 1200 ? "" : "100%"};
+  max-height: ${() => (window.innerHeight > 1200 ? "" : "100%")};
   animation: ${(props: { offset: number; visible: boolean }) =>
     props.offset ? animation(props) : ""};
   will-change: transform;

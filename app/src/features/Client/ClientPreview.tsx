@@ -11,7 +11,7 @@ const ClientPreview: React.FC<{ deviceId: string }> = ({ deviceId }) => {
   const scene = useSelector<RootState, string>(
     (state) => state.firestore.data.devices[deviceId].scene
   );
-  const mediaList = useSelector<RootState, any[]>(
+  const mediaList = useSelector<RootState, string[]>(
     (state) => state.firestore.data.scenes[scene].mediaList
   );
   useEffect(() => {

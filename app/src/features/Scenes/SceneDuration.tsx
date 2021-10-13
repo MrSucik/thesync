@@ -1,7 +1,7 @@
 import { Avatar, Box, Typography } from "@mui/material";
 import React from "react";
 import { MediaModel } from "../../definitions";
-import { getIconSource } from "../../utils/icons";
+import { getIconSourceSvg } from "../../utils/icons";
 
 const SceneDuration: React.FC<{ mediaList: MediaModel[] }> = ({
   mediaList,
@@ -11,7 +11,7 @@ const SceneDuration: React.FC<{ mediaList: MediaModel[] }> = ({
     " s";
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-      <Avatar sx={{ height: 24, width: 24 }} src={getIconSource("clock")} />
+      <Avatar sx={{ height: 24, width: 24 }} src={getIconSourceSvg("clock")} />
       <Typography>{duration}</Typography>
     </Box>
   );

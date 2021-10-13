@@ -18,7 +18,7 @@ const ListIt: React.FC<{
 }> = ({ media, onClick }) => {
   const url = useDownloadURL(media.file);
   return (
-    <ListItem onClick={onClick} button>
+    <ListItem onClick={onClick}>
       <ListItemAvatar>
         <Avatar src={url} />
       </ListItemAvatar>

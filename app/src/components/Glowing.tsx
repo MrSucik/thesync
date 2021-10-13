@@ -1,7 +1,6 @@
 import React from "react";
 import { styled } from "@mui/styles";
-import { Box, Theme } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
+import { Box } from "@mui/material";
 import clsx from "clsx";
 
 const PREFIX = "Glowing";

@@ -7,14 +7,15 @@ import ScenesList from "./ScenesList";
 import { useDispatch } from "react-redux";
 import { setSelectedScene } from "../../store/slices/app";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { UserModel } from "../../definitions";
 
 const Scenes = () => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  const user = useCurrentUser();
+  const user = useCurrentUser() as UserModel;
   const handleAddScene = async () => {
     try {
-      const newScene = await createNewScene(user!.email);
+      const newScene = await createNewScene(user.email);
       dispatch(setSelectedScene(newScene.id));
     } catch {
       enqueueSnackbar("Nepodařilo se přidat scénu", { variant: "error" });

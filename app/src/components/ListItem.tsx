@@ -1,8 +1,10 @@
-import { ListItem as MuiListItem } from "@mui/material";
+import {
+  ListItem as MuiListItem,
+  ListItemProps,
+  withStyles,
+} from "@mui/material";
 
-import withStyles from "@mui/styles/withStyles";
-
-const ListItem: any = withStyles(() => ({
+const ListItem: React.FC<Omit<ListItemProps, "button">> = withStyles(() => ({
   root: { background: "#444", borderRadius: 8 },
 }))(MuiListItem);
 

@@ -18,7 +18,7 @@ import { List } from "../../components/List";
 import StatusBadge from "../../components/StatusBadge";
 import { DeviceModel, UserModel } from "../../definitions";
 import { useSelector } from "../../store";
-import { getIconSource } from "../../utils/icons";
+import { getIconSourceSvg } from "../../utils/icons";
 import moment from "moment";
 import { CustomSwitch } from "../../components/CustomSwitch";
 
@@ -34,7 +34,7 @@ const DeviceListItem: React.FC<{
     <ListItem>
       <ListItemAvatar>
         <StatusBadge status={device.status}>
-          <Avatar alt={device.name} src={getIconSource(device.icon)} />
+          <Avatar alt={device.name} src={getIconSourceSvg(device.icon)} />
         </StatusBadge>
       </ListItemAvatar>
       <ListItemText primary={device.name} />
