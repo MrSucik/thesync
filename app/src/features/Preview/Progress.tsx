@@ -8,20 +8,20 @@ interface Props {
 
 const Progress: React.FC<Props> = ({ duration, state }) => {
   const [progress, setProgress] = useState(0);
-  const interval = useRef<NodeJS.Timeout>();
+  const interval = useRef<number>(0);
   // 101 for smoothness
   const completed = progress >= 101;
   useEffect(() => {
     if (state === "full") {
       setProgress(100);
-      clearInterval(interval.current as any);
+      clearInterval(interval.current);
     } else if (state === "empty") {
       setProgress(0);
-      clearInterval(interval.current as any);
+      clearInterval(interval.current);
     }
   }, [state]);
   useEffect(() => {
-    clearInterval(interval?.current as any);
+    clearInterval(interval?.current);
     if (state === "running") {
       setProgress(0);
       const startTime = moment();
@@ -33,9 +33,9 @@ const Progress: React.FC<Props> = ({ duration, state }) => {
               100
           ),
         1000
-      );
+      ) as unknown as number;
     }
-    return () => clearInterval(interval?.current as any);
+    return () => clearInterval(interval.current);
   }, [duration, state, completed]);
   return (
     <LinearProgress

@@ -9,27 +9,42 @@ import {
   Icon,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { ErrorInfo } from "react";
 import firebase from "firebase/app";
 import { firestore } from "../utils/fire";
 
 const defaultTimeout = 15;
 
-export default class ErrorContainer extends React.Component<
-  {},
-  { hasError: boolean; errorInfo: any; timeout: number }
-> {
-  constructor(props: {}) {
+interface Props {}
+
+export interface ErrorDetails {
+  message: string;
+  source: string;
+  created: string;
+}
+
+interface State {
+  hasError: boolean;
+  errorInfo: ErrorDetails | undefined;
+  timeout: number;
+}
+
+export default class ErrorContainer extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
-    this.state = { hasError: false, errorInfo: null, timeout: defaultTimeout };
+    this.state = {
+      hasError: false,
+      errorInfo: undefined,
+      timeout: defaultTimeout,
+    };
   }
 
-  static getDerivedStateFromError(error: any) {
+  static getDerivedStateFromError(error: ErrorDetails) {
     return { hasError: true, errorInfo: error, timeout: defaultTimeout };
   }
 
-  componentDidCatch(error: any, errorInfo: any) {
-    console.log(error, errorInfo);
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error(error, errorInfo);
     firestore.collection("logs").add({
       error: JSON.stringify({ error, errorInfo }),
       location: window.location.pathname,
@@ -68,7 +83,7 @@ export default class ErrorContainer extends React.Component<
               <Typography variant="body1">
                 Tato chyba se automaticky zaznamenala do našeho systému a
                 vyřešíme ji co nejdříve to bude možné. Zatím můžete zkusit akci
-                opakovat. <br /> Stack: {this.state.errorInfo.toString()}
+                opakovat. <br /> Stack: {this.state.errorInfo?.toString()}
               </Typography>
             </CardContent>
             <CardActions style={{ flexDirection: "row-reverse" }}>

@@ -1,5 +1,6 @@
 import { Icon, IconButton, IconButtonProps, IconProps } from "@mui/material";
 import React from "react";
+import { dummyFunction } from "../utils/constants";
 import Tooltip from "./Tooltip";
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
 
 const Action: React.FC<Props> = ({
   icon,
-  onClick = () => {},
+  onClick = dummyFunction,
   tooltip,
   iconButtonProps,
   iconProps,

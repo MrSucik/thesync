@@ -24,7 +24,7 @@ declare module "@mui/styles/defaultTheme" {
   interface DefaultTheme extends Theme {}
 }
 
-const AllTheProviders: React.FC = ({ children }) => {
+const AllTheProviders: React.FC = () => {
   return (
     <React.StrictMode>
       <BrowserRouter>

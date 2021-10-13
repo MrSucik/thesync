@@ -53,4 +53,6 @@ const Weather = forwardRef((_props, ref) => {
   );
 });
 
+Weather.displayName = "Weather";
+
 export default Weather;

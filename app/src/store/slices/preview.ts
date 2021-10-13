@@ -30,14 +30,14 @@ const previewSlice = createSlice({
       state.type = action.payload.type;
       state.activeMediaIndex = 0;
     },
-    nextMedia(state, _action: PayloadAction) {
+    nextMedia(state) {
       state.activeInnerMediaIndex = 0;
       state.activeMediaIndex =
         state.activeMediaIndex + 1 >= state.previewMediaList.length
           ? 0
           : state.activeMediaIndex + 1;
     },
-    previousMedia(state, _action: PayloadAction) {
+    previousMedia(state) {
       state.activeInnerMediaIndex = 0;
       state.activeMediaIndex =
         state.activeMediaIndex - 1 < 0

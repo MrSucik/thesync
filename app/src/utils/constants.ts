@@ -10,3 +10,5 @@ export const firebaseApiKey = process.env.REACT_APP_FIREBASE_API_KEY;
 export const firebaseAppId = process.env.REACT_APP_FIREBASE_APP_ID;
 
 export const isDevelopment = process.env.NODE_ENV === "development";
+
+export const dummyFunction = () => {};

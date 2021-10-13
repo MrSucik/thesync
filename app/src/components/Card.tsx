@@ -10,17 +10,10 @@ interface Props {
   outerBoxProps?: BoxProps;
 }
 
-const Card: React.FC<Props> = forwardRef<any, Props>(
+const Card: React.FC<Props> = forwardRef<unknown, Props>(
   ({ children, outerBoxProps, disabled, fill, clickable }, ref) => {
     return (
-      <Box
-        // @ts-ignore
-        ref={ref}
-        flex={1}
-        margin={3}
-        marginBottom={3}
-        {...outerBoxProps}
-      >
+      <Box ref={ref} flex={1} margin={3} marginBottom={3} {...outerBoxProps}>
         <Box
           position="relative"
           sx={{
@@ -39,5 +32,7 @@ const Card: React.FC<Props> = forwardRef<any, Props>(
     );
   }
 );
+
+Card.displayName = "Card";
 
 export default Card;

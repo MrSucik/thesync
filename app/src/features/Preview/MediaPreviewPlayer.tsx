@@ -26,17 +26,17 @@ const MediaPreviewPlayer: React.FC = () => {
   );
   useEffect(() => {
     const activeMedia = mediaList[activeMediaIndex];
-    let interval: NodeJS.Timeout | null = null;
-    if (activeMedia.fileType === "images") {
+    let interval = 0;
+    if (activeMedia.fileType === "images" && activeMedia.files?.length) {
       interval = setInterval(() => {
-        if (activeInnerMediaIndex === activeMedia.files!.length) {
-          clearInterval(interval as NodeJS.Timeout);
+        if (activeInnerMediaIndex === activeMedia.files?.length) {
+          clearInterval(interval);
         } else {
           handleInnerMediaEnded();
         }
-      }, (activeMedia.duration / activeMedia.files!.length) * 1000);
+      }, (activeMedia.duration / activeMedia.files.length) * 1000) as unknown as number;
     }
-    return () => clearInterval(interval as NodeJS.Timeout);
+    return () => clearInterval(interval);
   }, [activeMediaIndex]);
   return (
     <Box
@@ -67,7 +67,7 @@ const MediaPreviewPlayer: React.FC = () => {
                 ...media,
                 file:
                   media.fileType === "images"
-                    ? media.files![activeInnerMediaIndex]
+                    ? media.files?.[activeInnerMediaIndex] || ""
                     : media.file,
               }}
               visible={index === activeMediaIndex}

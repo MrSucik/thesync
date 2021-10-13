@@ -1,5 +1,5 @@
 import { Icon, ListItem, ListItemAvatar, Popover } from "@mui/material";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import Action from "../../components/Action";
 import { List } from "../../components/List";
