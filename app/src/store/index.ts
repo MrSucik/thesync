@@ -78,6 +78,6 @@ export type RootState = CombinedState<{
 export const useSelector = <T>(
   selector: (state: RootState) => T,
   equalityFn?: ((left: T, right: T) => boolean) | undefined
-) => useReduxSelector<RootState, T>(selector, equalityFn);
+): T => useReduxSelector<RootState, T>(selector, equalityFn);
 
 export default store;

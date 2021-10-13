@@ -27,7 +27,7 @@ export const analytics = app.analytics();
 
 analytics.logEvent("Application started");
 
-export const getDownloadURL = (path: string) =>
+export const getDownloadURL = (path: string): Promise<string> =>
   storage.ref(path).getDownloadURL();
 
 export const uploadFile = async (file: File) => {
