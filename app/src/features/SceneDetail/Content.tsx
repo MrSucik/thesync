@@ -11,7 +11,7 @@ import { PrimaryButton } from "../../components/PrimaryButton";
 import { Box } from "@mui/material";
 import { setContentOpen } from "../../features/Content/contentSlice";
 
-const reorder = (list: any[], startIndex: number, endIndex: number) => {
+const reorder = (list: string[], startIndex: number, endIndex: number) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);

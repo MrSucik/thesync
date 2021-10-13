@@ -2,7 +2,7 @@ import { Route, Switch } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import ClientPreview from "./features/Client/ClientAuthorization";
 import WebPreview from "./features/WebPreview/WebPreview";
-import AuthenticatedRoute from "./features/Authorization/AuthonticatedRoute";
+import AuthenticatedRoute from "./features/Authorization/AuthenticatedRoute";
 
 const Router = () => (
   <Switch>

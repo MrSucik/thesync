@@ -5,38 +5,12 @@ import Tooltip from "../../components/Tooltip";
 import { MediaModel } from "../../definitions";
 import { RootState } from "../../store";
 import { setActiveMediaIndex } from "../../store/slices/preview";
-
-import styled, { keyframes, css } from "styled-components";
 import Progress from "./Progress";
 
 interface Props {
   media: MediaModel;
   index: number;
 }
-
-const scroll = keyframes`
-from {
-  width: 0
-}
-to {
-  width: 100%
-}
-`;
-
-const animation = (props: { duration: number; state: string }) =>
-  css`
-    ${scroll} ${props.duration}s linear forwards
-  `;
-
-const ProgressAnimation = styled.img`
-  height: 2px;
-  background: white;
-  animation: ${(props: { duration: number; state: string }) =>
-    props.state === "running" ? animation(props) : ""};
-  width: ${(props: { duration: number; state: string }) =>
-    props.state === "full" ? "100%" : ""};
-  will-change: width;
-`;
 
 const ProgressBarItem: React.FC<Props> = ({ index, media }) => {
   const activeMediaIndex = useSelector<RootState, number>(
