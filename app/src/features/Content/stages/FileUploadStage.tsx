@@ -3,7 +3,7 @@ import firebase from "firebase/app";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../../store";
+import { useSelector } from "../../../useSelector";
 import {
   setActiveStep,
   setDurationVisible,

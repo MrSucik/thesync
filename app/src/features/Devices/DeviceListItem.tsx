@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { getIconSourceSvg } from "../../utils/icons";
 import { DeviceModel } from "../../definitions";
-import { useSelector } from "../../store";
+import { useSelector } from "../../useSelector";
 import StatusBadge from "../../components/StatusBadge";
 import { ListItemText } from "../../components/ListItemText";
 import ListItem from "../../components/ListItem";

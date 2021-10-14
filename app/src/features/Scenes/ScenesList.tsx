@@ -2,7 +2,7 @@ import { List } from "../../components/List";
 import { useScenesWithChildren } from "./useScenesWithChildren";
 import SceneListItem from "./SceneListItem";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../store";
+import { useSelector } from "../../useSelector";
 import { setSelectedScene } from "../../store/slices/app";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { useSnackbar } from "notistack";

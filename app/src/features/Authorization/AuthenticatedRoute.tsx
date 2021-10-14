@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { FirebaseReducer } from "react-redux-firebase";
 import { Route, Redirect, RouteProps } from "react-router";
-import { useSelector } from "../../store";
+import { useSelector } from "../../useSelector";
 import { useAuthorization } from "./useAuthorization";
 
 const AuthenticatedRoute: React.FC<RouteProps> = ({

@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
 import CustomColorPicker from "../../../components/CustomColorPicker";
 import { useCurrentScene } from "../../../hooks/useCurrentScene";
-import { useSelector } from "../../../store";
+import { useSelector } from "../../../useSelector";
 import { setPreviewMediaList } from "../../../store/slices/preview";
 import { screenHeight } from "../../../utils/constants";
 import { setPreviewMediaId, updateUpdatingMediaLmao } from "../contentSlice";

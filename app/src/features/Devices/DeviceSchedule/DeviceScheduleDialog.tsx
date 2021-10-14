@@ -4,7 +4,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../../store";
+import { useSelector } from "../../../useSelector";
 import { setDeviceScheduleOpen } from "../../../store/slices/app";
 import { useFirestore } from "react-redux-firebase";
 import moment from "moment";

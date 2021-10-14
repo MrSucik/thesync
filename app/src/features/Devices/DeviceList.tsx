@@ -1,5 +1,5 @@
 import { DeviceModel } from "../../definitions";
-import { useSelector } from "../../store";
+import { useSelector } from "../../useSelector";
 import { List } from "../../components/List";
 import DeviceListItem from "./DeviceListItem";
 

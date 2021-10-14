@@ -8,7 +8,7 @@ import ListItem from "../../../components/ListItem";
 import { ListItemText } from "../../../components/ListItemText";
 import { MediaModel } from "../../../definitions";
 import { useDownloadURL } from "../../../hooks/useDownloadURL";
-import { useSelector } from "../../../store";
+import { useSelector } from "../../../useSelector";
 import { setActiveStep, setUpdatingMedia } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
 

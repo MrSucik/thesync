@@ -17,7 +17,7 @@ import { useFirestore } from "react-redux-firebase";
 import { List } from "../../components/List";
 import StatusBadge from "../../components/StatusBadge";
 import { DeviceModel, UserModel } from "../../definitions";
-import { useSelector } from "../../store";
+import { useSelector } from "../../useSelector";
 import { getIconSourceSvg } from "../../utils/icons";
 import moment from "moment";
 import { CustomSwitch } from "../../components/CustomSwitch";

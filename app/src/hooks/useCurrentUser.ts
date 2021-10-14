@@ -1,5 +1,5 @@
 import { UserModel } from "../definitions";
-import { useSelector } from "../store";
+import { useSelector } from "../useSelector";
 
 export const useCurrentUser = () =>
   useSelector<UserModel | null>(

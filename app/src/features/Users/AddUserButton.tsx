@@ -5,7 +5,7 @@ import firebase from "firebase/app";
 import { useSnackbar } from "notistack";
 import Action from "../../components/Action";
 import { Field } from "../../components/Field";
-import { useSelector } from "../../store";
+import { useSelector } from "../../useSelector";
 
 const regex =
   // eslint-disable-next-line no-control-regex

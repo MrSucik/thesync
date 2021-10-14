@@ -1,6 +1,6 @@
 import { Modal, Paper, Step, StepLabel, Stepper } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../store";
+import { useSelector } from "../../useSelector";
 import BakalariConfigurationStage from "./stages/BakalariConfigurationStage";
 import ChooseTypeStage from "./stages/ChooseTypeStage";
 import { ContentType, setContentOpen } from "./contentSlice";

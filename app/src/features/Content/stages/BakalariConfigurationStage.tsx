@@ -11,7 +11,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-import { useSelector } from "../../../store";
+import { useSelector } from "../../../useSelector";
 import client from "../../../utils/client";
 import firebase from "firebase/app";
 import {
