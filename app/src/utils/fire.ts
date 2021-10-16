@@ -6,7 +6,7 @@ import "firebase/performance";
 import "firebase/database";
 import "firebase/analytics";
 import { firebaseApiKey, firebaseAppId } from "./constants";
-import { SceneModel, UserModel } from "../definitions";
+import { MediaModel, SceneModel, UserModel } from "../definitions";
 
 const firebaseConfig = {
   apiKey: firebaseApiKey,
@@ -47,4 +47,13 @@ export const createNewScene = (author: UserModel) =>
     area: author.area,
     hideProgress: false,
     hideWeather: false,
+  } as Partial<SceneModel>);
+
+export const createNewMedia = (author: UserModel, media: Partial<MediaModel>) =>
+  firestore.collection("media").add({
+    name: "Nový soubor",
+    duration: 7,
+    author: author.email,
+    area: author.area,
+    ...media,
   } as Partial<SceneModel>);

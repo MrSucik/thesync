@@ -17,8 +17,9 @@ import { useFirestore } from "react-redux-firebase";
 import client from "../../../utils/client";
 import { useCurrentScene } from "../../../hooks/useCurrentScene";
 import { dummyFunction } from "../../../utils/constants";
-import { MediaModel } from "../../../definitions";
+import { MediaModel, UserModel } from "../../../definitions";
 import { useCurrentUser } from "../../../hooks/useCurrentUser";
+import { createNewMedia } from "../../../utils/fire";
 
 const getFileType = (type: string) => {
   console.log(type);
@@ -40,7 +41,7 @@ const FileUploadStage = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const media = useSelector(state => state.content.updatingMedia);
-  const user = useCurrentUser();
+  const user = useCurrentUser() as UserModel;
   const { enqueueSnackbar } = useSnackbar();
   const firestore = useFirestore();
   const handleDropAccepted = <T extends File>(files: T[]) => {
@@ -74,17 +75,13 @@ const FileUploadStage = () => {
         dispatch(setLayoutVisible(true));
       }
       const response = await client.getImageSize(remoteFileName);
-      const newMedia = {
-        name: "Nový soubor",
-        duration: 7,
+      const newMedia = createNewMedia(user, {
         file: remoteFile.fullPath,
         fileType,
-        author: user?.email,
-        area: user?.area,
         width: response.data.width,
         height: response.data.height,
         backgroundColor: scene.backgroundColor,
-      } as Partial<MediaModel>;
+      }) as Partial<MediaModel>;
       const { id } = await firestore.add("media", {
         ...newMedia,
         created: firebase.firestore.FieldValue.serverTimestamp(),
