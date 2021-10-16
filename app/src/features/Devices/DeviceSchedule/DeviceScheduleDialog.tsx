@@ -21,6 +21,12 @@ import {
 import { TimePicker } from "@mui/lab";
 import { useCurrentUser } from "../../../hooks/useCurrentUser";
 
+interface Powersettings {
+  enabled: boolean;
+  time: string;
+  action: string;
+}
+
 const DeviceScheduleDialog = () => {
   const dispatch = useDispatch();
   const settings = useSelector(
@@ -29,7 +35,7 @@ const DeviceScheduleDialog = () => {
   const firestore = useFirestore();
   const open = useSelector(state => state.app.deviceScheduleOpen);
   const user = useCurrentUser();
-  const updateSettings = (changes: any) =>
+  const updateSettings = (changes: Partial<Powersettings>) =>
     firestore.add("powersettings", {
       ...settings,
       author: user?.email,
@@ -42,7 +48,7 @@ const DeviceScheduleDialog = () => {
     updateSettings({ time: moment(date as string).format() });
 
   const handleActionChange = (event: SelectChangeEvent<unknown>) =>
-    updateSettings({ action: event.target.value });
+    updateSettings({ action: event.target.value as string });
 
   const handleEnabledChange = (
     _event: React.ChangeEvent<HTMLInputElement>,

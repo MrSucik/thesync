@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import reactCSS from "reactcss";
 import { SketchPicker, ColorResult } from "react-color";
 
 interface Props {
@@ -32,51 +31,53 @@ const CustomColorPicker: React.FC<Props> = ({
     transformEvent(event, color);
     onChange(event);
   };
-  const styles = reactCSS({
-    default: {
-      color: {
-        height: "14px",
-        borderRadius: "2px",
-        backgroundColor: value,
-        margin: "4px 0",
-      },
-      swatch: {
-        background: "#fff",
-        boxShadow: "0 0 0 1px rgba(0,0,0,.1)",
-        display: "inline-block",
-        cursor: "pointer",
-        backgroundColor: "rgba(255, 255, 255, 0.09)",
-        width: "100%",
-        padding: "4px 12px",
-        borderRadius: 4,
-        "&:hover": {
-          backgroundColor: "rgba(255, 255, 255, 0.15)",
-        },
-      },
-      popover: {
-        position: "absolute",
-        zIndex: "2",
-      },
-      cover: {
-        position: "fixed",
-        inset: 0,
-      },
-      label: {
-        paddingBottom: 6,
-        fontSize: "0.8rem",
-      },
-    },
-  }) as any;
 
   return (
     <>
-      <div style={styles.swatch} onClick={handleClick}>
-        <span style={styles.label}>{label}</span>
-        <div style={styles.color} />
+      <div
+        style={{
+          background: "#fff",
+          boxShadow: "0 0 0 1px rgba(0,0,0,.1)",
+          display: "inline-block",
+          cursor: "pointer",
+          backgroundColor: "rgba(255, 255, 255, 0.09)",
+          width: "100%",
+          padding: "4px 12px",
+          borderRadius: 4,
+          // "&:hover": {
+          //   backgroundColor: "rgba(255, 255, 255, 0.15)",
+          // },
+        }}
+        onClick={handleClick}>
+        <span
+          style={{
+            paddingBottom: 6,
+            fontSize: "0.8rem",
+          }}>
+          {label}
+        </span>
+        <div
+          style={{
+            height: "14px",
+            borderRadius: "2px",
+            backgroundColor: value,
+            margin: "4px 0",
+          }}
+        />
       </div>
       {displayPicker && (
-        <div style={styles.popover}>
-          <div style={styles.cover} onClick={handleClose} />
+        <div
+          style={{
+            position: "absolute",
+            zIndex: 2,
+          }}>
+          <div
+            style={{
+              position: "fixed",
+              inset: 0,
+            }}
+            onClick={handleClose}
+          />
           <SketchPicker onChange={handleChange} color={value} />
         </div>
       )}

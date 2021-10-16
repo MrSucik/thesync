@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "../../store/useSelector";
 import BakalariConfigurationStage from "./stages/BakalariConfigurationStage";
 import ChooseTypeStage from "./stages/ChooseTypeStage";
-import { ContentType, setContentOpen } from "./contentSlice";
+import { setContentOpen } from "./contentSlice";
 import FileUploadStage from "./stages/FileUploadStage";
 import ChooseExistingStage from "./stages/ChooseExistingStage";
 import MediaUpdateStage from "./stages/MediaUpdateStage";

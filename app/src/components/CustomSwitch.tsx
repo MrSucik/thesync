@@ -15,7 +15,7 @@ export const CustomSwitch: React.FC<CustomSwitchProps> = ({
     event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean
   ) => {
-    event.target.value = checked as any;
+    event.target.value = checked as unknown as string;
   };
   return (
     <FormControlLabel
