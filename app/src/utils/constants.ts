@@ -9,6 +9,9 @@ export const openWeatherApiToken = process.env.REACT_APP_OPEN_WEATHER_API_TOKEN;
 export const firebaseApiKey = process.env.REACT_APP_FIREBASE_API_KEY;
 export const firebaseAppId = process.env.REACT_APP_FIREBASE_APP_ID;
 
+console.log(JSON.stringify(process.env));
+
+
 export const isDevelopment = process.env.NODE_ENV === "development";
 
 export const dummyFunction = (): void => console.log("Dummy function called!");
