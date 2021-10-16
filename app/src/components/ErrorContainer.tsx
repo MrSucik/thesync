@@ -10,8 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { ErrorInfo } from "react";
-import firebase from "firebase/app";
-import { firestore } from "../utils/fire";
+import { handleError } from "../utils/error";
 
 const defaultTimeout = 15;
 
@@ -44,12 +43,7 @@ export default class ErrorContainer extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error(error, errorInfo);
-    firestore.collection("logs").add({
-      error: JSON.stringify({ error, errorInfo }),
-      location: window.location.pathname,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+    handleError(error, errorInfo);
     const interval = setInterval(() => {
       if (this.state.timeout < 1) {
         window.location.reload();

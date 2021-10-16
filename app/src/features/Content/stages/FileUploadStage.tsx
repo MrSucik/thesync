@@ -16,10 +16,10 @@ import NextBackButtons from "../NextBackButtons";
 import { useFirestore } from "react-redux-firebase";
 import client from "../../../utils/client";
 import { useCurrentScene } from "../../../hooks/useCurrentScene";
-import { dummyFunction } from "../../../utils/constants";
-import { MediaModel, UserModel } from "../../../definitions";
+import { MediaFileType, MediaModel, UserModel } from "../../../definitions";
 import { useCurrentUser } from "../../../hooks/useCurrentUser";
-import { createNewMedia } from "../../../utils/fire";
+import { createNewMedia, uploadFile } from "../../../utils/fire";
+import error, { handleError } from "../../../utils/error";
 
 const getFileType = (type: string) => {
   console.log(type);
@@ -44,39 +44,17 @@ const FileUploadStage = () => {
   const user = useCurrentUser() as UserModel;
   const { enqueueSnackbar } = useSnackbar();
   const firestore = useFirestore();
-  const handleDropAccepted = <T extends File>(files: T[]) => {
-    setLoading(true);
-    const file = files[0];
-    const fileType = getFileType(file.type);
-    const remoteFileName = `uploads/${uuid() + file.name}`;
-    const remoteFile = firebase.storage().ref(remoteFileName);
-    const task = remoteFile.put(file);
-    console.log(task, remoteFile, file);
-    task.on("state-changed", dummyFunction, dummyFunction, async () => {
-      if (fileType === "video") {
-        // TODO: Determine video duration
-        // const reader = new FileReader();
-        // reader.onloadend = () => {
-        //   const result = reader.result;
-        //   const audio = new Video(result as string);
-        //   audio.onloadedmetadata = () => {
-        //     console.log("cmon2");
-        //     dispatch(updateUpdatingMediaLmao({ duration: audio.duration }));
-        //   };
-        //   audio.onloadeddata = () => {
-        //     console.log("cmon");
-        //     dispatch(updateUpdatingMediaLmao({ duration: audio.duration }));
-        //   };
-        //   audio.onerror = (e) => console.log(e);
-        // };
-        // reader.readAsDataURL(file);
-      } else if (fileType === "image") {
-        dispatch(setDurationVisible(true));
-        dispatch(setLayoutVisible(true));
-      }
+  const postProcessImage = async (
+    remoteFileName: string,
+    fileRef: firebase.storage.Reference,
+    fileType: MediaFileType
+  ) => {
+    try {
+      dispatch(setDurationVisible(true));
+      dispatch(setLayoutVisible(true));
       const response = await client.getImageSize(remoteFileName);
       const newMedia = createNewMedia(user, {
-        file: remoteFile.fullPath,
+        file: fileRef.fullPath,
         fileType,
         width: response.data.width,
         height: response.data.height,
@@ -89,17 +67,54 @@ const FileUploadStage = () => {
       dispatch(updateUpdatingMediaLmao({ id, ...newMedia }));
       enqueueSnackbar("Soubor úspěšně nahrán!");
       dispatch(setActiveStep(2));
+    } catch (error) {
+      const userMessage = "Nepodařilo se zpracovat nahraný soubor.";
+      handleError(error as Error, {
+        function: "fileUploadImagePostProcessing",
+        userMessage,
+      });
+      enqueueSnackbar(userMessage, { variant: "error" });
+    } finally {
       setLoading(false);
-    });
+    }
   };
-  const handleDropRejected = () =>
-    enqueueSnackbar(
-      "Tento typ souboru bohužel není v této chvíli podporován.",
-      { variant: "error" }
+  const handleDropAccepted = async <T extends File>(files: T[]) => {
+    setLoading(true);
+    const file = files[0];
+    const fileType = getFileType(file.type);
+    const { path, task, fileRef } = uploadFile(file);
+    task.on(
+      "state-changed",
+      null,
+      error.onUserFileUploadError(enqueueSnackbar),
+      async () => {
+        if (fileType === "video") {
+          // TODO: Determine video duration
+          // const reader = new FileReader();
+          // reader.onloadend = () => {
+          //   const result = reader.result;
+          //   const audio = new Video(result as string);
+          //   audio.onloadedmetadata = () => {
+          //     console.log("cmon2");
+          //     dispatch(updateUpdatingMediaLmao({ duration: audio.duration }));
+          //   };
+          //   audio.onloadeddata = () => {
+          //     console.log("cmon");
+          //     dispatch(updateUpdatingMediaLmao({ duration: audio.duration }));
+          //   };
+          //   audio.onerror = (e) => console.log(e);
+          // };
+          // reader.readAsDataURL(file);
+        } else if (fileType === "image") {
+          await postProcessImage(path, fileRef, fileType);
+        }
+      }
     );
+  };
+
   const { getInputProps, getRootProps } = useDropzone({
     onDropAccepted: handleDropAccepted,
-    onDropRejected: handleDropRejected,
+    onDropRejected: error.onFileUploadUnsupportedFileType(enqueueSnackbar),
     accept: ["image/png", "image/gif", "image/jpeg", "video/mp4"],
     multiple: false,
   });

@@ -24,6 +24,7 @@ export const auth = app.auth();
 export const storage = app.storage();
 export const performance = app.performance();
 export const analytics = app.analytics();
+import { v4 as uuid } from "uuid";
 
 // TODO: Add more
 analytics.logEvent("Application started");
@@ -31,10 +32,11 @@ analytics.logEvent("Application started");
 export const getDownloadURL = (path: string): Promise<string> =>
   storage.ref(path).getDownloadURL();
 
-export const uploadFile = async (file: File) => {
-  const path = `uploads/${file.name}`;
-  await storage.ref().child(path).put(file);
-  return path;
+export const uploadFile = (file: File) => {
+  const path = `uploads/${uuid() + file.name}`;
+  const fileRef = storage.ref().child(path);
+  const task = fileRef.put(file);
+  return { path, task, fileRef };
 };
 
 export const createNewScene = (author: UserModel) =>

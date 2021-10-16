@@ -17,6 +17,8 @@ export interface UserModel extends FirestoreDocument {
   bigD?: boolean;
 }
 
+export type MediaFileType = "images" | "image" | "video";
+
 export interface MediaModel extends FirestoreDocument {
   created: Timestamp;
   thumbnail: string;
@@ -24,7 +26,7 @@ export interface MediaModel extends FirestoreDocument {
   duration: number;
   file: string;
   files?: string[];
-  fileType: "images" | "image" | "video";
+  fileType: MediaFileType;
   backgroundColor?: string;
   bakalariConfiguration?: string | "auto";
   bakalariType?: "bakalari-planakci" | "bakalari-suplovani";
