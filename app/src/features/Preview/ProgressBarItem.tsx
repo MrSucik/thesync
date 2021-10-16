@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Tooltip from "../../components/Tooltip";
 import { MediaModel } from "../../definitions";
-import { RootState } from "../../store";
+import { useSelector } from "../../store/useSelector";
 import { setActiveMediaIndex } from "../../store/slices/preview";
 import Progress from "./Progress";
 
@@ -13,10 +13,8 @@ interface Props {
 }
 
 const ProgressBarItem: React.FC<Props> = ({ index, media }) => {
-  const activeMediaIndex = useSelector<RootState, number>(
-    state => state.preview.activeMediaIndex
-  );
-  const currentMediaIndex = useSelector<RootState, number>(state =>
+  const activeMediaIndex = useSelector(state => state.preview.activeMediaIndex);
+  const currentMediaIndex = useSelector(state =>
     state.preview.previewMediaList.indexOf(media.id)
   );
   const state =

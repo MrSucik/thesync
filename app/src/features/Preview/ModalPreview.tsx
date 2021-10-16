@@ -1,6 +1,6 @@
 import { Box, Modal } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useDispatch } from "react-redux";
+import { useSelector } from "../../store/useSelector";
 import { setPreviewMediaList } from "../../store/slices/preview";
 import Preview from "./Preview";
 
@@ -8,9 +8,7 @@ const ModalPreview = () => {
   const dispatch = useDispatch();
   const handleClose = () =>
     dispatch(setPreviewMediaList({ mediaList: [], type: "closed" }));
-  const isOpen = useSelector<RootState, boolean>(
-    state => state.preview.type === "modal"
-  );
+  const isOpen = useSelector(state => state.preview.type === "modal");
   return (
     <Modal open={isOpen} onClose={handleClose}>
       <Box

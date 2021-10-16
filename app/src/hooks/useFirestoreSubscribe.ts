@@ -1,26 +1,34 @@
-import { useSelector } from "react-redux";
-import { useFirestoreConnect } from "react-redux-firebase";
-import { RootState } from "../store";
+import {
+  OrderByOptions,
+  useFirestoreConnect,
+  WhereOptions,
+} from "react-redux-firebase";
+import { useSelector } from "../store/useSelector";
 
-export const useFirestoreSubscribe = () => {
+export const useFirestoreSubscribe = (area: string) => {
+  const selectArea = {
+    where: ["area", "==", area] as WhereOptions | WhereOptions[],
+  };
+  const orderByCreated = {
+    orderBy: ["created", "desc"] as OrderByOptions | OrderByOptions[],
+  };
+  const connectCollection = (collection: string, omitArea = false) => ({
+    collection,
+    ...(omitArea ? {} : selectArea),
+    ...orderByCreated,
+  });
   useFirestoreConnect([
-    { collection: "media", orderBy: ["created", "desc"] },
-    {
-      collection: "devices",
-      orderBy: ["created", "asc"],
-    },
-    {
-      collection: "scenes",
-      orderBy: ["created", "desc"],
-    },
-    { collection: "users", orderBy: ["created", "asc"] },
-    { collection: "powersettings", orderBy: ["updated", "desc"], limit: 1 },
+    connectCollection("media"),
+    connectCollection("devices", true),
+    connectCollection("scenes"),
+    connectCollection("users"),
+    connectCollection("powersettings"),
   ]);
-  const dataLoaded = useSelector<RootState, boolean>(
+  const dataLoaded = useSelector<boolean>(
     ({ firestore: { data } }) =>
+      data.media &&
       data.devices &&
       data.scenes &&
-      data.media &&
       data.users &&
       data.powersettings
   );

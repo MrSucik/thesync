@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { forwardRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import CurrentDateTime from "../../components/CurrentDateTime";
-import { useSelector } from "../../useSelector";
+import { useSelector } from "../../store/useSelector";
 import client from "../../utils/client";
 import { setWeatherData } from "./weatherSlice";
 

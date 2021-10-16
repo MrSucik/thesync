@@ -4,7 +4,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../../useSelector";
+import { useSelector } from "../../../store/useSelector";
 import { setDeviceScheduleOpen } from "../../../store/slices/app";
 import { useFirestore } from "react-redux-firebase";
 import moment from "moment";
@@ -19,6 +19,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { TimePicker } from "@mui/lab";
+import { useCurrentUser } from "../../../hooks/useCurrentUser";
 
 const DeviceScheduleDialog = () => {
   const dispatch = useDispatch();
@@ -27,10 +28,12 @@ const DeviceScheduleDialog = () => {
   );
   const firestore = useFirestore();
   const open = useSelector(state => state.app.deviceScheduleOpen);
-
+  const user = useCurrentUser();
   const updateSettings = (changes: any) =>
     firestore.add("powersettings", {
       ...settings,
+      author: user?.email,
+      area: user?.area,
       updated: moment().format(),
       ...changes,
     });

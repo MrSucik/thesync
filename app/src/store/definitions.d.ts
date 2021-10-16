@@ -7,6 +7,7 @@ import { ContentState } from "../features/Content/contentSlice";
 import { DeviceConfigurationState } from "../features/Devices/deviceConfigurationSlice";
 import { WeatherState } from "../features/Footer/weatherSlice";
 import { NameDayState } from "../features/Footer/nameDaySlice";
+import { CombinedState } from "redux";
 
 export type RootState = CombinedState<{
   firestore: FirestoreReducer.Reducer;

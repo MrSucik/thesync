@@ -10,7 +10,7 @@ interface Params {
 const Client = () => {
   const { deviceId } = useParams<Params>();
   useStatusReporting(deviceId);
-  const loaded = useFirestoreSubscribe();
+  const loaded = useFirestoreSubscribe("wigym");
   return loaded ? <ClientPreview deviceId={deviceId} /> : null;
 };
 

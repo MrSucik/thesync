@@ -4,6 +4,7 @@ export type Timestamp = firebase.firestore.Timestamp;
 
 interface FirestoreDocument {
   id: string;
+  area: string;
 }
 
 export interface UserModel extends FirestoreDocument {

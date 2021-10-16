@@ -1,10 +1,8 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
 import { MediaModel } from "../../definitions";
-import { RootState } from "../../store";
+import { useSelector } from "../../store/useSelector";
 import ProgressBar from "./ProgressBar";
-import { PreviewState } from "../../store/slices/preview";
 import PlayNextPrevious from "./PlayNext";
 import MediaPreviewPlayer from "./MediaPreviewPlayer";
 import { useCurrentScene } from "../../hooks/useCurrentScene";
@@ -14,12 +12,11 @@ interface Props {
 }
 
 const Preview: React.FC<Props> = ({ disableControls }) => {
-  const { activeMediaIndex, previewMediaList } = useSelector<
-    RootState,
-    PreviewState
-  >(state => state.preview);
+  const { activeMediaIndex, previewMediaList } = useSelector(
+    state => state.preview
+  );
   const selectedScene = useCurrentScene();
-  const mediaList = useSelector<RootState, MediaModel[]>(state =>
+  const mediaList = useSelector<MediaModel[]>(state =>
     previewMediaList
       .filter(x => Object.keys(state.firestore.data.media).includes(x))
       .map(id => state.firestore.data.media[id])

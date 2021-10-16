@@ -3,7 +3,7 @@ import firebase from "firebase/app";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../../useSelector";
+import { useSelector } from "../../../store/useSelector";
 import {
   setActiveStep,
   setDurationVisible,
@@ -18,6 +18,7 @@ import client from "../../../utils/client";
 import { useCurrentScene } from "../../../hooks/useCurrentScene";
 import { dummyFunction } from "../../../utils/constants";
 import { MediaModel } from "../../../definitions";
+import { useCurrentUser } from "../../../hooks/useCurrentUser";
 
 const getFileType = (type: string) => {
   console.log(type);
@@ -39,7 +40,7 @@ const FileUploadStage = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const media = useSelector(state => state.content.updatingMedia);
-  const author = useSelector(state => state.firebase.auth.email);
+  const user = useCurrentUser();
   const { enqueueSnackbar } = useSnackbar();
   const firestore = useFirestore();
   const handleDropAccepted = <T extends File>(files: T[]) => {
@@ -78,7 +79,8 @@ const FileUploadStage = () => {
         duration: 7,
         file: remoteFile.fullPath,
         fileType,
-        author,
+        author: user?.email,
+        area: user?.area,
         width: response.data.width,
         height: response.data.height,
         backgroundColor: scene.backgroundColor,

@@ -11,7 +11,6 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-import { useSelector } from "../../../useSelector";
 import client from "../../../utils/client";
 import firebase from "firebase/app";
 import {
@@ -31,6 +30,8 @@ import {
 } from "../../../utils/constants";
 import { useCurrentScene } from "../../../hooks/useCurrentScene";
 import { Box } from "@mui/system";
+import { useSelector } from "../../../store/useSelector";
+import { useCurrentUser } from "../../../hooks/useCurrentUser";
 
 const generateName = (type: ContentType, date: string) =>
   `${type === "bakalari-suplovani" ? "Suplování" : "Plán Akcí"} (${
@@ -48,7 +49,7 @@ const BakalariConfigurationStage = () => {
     state => state.content.type as ContentType
   );
   const dispatch = useDispatch();
-  const dates = useSelector(state => state.content.bakalariDates);
+  const dates = useSelector<string[]>(state => state.content.bakalariDates);
   const selectedOption = useSelector(
     state => state.content.bakalariSelectedOption
   );
@@ -102,7 +103,7 @@ const BakalariConfigurationStage = () => {
   useEffect(() => void fetchDates(), []);
   const manualDate = selectedOption !== "auto";
   const firestore = useFirestore();
-  const author = useSelector(state => state.firebase.auth.email);
+  const author = useCurrentUser();
   const handleNextClick = async () => {
     const name = await updateFile();
     const newMedia = {
@@ -110,7 +111,8 @@ const BakalariConfigurationStage = () => {
       name: name + "",
       bakalariConfiguration: selectedOption,
       bakalariType: bakalariType as "bakalari-suplovani" | "bakalari-planakci",
-      author: author + "",
+      author: author?.email,
+      area: author?.area,
       backgroundColor: scene.backgroundColor,
     };
     const { id } = await firestore.add("media", {

@@ -106,3 +106,5 @@ export interface WeatherResponse {
   hourly: Hourly[];
   daily: Daily[];
 }
+
+export type NameDayResponse = [{ date: string; name: string }];

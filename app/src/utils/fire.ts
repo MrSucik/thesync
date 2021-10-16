@@ -6,7 +6,7 @@ import "firebase/performance";
 import "firebase/database";
 import "firebase/analytics";
 import { firebaseApiKey, firebaseAppId } from "./constants";
-import { SceneModel } from "../definitions";
+import { SceneModel, UserModel } from "../definitions";
 
 const firebaseConfig = {
   apiKey: firebaseApiKey,
@@ -25,6 +25,7 @@ export const storage = app.storage();
 export const performance = app.performance();
 export const analytics = app.analytics();
 
+// TODO: Add more
 analytics.logEvent("Application started");
 
 export const getDownloadURL = (path: string): Promise<string> =>
@@ -36,14 +37,14 @@ export const uploadFile = async (file: File) => {
   return path;
 };
 
-export const createNewScene = (author: string) =>
+export const createNewScene = (author: UserModel) =>
   firestore.collection("scenes").add({
     name: "Nová Scéna",
     mediaList: [],
     backgroundColor: "#1a1a1a",
     created: firebase.firestore.FieldValue.serverTimestamp(),
-    author,
-    footer: "",
+    author: author.email,
+    area: author.area,
     hideProgress: false,
     hideWeather: false,
   } as Partial<SceneModel>);

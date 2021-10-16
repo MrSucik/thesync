@@ -1,10 +1,10 @@
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
 import { List } from "../../components/List";
 import { MediaModel } from "../../definitions";
 import { useCurrentScene } from "../../hooks/useCurrentScene";
-import { RootState } from "../../store";
+import { useSelector } from "../../store/useSelector";
 import { setOptimisticReorderUpdate } from "../../store/slices/app";
 import MediaListItem from "./MediaListItem";
 import { PrimaryButton } from "../../components/PrimaryButton";
@@ -22,7 +22,7 @@ const Content = () => {
   const firestore = useFirestore();
   const dispatch = useDispatch();
   const scene = useCurrentScene();
-  const mediaList = useSelector<RootState, MediaModel[]>(state =>
+  const mediaList = useSelector<MediaModel[]>(state =>
     scene?.mediaList
       ? scene.mediaList.map((m: string) => ({
           id: m,

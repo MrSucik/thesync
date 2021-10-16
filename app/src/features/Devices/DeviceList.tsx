@@ -1,5 +1,5 @@
 import { DeviceModel } from "../../definitions";
-import { useSelector } from "../../useSelector";
+import { useSelector } from "../../store/useSelector";
 import { List } from "../../components/List";
 import DeviceListItem from "./DeviceListItem";
 
@@ -9,7 +9,7 @@ interface Device extends DeviceModel {
 
 const DeviceList = () => {
   const devices = useSelector<Device[]>(state =>
-    state.firestore.ordered.devices.map(d => ({
+    (state.firestore.ordered.devices as DeviceModel[]).map(d => ({
       ...d,
       sceneName: state.firestore.data.scenes[d.scene]?.name,
     }))

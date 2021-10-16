@@ -1,7 +1,7 @@
 import { Box, Button, CircularProgress } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../useSelector";
+import { useSelector } from "../../store/useSelector";
 import { dummyFunction } from "../../utils/constants";
 import { steps } from "./Content";
 import { setActiveStep, setContentOpen } from "./contentSlice";

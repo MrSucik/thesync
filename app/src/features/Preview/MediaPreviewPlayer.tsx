@@ -1,22 +1,18 @@
 import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { MediaModel } from "../../definitions";
-import { RootState } from "../../store";
 import MediaPreview from "./MediaPreview";
-import {
-  nextInnerMedia,
-  nextMedia,
-  PreviewState,
-} from "../../store/slices/preview";
+import { nextInnerMedia, nextMedia } from "../../store/slices/preview";
 import TimedPreview from "./TimedPreview";
 import { Box } from "@mui/material";
 import Footer from "../Footer/Footer";
+import { useSelector } from "../../store/useSelector";
 
 const MediaPreviewPlayer: React.FC = () => {
   const dispatch = useDispatch();
   const { activeMediaIndex, activeInnerMediaIndex, previewMediaList } =
-    useSelector<RootState, PreviewState>(state => state.preview);
-  const mediaList = useSelector<RootState, MediaModel[]>(state =>
+    useSelector(state => state.preview);
+  const mediaList = useSelector<MediaModel[]>(state =>
     previewMediaList.map(id => state.firestore.data.media[id])
   );
   const handleMediaEnded = useCallback(() => dispatch(nextMedia()), [dispatch]);

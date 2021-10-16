@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import { useFirestore } from "react-redux-firebase";
 import { useCurrentScene } from "../../../hooks/useCurrentScene";
-import { useSelector } from "../../../useSelector";
+import { useSelector } from "../../../store/useSelector";
 import Preview from "../../Preview/Preview";
 import NextBackButtons from "../NextBackButtons";
 

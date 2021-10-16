@@ -1,6 +1,6 @@
 import { Modal, Paper, Step, StepLabel, Stepper } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../useSelector";
+import { useSelector } from "../../store/useSelector";
 import BakalariConfigurationStage from "./stages/BakalariConfigurationStage";
 import ChooseTypeStage from "./stages/ChooseTypeStage";
 import { ContentType, setContentOpen } from "./contentSlice";
@@ -12,11 +12,9 @@ import PreviewStage from "./stages/PreviewStage";
 export const steps = ["VÝBĚR TYPU", "SOUBOR", "KONFIGURACE", "NÁHLED"];
 
 const Content = () => {
-  const type = useSelector<ContentType | undefined>(
-    state => state.content.type
-  );
-  const contentOpen = useSelector<boolean>(state => state.content.contentOpen);
-  const activeStep = useSelector<number>(state => state.content.activeStep);
+  const type = useSelector(state => state.content.type);
+  const contentOpen = useSelector(state => state.content.contentOpen);
+  const activeStep = useSelector(state => state.content.activeStep);
   const dispatch = useDispatch();
   return (
     <Modal

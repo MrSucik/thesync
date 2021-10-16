@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Tab, Tabs as MuiTabs } from "@mui/material";
 import Content from "./Content";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useDispatch } from "react-redux";
+import { useSelector } from "../../store/useSelector";
 import Preview from "../../features/Preview/Preview";
 import Settings from "./Settings";
 import { setPreviewMediaList } from "../../store/slices/preview";
@@ -16,9 +16,7 @@ const darkTab = {
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const selectedScene = useSelector<RootState, string | null>(
-    state => state.app.selectedScene
-  );
+  const selectedScene = useSelector(state => state.app.selectedScene);
   const dispatch = useDispatch();
   const scene = useCurrentScene();
   useEffect(() => setActiveTab(0), [selectedScene]);

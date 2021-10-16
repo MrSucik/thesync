@@ -8,7 +8,7 @@ import { useScenesWithChildren } from "../Scenes/useScenesWithChildren";
 import SceneListItem from "../Scenes/SceneListItem";
 import { List } from "../../components/List";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../useSelector";
+import { useSelector } from "../../store/useSelector";
 import { setDeviceSceneUpdate } from "../../store/slices/app";
 import { useFirestore } from "react-redux-firebase";
 

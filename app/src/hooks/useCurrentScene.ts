@@ -1,9 +1,8 @@
-import { useSelector } from "react-redux";
 import { SceneModel } from "../definitions";
-import { RootState } from "../store";
+import { useSelector } from "../store/useSelector";
 
 export const useCurrentScene = () =>
-  useSelector<RootState, SceneModel>(state =>
+  useSelector<SceneModel>(state =>
     !state.app.selectedScene
       ? null
       : {

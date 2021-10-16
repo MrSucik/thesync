@@ -1,14 +1,11 @@
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
 import CurrentUserIcon from "./CurrentUserIcon";
-import { RootState } from "../../store";
+import { useSelector } from "../../store/useSelector";
 import UsersAdministrationIconButton from "./SettingsButton";
 
 const HeaderButtons = () => {
-  const isEmpty = useSelector<RootState, boolean>(
-    state => state.firebase.auth.isEmpty
-  );
-  const settingsButtonVisible = useSelector<RootState, boolean>(
+  const isEmpty = useSelector(state => state.firebase.auth.isEmpty);
+  const settingsButtonVisible = useSelector(
     state => state.settings.openSettingsButtonVisible
   );
   return !isEmpty ? (

@@ -1,14 +1,12 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useDispatch } from "react-redux";
+import { useSelector } from "../../store/useSelector";
 import { setUserAdministrationOpen } from "../../store/slices/settings";
 import AddUserButton from "./AddUserButton";
 import UsersList from "./UsersList";
 
 const UsersModal = () => {
-  const open = useSelector<RootState, boolean>(
-    state => state.settings.userAdministrationOpen
-  );
+  const open = useSelector(state => state.settings.userAdministrationOpen);
   const dispatch = useDispatch();
   const handleClose = () => dispatch(setUserAdministrationOpen(false));
   return (

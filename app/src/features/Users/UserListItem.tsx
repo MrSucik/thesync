@@ -17,7 +17,7 @@ import { useFirestore } from "react-redux-firebase";
 import { List } from "../../components/List";
 import StatusBadge from "../../components/StatusBadge";
 import { DeviceModel, UserModel } from "../../definitions";
-import { useSelector } from "../../useSelector";
+import { useSelector } from "../../store/useSelector";
 import { getIconSourceSvg } from "../../utils/icons";
 import moment from "moment";
 import { CustomSwitch } from "../../components/CustomSwitch";
@@ -47,7 +47,9 @@ const DeviceListItem: React.FC<{
 
 const DeviceList: React.FC<{ user: string }> = ({ user }) => {
   const firestore = useFirestore();
-  const devices = useSelector(state => state.firestore.ordered.devices);
+  const devices = useSelector<DeviceModel[]>(
+    state => state.firestore.ordered.devices
+  );
   const checkedDevices = useSelector<string[]>(
     state => state.firestore.data.users[user]?.devices || []
   );

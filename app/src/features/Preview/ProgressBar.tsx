@@ -1,17 +1,13 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
 import { MediaModel } from "../../definitions";
-import { RootState } from "../../store";
-import { PreviewState } from "../../store/slices/preview";
+import { useSelector } from "../../store/useSelector";
 import Overlay from "./Overlay";
 import ProgressBarItem from "./ProgressBarItem";
 
 const ProgressBar: React.FC = () => {
-  const { previewMediaList } = useSelector<RootState, PreviewState>(
-    state => state.preview
-  );
-  const mediaList = useSelector<RootState, MediaModel[]>(state =>
+  const { previewMediaList } = useSelector(state => state.preview);
+  const mediaList = useSelector<MediaModel[]>(state =>
     previewMediaList.map(id => state.firestore.data.media[id])
   );
   return (

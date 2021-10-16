@@ -1,11 +1,10 @@
-import { useSelector } from "react-redux";
 import { List } from "../../components/List";
 import { UserModel } from "../../definitions";
-import { RootState } from "../../store";
+import { useSelector } from "../../store/useSelector";
 import UserListItem from "./UserListItem";
 
 const UsersList = () => {
-  const users = useSelector<RootState, UserModel[]>(
+  const users = useSelector<UserModel[]>(
     state => state.firestore.ordered.users
   );
   return (

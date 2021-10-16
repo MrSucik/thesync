@@ -15,7 +15,7 @@ const Scenes = () => {
   const user = useCurrentUser() as UserModel;
   const handleAddScene = async () => {
     try {
-      const newScene = await createNewScene(user.email);
+      const newScene = await createNewScene(user);
       dispatch(setSelectedScene(newScene.id));
     } catch {
       enqueueSnackbar("Nepodařilo se přidat scénu", { variant: "error" });
