@@ -1,4 +1,4 @@
-import { Modal, Paper, Step, StepLabel, Stepper } from "@mui/material";
+import { Container, Modal, Paper } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useSelector } from "../../store/useSelector";
 import BakalariConfigurationStage from "./stages/BakalariConfigurationStage";
@@ -8,6 +8,7 @@ import FileUploadStage from "./stages/FileUploadStage";
 import ChooseExistingStage from "./stages/ChooseExistingStage";
 import MediaUpdateStage from "./stages/MediaUpdateStage";
 import PreviewStage from "./stages/PreviewStage";
+import ContentHeader from "./ContentHeader";
 
 export const steps = ["VÝBĚR TYPU", "SOUBOR", "KONFIGURACE", "NÁHLED"];
 
@@ -28,29 +29,21 @@ const Content = () => {
       }}
       open={contentOpen}
       onClose={() => dispatch(setContentOpen(false))}>
-      <Paper
-        sx={{
-          paddingTop: 2,
-          paddingInline: 2,
-        }}>
-        <Stepper sx={{ margin: 2 }} activeStep={activeStep}>
-          {steps.map((label, index) => (
-            <Step active={index === activeStep} key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-        {activeStep === 0 && <ChooseTypeStage />}
-        {activeStep === 1 &&
-          (type === "existing" ? (
-            <ChooseExistingStage />
-          ) : type === "upload" ? (
-            <FileUploadStage />
-          ) : type?.startsWith("bakalari-") ? (
-            <BakalariConfigurationStage />
-          ) : null)}
-        {activeStep === 2 && <MediaUpdateStage />}
-        {activeStep === 3 && <PreviewStage />}
+      <Paper>
+        <ContentHeader />
+        <Container>
+          {activeStep === 0 && <ChooseTypeStage />}
+          {activeStep === 1 &&
+            (type === "existing" ? (
+              <ChooseExistingStage />
+            ) : type === "upload" ? (
+              <FileUploadStage />
+            ) : type?.startsWith("bakalari-") ? (
+              <BakalariConfigurationStage />
+            ) : null)}
+          {activeStep === 2 && <MediaUpdateStage />}
+          {activeStep === 3 && <PreviewStage />}
+        </Container>
       </Paper>
     </Modal>
   );
