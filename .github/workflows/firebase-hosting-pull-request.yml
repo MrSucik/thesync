@@ -14,11 +14,9 @@ jobs:
           yarn lint
           yarn build
         env:
-          ASD: asd
-          REACT_APP_ASD: asd2
-          OPEN_WEATHER_API_TOKEN: ${{ secrets.REACT_APP_OPEN_WEATHER_API_TOKEN }}
-          FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
-          FIREBASE_APP_ID: ${{ secrets.REACT_APP_FIREBASE_APP_ID }}
+          REACT_APP_OPEN_WEATHER_API_TOKEN: ${{ secrets.REACT_APP_OPEN_WEATHER_API_TOKEN }}
+          REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
+          REACT_APP_FIREBASE_APP_ID: ${{ secrets.REACT_APP_FIREBASE_APP_ID }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
@@ -27,4 +25,3 @@ jobs:
           expires: 30d
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
-          FIREBASE_ASD: asd
