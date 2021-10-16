@@ -21,6 +21,6 @@ jobs:
           expires: 30d
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
-          REACT_APP_OPEN_WEATHER_API_TOKEN: ${{ secrets.REACT_APP_OPEN_WEATHER_API_TOKEN }}
-          REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
-          REACT_APP_FIREBASE_APP_ID: ${{ secrets.REACT_APP_FIREBASE_APP_ID }}
+          OPEN_WEATHER_API_TOKEN: ${{ secrets.REACT_APP_OPEN_WEATHER_API_TOKEN }}
+          FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
+          FIREBASE_APP_ID: ${{ secrets.REACT_APP_FIREBASE_APP_ID }}
