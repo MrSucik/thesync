@@ -67,3 +67,9 @@ export interface ConfigurationModel extends FirestoreDocument {
   planDate: Timestamp;
   suplDate: Timestamp;
 }
+
+export interface PowerSettings {
+  enabled: boolean;
+  time: string;
+  action: string;
+}
