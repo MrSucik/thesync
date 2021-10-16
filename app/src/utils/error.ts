@@ -18,21 +18,34 @@ type EnqueueSnackbarHandler = (
 ) => SnackbarKey;
 
 export default {
-  onUserFileUploadError:
+  onFileUploadProcessError:
+    (enqueueSnackbar: EnqueueSnackbarHandler) => (error: unknown) => {
+      const userMessage = "Nepodařilo se nahrát tento soubor.";
+      const func = "User file upload";
+      handleError(error as Error, { userMessage, function: func });
+      enqueueSnackbar(userMessage, { variant: "error" });
+    },
+  onFileUploadImagePostProcessError:
+    (enqueueSnackbar: EnqueueSnackbarHandler) => (error: unknown) => {
+      const userMessage = "Nepodařilo se zpracovat tento soubor.";
+      const func = "User file upload - image post process error";
+      handleError(error as Error, { userMessage, function: func });
+      enqueueSnackbar(userMessage, { variant: "error" });
+    },
+  onFileUploadError:
     (enqueueSnackbar: EnqueueSnackbarHandler) =>
     (error: firebase.storage.FirebaseStorageError) => {
-      const userMessage = "Nepodařilo se nahrát soubor.";
-      handleError(error, { userMessage, function: "User file upload" });
+      const userMessage = "Nepodařilo se nahrát tento soubor.";
+      const func = "User file upload upload to Cloud Storage";
+      handleError(error, { userMessage, function: func });
       enqueueSnackbar(userMessage, { variant: "error" });
     },
   onFileUploadUnsupportedFileType:
     (enqueueSnackbar: EnqueueSnackbarHandler) => (error: unknown) => {
       const userMessage =
         "Tento typ souboru bohužel není v této chvíli podporován.";
-      handleError(error as Error, {
-        userMessage,
-        function: "User file upload - wrong file type",
-      });
+      const func = "User file upload - wrong file type";
+      handleError(error as Error, { userMessage, function: func });
       enqueueSnackbar(userMessage, { variant: "error" });
     },
 };

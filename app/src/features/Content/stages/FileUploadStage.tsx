@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Icon, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Icon, Typography } from "@mui/material";
 import firebase from "firebase/app";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -10,7 +10,6 @@ import {
   setLayoutVisible,
   updateUpdatingMediaLmao,
 } from "../contentSlice";
-import { v4 as uuid } from "uuid";
 import { useSnackbar } from "notistack";
 import NextBackButtons from "../NextBackButtons";
 import { useFirestore } from "react-redux-firebase";
@@ -19,7 +18,7 @@ import { useCurrentScene } from "../../../hooks/useCurrentScene";
 import { MediaFileType, MediaModel, UserModel } from "../../../definitions";
 import { useCurrentUser } from "../../../hooks/useCurrentUser";
 import { createNewMedia, uploadFile } from "../../../utils/fire";
-import error, { handleError } from "../../../utils/error";
+import error from "../../../utils/error";
 
 const getFileType = (type: string) => {
   console.log(type);
@@ -67,49 +66,48 @@ const FileUploadStage = () => {
       dispatch(updateUpdatingMediaLmao({ id, ...newMedia }));
       enqueueSnackbar("Soubor úspěšně nahrán!");
       dispatch(setActiveStep(2));
-    } catch (error) {
-      const userMessage = "Nepodařilo se zpracovat nahraný soubor.";
-      handleError(error as Error, {
-        function: "fileUploadImagePostProcessing",
-        userMessage,
-      });
-      enqueueSnackbar(userMessage, { variant: "error" });
+    } catch (err) {
+      error.onFileUploadImagePostProcessError(enqueueSnackbar)(err);
     } finally {
       setLoading(false);
     }
   };
   const handleDropAccepted = async <T extends File>(files: T[]) => {
-    setLoading(true);
-    const file = files[0];
-    const fileType = getFileType(file.type);
-    const { path, task, fileRef } = uploadFile(file);
-    task.on(
-      "state-changed",
-      null,
-      error.onUserFileUploadError(enqueueSnackbar),
-      async () => {
-        if (fileType === "video") {
-          // TODO: Determine video duration
-          // const reader = new FileReader();
-          // reader.onloadend = () => {
-          //   const result = reader.result;
-          //   const audio = new Video(result as string);
-          //   audio.onloadedmetadata = () => {
-          //     console.log("cmon2");
-          //     dispatch(updateUpdatingMediaLmao({ duration: audio.duration }));
-          //   };
-          //   audio.onloadeddata = () => {
-          //     console.log("cmon");
-          //     dispatch(updateUpdatingMediaLmao({ duration: audio.duration }));
-          //   };
-          //   audio.onerror = (e) => console.log(e);
-          // };
-          // reader.readAsDataURL(file);
-        } else if (fileType === "image") {
-          await postProcessImage(path, fileRef, fileType);
+    try {
+      setLoading(true);
+      const file = files[0];
+      const fileType = getFileType(file.type);
+      const { path, task, fileRef } = uploadFile(file);
+      task.on(
+        "state-changed",
+        null,
+        error.onFileUploadError(enqueueSnackbar),
+        async () => {
+          if (fileType === "video") {
+            // TODO: Determine video duration
+            // const reader = new FileReader();
+            // reader.onloadend = () => {
+            //   const result = reader.result;
+            //   const audio = new Video(result as string);
+            //   audio.onloadedmetadata = () => {
+            //     console.log("cmon2");
+            //     dispatch(updateUpdatingMediaLmao({ duration: audio.duration }));
+            //   };
+            //   audio.onloadeddata = () => {
+            //     console.log("cmon");
+            //     dispatch(updateUpdatingMediaLmao({ duration: audio.duration }));
+            //   };
+            //   audio.onerror = (e) => console.log(e);
+            // };
+            // reader.readAsDataURL(file);
+          } else if (fileType === "image") {
+            await postProcessImage(path, fileRef, fileType);
+          }
         }
-      }
-    );
+      );
+    } catch (err) {
+      error.onFileUploadProcessError(enqueueSnackbar)(err);
+    }
   };
 
   const { getInputProps, getRootProps } = useDropzone({
@@ -127,37 +125,33 @@ const FileUploadStage = () => {
         alignItems: "center",
         padding: 1,
       }}>
-      <Box
+      <Button
         sx={{
-          cursor: "pointer",
+          textTransform: "none",
           minWidth: 206,
           maxWidth: 300,
           backgroundColor: "#444",
-          borderRadius: 2,
-          textAlign: "center",
           display: "flex",
+          borderRadius: 4,
           justifyContent: "center",
           alignItems: "center",
           gap: 3,
           padding: "16px 32px",
-          "&:hover": {
-            backgroundColor: "rgba(255, 255, 255, 0.13)",
-          },
+          marginTop: 4,
+          "&:hover": { backgroundColor: "#fff2" },
         }}>
         <Box {...getRootProps()}>
           <input {...getInputProps()} />
           {loading ? <CircularProgress size="20px" /> : <Icon>upload</Icon>}
-          <Box>
-            <Typography>
-              Nahrát soubor <br />
-              <Typography style={{ opacity: 0.8 }} variant="caption">
-                (pro optimální zobrazení použijte rozlišení - 1080x1760)
-              </Typography>
+          <Typography>
+            Nahrát soubor <br />
+            <Typography sx={{ opacity: 0.8 }} variant="caption">
+              (pro optimální zobrazení použijte rozlišení - 1080x1760)
             </Typography>
-            {media.file && <span>Soubor: {media.file}</span>}
-          </Box>
+          </Typography>
+          {media.file && <span>Soubor: {media.file}</span>}
         </Box>
-      </Box>
+      </Button>
       <NextBackButtons nextHidden />
     </Box>
   );
