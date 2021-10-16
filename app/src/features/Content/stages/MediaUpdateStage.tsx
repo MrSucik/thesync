@@ -22,20 +22,29 @@ const MediaUpdateStage = () => {
   const type = useSelector(state => state.content.type);
   const media = useSelector(state => state.content.updatingMedia);
   const firestore = useFirestore();
-  const hanleNextClick = async () => {
-    const mediaId = media.id + "";
-    await firestore.update(`media/${mediaId}`, {
-      ...media,
-      backgroundColor:
-        media.backgroundColor === defaultBackground
-          ? ""
-          : media.backgroundColor,
-    });
+
+  // TODO: Add error handling
+  const handleNextClick = async () => {
+    const mediaId = media.id as string;
+    await firestore.update(`media/${mediaId}`, media);
     dispatch(setPreviewMediaId(mediaId));
     dispatch(setPreviewMediaList({ mediaList: [mediaId], type: "tab" }));
   };
+
   const updateMedia = (name: string, value: string) =>
     dispatch(updateUpdatingMediaLmao({ [name]: value }));
+
+  // TODO: Verify this when jumping from custom to back default
+  const transformBackgroundEvent = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    event.target.value =
+      !event.target.value || event.target.value === defaultBackground
+        ? ""
+        : event.target.value;
+    handleChange(event);
+  };
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     updateMedia(event.target.name, event.target.value);
 
@@ -89,11 +98,11 @@ const MediaUpdateStage = () => {
         <CustomColorPicker
           name="backgroundColor"
           value={media.backgroundColor || defaultBackground}
-          onChange={handleChange}
+          onChange={transformBackgroundEvent}
           label="Barva pozadí"
         />
       </Box>
-      <NextBackButtons backHidden onNextClick={hanleNextClick} />
+      <NextBackButtons backHidden onNextClick={handleNextClick} />
     </Box>
   );
 };
