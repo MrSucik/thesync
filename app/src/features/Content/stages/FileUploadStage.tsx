@@ -17,7 +17,7 @@ import client from "../../../utils/client";
 import { useCurrentScene } from "../../../hooks/useCurrentScene";
 import { MediaFileType, MediaModel, UserModel } from "../../../definitions";
 import { useCurrentUser } from "../../../hooks/useCurrentUser";
-import { createNewMedia, uploadFile } from "../../../utils/fire";
+import { withTimestamp, createNewMedia, uploadFile } from "../../../utils/fire";
 import error from "../../../utils/error";
 
 const getFileType = (type: string) => {
@@ -59,10 +59,7 @@ const FileUploadStage = () => {
         height: response.data.height,
         backgroundColor: scene.backgroundColor,
       }) as Partial<MediaModel>;
-      const { id } = await firestore.add("media", {
-        ...newMedia,
-        created: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+      const { id } = await firestore.add("media", withTimestamp(newMedia));
       dispatch(updateUpdatingMediaLmao({ id, ...newMedia }));
       enqueueSnackbar("Soubor úspěšně nahrán!");
       dispatch(setActiveStep(2));

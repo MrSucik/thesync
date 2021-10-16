@@ -1,11 +1,11 @@
 import { InputAdornment } from "@mui/material";
 import { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
-import firebase from "firebase/app";
 import { useSnackbar } from "notistack";
 import Action from "../../components/Action";
 import { Field } from "../../components/Field";
 import { useSelector } from "../../store/useSelector";
+import { withTimestamp } from "../../utils/fire";
 
 const regex =
   // eslint-disable-next-line no-control-regex
@@ -31,11 +31,7 @@ const AddUserButton = () => {
         enqueueSnackbar(`Uživatel již existuje: ${email}`);
         return;
       }
-      await doc.set({
-        email,
-        devices,
-        created: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+      await doc.set(withTimestamp({ email, devices }));
       setEmail("");
       setValid(false);
       enqueueSnackbar(`Uživatel ${email} byl úspěšně přidán do aplikace.`, {

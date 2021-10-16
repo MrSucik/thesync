@@ -39,17 +39,23 @@ export const uploadFile = (file: File) => {
   return { path, task, fileRef };
 };
 
+export const withTimestamp = <T extends Record<string, unknown>>(obj: T) => ({
+  created: firebase.firestore.FieldValue.serverTimestamp(),
+  ...obj,
+});
+
 export const createNewScene = (author: UserModel) =>
-  firestore.collection("scenes").add({
-    name: "Nová Scéna",
-    mediaList: [],
-    backgroundColor: "#1a1a1a",
-    created: firebase.firestore.FieldValue.serverTimestamp(),
-    author: author.email,
-    area: author.area,
-    hideProgress: false,
-    hideWeather: false,
-  } as Partial<SceneModel>);
+  firestore.collection("scenes").add(
+    withTimestamp({
+      name: "Nová Scéna",
+      mediaList: [],
+      backgroundColor: "#1a1a1a",
+      author: author.email,
+      area: author.area,
+      hideProgress: false,
+      hideWeather: false,
+    }) as Partial<SceneModel>
+  );
 
 export const createNewMedia = (author: UserModel, media: Partial<MediaModel>) =>
   firestore.collection("media").add({

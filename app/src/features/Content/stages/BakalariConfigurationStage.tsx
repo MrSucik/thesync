@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
 import client from "../../../utils/client";
-import firebase from "firebase/app";
 import {
   ContentType,
   setBakalariDates,
@@ -32,6 +31,7 @@ import { useCurrentScene } from "../../../hooks/useCurrentScene";
 import { Box } from "@mui/system";
 import { useSelector } from "../../../store/useSelector";
 import { useCurrentUser } from "../../../hooks/useCurrentUser";
+import { withTimestamp } from "../../../utils/fire";
 
 const generateName = (type: ContentType, date: string) =>
   `${type === "bakalari-suplovani" ? "Suplování" : "Plán Akcí"} (${
@@ -115,10 +115,7 @@ const BakalariConfigurationStage = () => {
       area: author?.area,
       backgroundColor: scene.backgroundColor,
     };
-    const { id } = await firestore.add("media", {
-      ...newMedia,
-      created: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+    const { id } = await firestore.add("media", withTimestamp(newMedia));
     dispatch(updateUpdatingMediaLmao({ ...newMedia, id }));
   };
   const handleSwitchChanged = (
