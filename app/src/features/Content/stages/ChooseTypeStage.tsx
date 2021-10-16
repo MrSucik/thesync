@@ -38,35 +38,32 @@ const options: Option[] = [
   },
 ];
 
-const OptionsList = List;
-
 const ChooseTypeStage = () => {
-  // const selectedOption = useSelector<ContentType | undefined>(
-  //   (state) => state.content.type
-  // );
   const dispatch = useDispatch();
   const createClickHandler = (type: ContentType) => () => {
     dispatch(setContentType(type));
     dispatch(setActiveStep(1));
   };
   return (
-    <Box sx={{ width: "80%", margin: "auto", overflow: "visible" }}>
-      <OptionsList>
+    <Box
+      sx={{
+        width: "80%",
+        marginInline: "auto",
+        marginBlock: "2rem",
+        overflow: "visible",
+        userSelect: "none",
+      }}>
+      <List>
         {options.map(option => (
           <ListItem
+            sx={{ cursor: "pointer" }}
             key={option.type}
-            // style={{
-            //   boxShadow:
-            //     option.type === selectedOption
-            //       ? "0 0 0 2px rgba(255, 255, 255, 0.7)"
-            //       : undefined,
-            // }}
             onClick={createClickHandler(option.type)}>
             <ListItemAvatar>{option.icon}</ListItemAvatar>
             <ListItemText primary={option.name} />
           </ListItem>
         ))}
-      </OptionsList>
+      </List>
       <NextBackButtons backHidden nextHidden />
     </Box>
   );

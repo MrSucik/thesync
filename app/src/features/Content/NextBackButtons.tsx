@@ -31,7 +31,7 @@ const NextBackButtons: React.FC<{
     dispatch(setActiveStep(activeStep - 1));
     onBackClick();
   };
-  return (
+  return backHidden && nextHidden ? null : (
     <Box
       sx={{ display: "flex", justifyContent: "flex-end", padding: 3, gap: 1 }}>
       {!backHidden && <Button onClick={handleBackClick}>zpět</Button>}
