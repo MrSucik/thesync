@@ -32,6 +32,8 @@ const StatusBadge: React.FC<{
           ...(status === "online" ? online : offline),
           height: small ? 6 : 8,
           minWidth: small ? 6 : 8,
+          right: "6%",
+          left: "auto",
           boxShadow: theme => `0 0 0 2px ${theme.palette.background.default}`,
           "::after": {
             position: "absolute",

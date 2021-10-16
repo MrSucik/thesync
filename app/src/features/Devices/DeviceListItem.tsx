@@ -62,11 +62,16 @@ const DeviceListItem: React.FC<{
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}>
       <Tooltip
-        title={`Poslední update ze zařízení: ${
-          !lastUpdateRequest
-            ? "nikdy"
-            : moment(lastUpdateRequest).format("DD. MM. YYYY HH:mm:ss")
-        }`}>
+        title={
+          <span>
+            Status prohlížeče: <b>{status ? "online" : "offline"}</b>
+            <br />
+            Poslední update ze zařízení:{" "}
+            {!lastUpdateRequest
+              ? "nikdy"
+              : moment(lastUpdateRequest).format("DD. MM. YYYY HH:mm:ss")}
+          </span>
+        }>
         <ListItemAvatar>
           <StatusBadge
             status={pythonStatus}
