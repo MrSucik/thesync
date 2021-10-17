@@ -10,7 +10,7 @@ import Content from "./features/Content/Content";
 import { Box } from "@mui/system";
 
 const Dashboard = () => {
-  const dataLoaded = useFirestoreSubscribe("test");
+  const dataLoaded = useFirestoreSubscribe("wigym");
   return dataLoaded ? (
     <>
       <UsersModal />
