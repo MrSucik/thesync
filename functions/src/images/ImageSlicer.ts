@@ -10,7 +10,7 @@ export default class ImageSlicer extends Image {
   }
 
   async createSlices() {
-    await this.verifyLoaded();
+    await this.load();
     const { neededSlices, sliceHeight } = this.calculateSlicesDetails();
     const files: string[] = [];
     for (let index = 0; index < neededSlices; index++) {
@@ -24,14 +24,14 @@ export default class ImageSlicer extends Image {
     const sliceFileName = this.createSliceFileName(index);
     const localFile = tempFilePath(sliceFileName);
     const cropArea = this.createCropArea(index, sliceHeight);
-    await this.image.extract(cropArea).toFile(localFile);
+    await this.image?.extract(cropArea).toFile(localFile);
     const remoteFile = `cropped/${sliceFileName}`;
     await uploadFile(localFile, remoteFile);
     return remoteFile;
   }
 
   private calculateSlicesDetails() {
-    const height = this.metadata.height;
+    const height = this.metadata?.height as number;
     const neededSlices = Math.ceil(height / maxHeight);
     const sliceHeight = Math.floor(height / neededSlices);
     return { neededSlices, sliceHeight };
@@ -39,7 +39,7 @@ export default class ImageSlicer extends Image {
 
   private createCropArea(index: number, sliceHeight: number) {
     return {
-      width: this.metadata.width,
+      width: this.metadata?.width as number,
       height: sliceHeight,
       left: 0,
       top: index * sliceHeight,

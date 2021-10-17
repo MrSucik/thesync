@@ -44,7 +44,7 @@ export const withTimestamp = <T extends Record<string, unknown>>(obj: T) => ({
   ...obj,
 });
 
-export const createNewScene = (author: UserModel) =>
+export const createNewSceneInDB = (author: UserModel) =>
   firestore.collection("scenes").add(
     withTimestamp({
       name: "Nová Scéna",
@@ -58,10 +58,10 @@ export const createNewScene = (author: UserModel) =>
   );
 
 export const createNewMedia = (author: UserModel, media: Partial<MediaModel>) =>
-  firestore.collection("media").add({
+  ({
     name: "Nový soubor",
     duration: 7,
     author: author.email,
     area: author.area,
     ...media,
-  } as Partial<SceneModel>);
+  } as Partial<MediaModel>);

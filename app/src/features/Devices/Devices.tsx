@@ -16,9 +16,13 @@ const Device = () => {
   const handleChangeScene = () => dispatch(setDeviceSceneUpdate("all"));
   return (
     <>
-      <ConfirmationDialog />
-      <DeviceScheduleDialog />
-      <UpdateDeviceModal />
+      {user && (
+        <>
+          <ConfirmationDialog />
+          <DeviceScheduleDialog />
+          <UpdateDeviceModal />
+        </>
+      )}
       <Box
         sx={{
           minWidth: "20rem",

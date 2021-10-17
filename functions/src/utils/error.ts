@@ -12,6 +12,7 @@ export const handleError = (
   endpoint: string,
   response?: functions.Response<ErrorDetails>
 ) => {
+  functions.logger.error(error);
   firestore.collection("logs").add({
     ...error,
     endpoint,

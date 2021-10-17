@@ -1,6 +1,6 @@
 import * as admin from "firebase-admin";
 import { ConfigurationModel } from "../definitions";
-import serviceAccount from "../../thesync-firebase-adminsdk-zze06-035f9585f2.json";
+import serviceAccount from "./firebase-adminsdk.json";
 
 export const app = admin.initializeApp({
   credential: admin.credential.cert({

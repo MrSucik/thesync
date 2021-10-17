@@ -19,31 +19,17 @@ import { MediaFileType, MediaModel, UserModel } from "../../../definitions";
 import { useCurrentUser } from "../../../hooks/useCurrentUser";
 import { withTimestamp, createNewMedia, uploadFile } from "../../../utils/fire";
 import error from "../../../utils/error";
-
-const getFileType = (type: string) => {
-  console.log(type);
-  switch (type) {
-    case "image/jpeg":
-    case "image/gif":
-    case "image/png":
-      return "image";
-    case "video/mp4":
-    case "video/x-matroska":
-      return "video";
-    default:
-      return undefined;
-  }
-};
+import { getFileType } from "../../../utils/getFileType";
 
 const FileUploadStage = () => {
-  const scene = useCurrentScene();
+  const defaultBackground = useCurrentScene().backgroundColor;
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const media = useSelector(state => state.content.updatingMedia);
   const user = useCurrentUser() as UserModel;
   const { enqueueSnackbar } = useSnackbar();
   const firestore = useFirestore();
-  const postProcessImage = async (
+  const postProcessImageMedia = async (
     remoteFileName: string,
     fileRef: firebase.storage.Reference,
     fileType: MediaFileType
@@ -51,23 +37,27 @@ const FileUploadStage = () => {
     try {
       dispatch(setDurationVisible(true));
       dispatch(setLayoutVisible(true));
-      const response = await client.getImageSize(remoteFileName);
-      const newMedia = createNewMedia(user, {
+      const {
+        data: { width, height },
+      } = await client.getImageSize(remoteFileName);
+      return createNewMedia(user, {
         file: fileRef.fullPath,
         fileType,
-        width: response.data.width,
-        height: response.data.height,
-        backgroundColor: scene.backgroundColor,
-      }) as Partial<MediaModel>;
-      const { id } = await firestore.add("media", withTimestamp(newMedia));
-      dispatch(updateUpdatingMediaLmao({ id, ...newMedia }));
-      enqueueSnackbar("Soubor úspěšně nahrán!");
-      dispatch(setActiveStep(2));
+        width,
+        height,
+        backgroundColor: defaultBackground,
+      });
     } catch (err) {
       error.onFileUploadImagePostProcessError(enqueueSnackbar)(err);
-    } finally {
       setLoading(false);
+      throw err;
     }
+  };
+  const handleFinish = async (newMedia: Partial<MediaModel>) => {
+    const { id } = await firestore.add("media", withTimestamp(newMedia));
+    dispatch(updateUpdatingMediaLmao({ id, ...newMedia }));
+    enqueueSnackbar("Soubor úspěšně nahrán!");
+    dispatch(setActiveStep(2));
   };
   const handleDropAccepted = async <T extends File>(files: T[]) => {
     try {
@@ -75,6 +65,7 @@ const FileUploadStage = () => {
       const file = files[0];
       const fileType = getFileType(file.type);
       const { path, task, fileRef } = uploadFile(file);
+      let newMedia = createNewMedia(user, {});
       task.on(
         "state-changed",
         null,
@@ -98,8 +89,12 @@ const FileUploadStage = () => {
             // };
             // reader.readAsDataURL(file);
           } else if (fileType === "image") {
-            await postProcessImage(path, fileRef, fileType);
+            newMedia = {
+              ...newMedia,
+              ...(await postProcessImageMedia(path, fileRef, fileType)),
+            };
           }
+          await handleFinish(newMedia);
         }
       );
     } catch (err) {

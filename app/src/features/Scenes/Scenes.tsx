@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { createNewScene } from "../../utils/fire";
+import { createNewSceneInDB } from "../../utils/fire";
 import Title from "../../components/Title";
 import { PrimaryButton } from "../../components/PrimaryButton";
 import ScenesList from "./ScenesList";
@@ -15,7 +15,7 @@ const Scenes = () => {
   const user = useCurrentUser() as UserModel;
   const handleAddScene = async () => {
     try {
-      const newScene = await createNewScene(user);
+      const newScene = await createNewSceneInDB(user);
       dispatch(setSelectedScene(newScene.id));
     } catch {
       enqueueSnackbar("Nepodařilo se přidat scénu", { variant: "error" });

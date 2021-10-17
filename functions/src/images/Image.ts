@@ -51,23 +51,20 @@ interface Metadata {
 
 export default class Image {
   imagePath: string;
-  image: Sharp;
-  metadata: Metadata;
+  metadata?: Metadata;
+  image?: Sharp;
 
   constructor(imagePath: string) {
     this.imagePath = imagePath;
-    this.image = sharp(imagePath);
-    this.metadata = { height: 0, width: 0, chromaSubsampling: "4:4:4" };
   }
 
-  async verifyLoaded() {
-    if (!this.metadata.height) {
-      const metadata = await this.image.metadata();
-      this.metadata = {
-        ...metadata,
-        height: metadata.height || 0,
-        width: metadata.width || 0,
-      };
-    }
+  async load(file = this.imagePath) {
+    this.image = sharp(file);
+    const metadata = await this.image.metadata();
+    this.metadata = {
+      ...metadata,
+      height: metadata.height || 0,
+      width: metadata.width || 0,
+    };
   }
 }

@@ -1,16 +1,19 @@
-import { firestore, withTimestamp } from "./fire";
 import firebase from "firebase/app";
 import { SnackbarMessage, OptionsObject, SnackbarKey } from "notistack";
+import { FileRejection } from "react-dropzone";
+import { firestore, withTimestamp } from "./fire";
+
+const serialize = (a: unknown) =>
+  JSON.parse(JSON.stringify(a, Object.getOwnPropertyNames(a)));
 
 export const handleError = (error: Error, payload?: unknown) => {
-  console.error(error, payload);
-  firestore.collection("logs").add(
-    withTimestamp({
-      payload,
-      error: JSON.stringify({ error }),
-      location: window.location.pathname,
-    })
-  );
+  const data = {
+    payload: serialize(payload),
+    error: serialize(error),
+    location: window.location.pathname,
+  };
+  console.error(data);
+  firestore.collection("logs").add(withTimestamp(data));
 };
 
 type EnqueueSnackbarHandler = (
@@ -42,11 +45,23 @@ export default {
       enqueueSnackbar(userMessage, { variant: "error" });
     },
   onFileUploadUnsupportedFileType:
-    (enqueueSnackbar: EnqueueSnackbarHandler) => (error: unknown) => {
+    (enqueueSnackbar: EnqueueSnackbarHandler) =>
+    (fileRejections: FileRejection[]) => {
       const userMessage =
         "Tento typ souboru bohužel není v této chvíli podporován.";
       const func = "User file upload - wrong file type";
-      handleError(error as Error, { userMessage, function: func });
+      handleError(new Error(func), {
+        userMessage,
+        function: func,
+        fileRejections,
+      });
+      enqueueSnackbar(userMessage, { variant: "error" });
+    },
+  onAuthFailed:
+    (enqueueSnackbar: EnqueueSnackbarHandler) => (error: unknown) => {
+      const userMessage = "Přístup zamítnut.";
+      const func = "Failed auth";
+      handleError(error as Error, { userMessage, function: func, error });
       enqueueSnackbar(userMessage, { variant: "error" });
     },
 };

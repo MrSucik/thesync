@@ -16,6 +16,7 @@ import {
 import { uploadFile } from "../firebase/storage";
 import ImageSlicer from "../images/ImageSlicer";
 import Image from "../images/Image";
+import { Metadata } from "sharp";
 
 export const processBakalariDate = async (
   type: BakalariType,
@@ -99,8 +100,8 @@ const exportBakalariMediaDocument = async (
   const remote = await processBakalariDate(type, date);
   const newFile = remote[0].metadata.name;
   const image = new Image(newFile);
-  await image.verifyLoaded();
-  const { height, width } = image.metadata;
+  await image.load();
+  const { height = 0, width } = image.metadata as Metadata;
   const update = { name, height, width };
   if (height < maxHeight) {
     await updateBakalariDoc(doc.ref, {

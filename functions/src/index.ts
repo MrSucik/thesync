@@ -35,7 +35,7 @@ export const generateDeviceToken = functions
           response.send(token);
         }
       } catch (error) {
-        handleError(error, "getImageSize", response);
+        handleError(error, "generateDeviceToken", response);
       }
     });
   });

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useCallback } from "react";
 import { setAuthorized } from "../../store/slices/auth";
 import { setOpenSettingsButtonVisible } from "../../store/slices/settings";
+import error from "../../utils/error";
 
 export const useAuthorization = () => {
   const dispatch = useDispatch();
@@ -28,27 +29,30 @@ export const useAuthorization = () => {
 
   const handleAuthorized = () => push("/app");
 
-  const handleUnauthorized = (email: string | null) => {
+  const handleUnauthorized = () => {
     push("/");
-    enqueueSnackbar(`Přístup zamítnut pro: ${email}`, {
-      variant: "error",
-    });
     firebase.auth().signOut();
   };
 
   const handleLogin = async () => {
-    const { user } = await firebaseAuth().signInWithPopup(
-      new firebase.auth.GoogleAuthProvider()
-    );
-    if (!user) {
-      return;
+    try {
+      const { user } = await firebaseAuth().signInWithPopup(
+        new firebase.auth.GoogleAuthProvider()
+      );
+      if (!user) {
+        throw new Error("Failed to get user");
+      }
+      const authorized = await updateAuthorization(user.email);
+      if (!authorized) {
+        throw new Error(
+          "Failed Firestore Database authorization for: " + user.email
+        );
+      }
+      handleAuthorized();
+    } catch (err) {
+      error.onAuthFailed(enqueueSnackbar)(err);
+      handleUnauthorized();
     }
-    const authorized = await updateAuthorization(user.email);
-    if (!authorized) {
-      handleUnauthorized(user.email);
-      return;
-    }
-    handleAuthorized();
   };
 
   return { onLogin: handleLogin, updateAuthorization };

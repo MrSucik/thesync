@@ -3,6 +3,7 @@ import { handleError } from "../utils/error";
 import * as functions from "firebase-functions";
 import ImageSlicer from "./ImageSlicer";
 import OnlineImage from "./OnlineImage";
+import ResizableImage from "./ResizableImage";
 
 export const cutImageToSlices = functions
   .region("europe-west3")
@@ -20,17 +21,27 @@ export const cutImageToSlices = functions
     });
   });
 
+const validateFile = (file = "") => {
+  if (!file) {
+    return false;
+  }
+  return true;
+};
+
 export const getImageSize = functions
   .region("europe-west3")
-  .https.onRequest(async (request, response) => {
+  .https.onRequest(async (request, response) =>
     corsHandler(request, response, async () => {
-      try {
-        const requestedFile = request.query.file as string;
-        const image = new OnlineImage(requestedFile);
-        await image.downloadFile();
-        response.send(image.metadata);
-      } catch (error) {
-        handleError(error, "getImageSize", response);
+      const requestedFile = request.query.file + "";
+      if (!validateFile(requestedFile)) {
+        handleError(new Error("Bad Request"), "cutImageToSlices", response);
+        return;
       }
-    });
-  });
+      const resizableImage = new ResizableImage(requestedFile);
+      await resizableImage.shrinkWidth();
+      console.log(resizableImage.metadata);
+      const image = new OnlineImage(requestedFile);
+      await image.downloadFile();
+      return response.send(image.metadata);
+    })
+  );

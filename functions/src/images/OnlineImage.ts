@@ -2,14 +2,15 @@ import { downloadFile } from "../firebase/storage";
 import Image from "./Image";
 
 export default class OnlineImage extends Image {
-  downloadURL: string;
-  constructor(downloadURL: string) {
-    super("");
-    this.downloadURL = downloadURL;
+  localFile: string;
+  constructor(imagePath: string) {
+    super(imagePath);
+    this.localFile = "";
   }
 
   async downloadFile() {
-    const destination = await downloadFile(this.downloadURL);
-    this.imagePath = destination;
+    const destination = await downloadFile(this.imagePath);
+    this.localFile = destination;
+    await this.load(this.localFile);
   }
 }
