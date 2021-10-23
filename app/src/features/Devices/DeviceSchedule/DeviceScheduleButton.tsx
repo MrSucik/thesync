@@ -1,17 +1,16 @@
-import { Icon, IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setDeviceScheduleOpen } from "../../../store/slices/app";
-import Tooltip from "../../../components/Tooltip";
+import DeviceActionButton from "../DeviceActionButton";
 
 const DeviceScheduleButton = () => {
   const dispatch = useDispatch();
   const handleClick = () => dispatch(setDeviceScheduleOpen(true));
   return (
-    <Tooltip title="Nastavit automatické vypínaní/restart">
-      <IconButton onClick={handleClick} size="small">
-        <Icon style={{ color: "#c4c4c4" }}>schedule</Icon>
-      </IconButton>
-    </Tooltip>
+    <DeviceActionButton
+      onClick={handleClick}
+      tooltip="Nastavit automatické vypínaní/restart"
+      icon="schedule"
+    />
   );
 };
 

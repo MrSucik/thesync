@@ -1,64 +1,45 @@
-import { Avatar, ListItemAvatar, ListItemSecondaryAction } from "@mui/material";
-import { getIconSourceSvg } from "../../utils/icons";
 import { DeviceModel } from "../../definitions";
 import { useSelector } from "../../store/useSelector";
-import StatusBadge from "../../components/StatusBadge";
 import { ListItemText } from "../../components/ListItemText";
 import ListItem from "../../components/ListItem";
-import DeviceChangeSceneButton from "./DeviceChangeSceneButton";
 import { useDispatch } from "react-redux";
 import { setConfigureDevice } from "./deviceConfigurationSlice";
-import Tooltip from "../../components/Tooltip";
-import { useFirestore } from "react-redux-firebase";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { setDeviceSceneUpdate } from "../../store/slices/app";
 import moment from "moment";
-import { useStatus } from "../../hooks/useStatus";
+import { usePythonStatus } from "../../hooks/usePythonStatus";
 import { czechLongDateTimeFormat } from "../../utils/constants";
-import DeviceAction from "./DeviceAction";
+import DeviceAvatar from "../../components/DeviceAvatar";
+import DeviceActions from "./DeviceActions";
 
 interface Device extends DeviceModel {
   sceneName: string;
 }
 
-const DeviceListItem: React.FC<{
-  device: Device;
-}> = ({ device: { id, name, sceneName, icon, lastUpdateRequest, status } }) => {
-  const pythonStatus = useStatus(lastUpdateRequest);
-
-  const [hovering, setHovering] = useState(false);
+const useDeviceAccess = (deviceId: string) => {
   const userDevices = useSelector(
     state =>
       state.firestore.data.users[state.firebase.auth.email + ""]?.devices || []
   );
-  const dispatch = useDispatch();
-  const createConfigureClickHandler = (id: string) => () =>
-    dispatch(setConfigureDevice(id));
+  return userDevices.includes(deviceId);
+};
 
-  const firestore = useFirestore();
-  const { enqueueSnackbar } = useSnackbar();
-  const createShutdownClickHandler = (id: string) => async () => {
-    await firestore.update(`devices/${id}`, { forceShutdown: true });
-    enqueueSnackbar("Příkaz k vypnutí odeslán", { variant: "success" });
-  };
-  const createRebootClickHandler = (id: string) => async () => {
-    await firestore.update(`devices/${id}`, { forceReboot: true });
-    enqueueSnackbar("Příkaz k restartování odeslán", { variant: "success" });
-  };
-  const handleChangeScene = () => dispatch(setDeviceSceneUpdate(id));
+const DeviceListItem: React.FC<{
+  device: Device;
+}> = ({ device }) => {
+  const { id, name, sceneName, lastUpdateRequest } = device;
+  const dispatch = useDispatch();
+  const pythonStatus = usePythonStatus(lastUpdateRequest);
+  const hasAccess = useDeviceAccess(id);
+
+  const handleConfigureClick = () => dispatch(setConfigureDevice(id));
+
   return (
     <ListItem
-      sx={{
-        paddingRight: userDevices.includes(id) ? 34 * 4 + "px" : 0,
-        userSelect: "none",
-      }}
-      disabled={!userDevices.includes(id)}
-      key={id}
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}>
-      <Tooltip
-        title={
+      sx={{ paddingRight: hasAccess ? 38 * 4 + "px" : 0 }}
+      disabled={!hasAccess}>
+      <DeviceAvatar
+        device={device}
+        size={40}
+        tooltip={
           <span>
             Status prohlížeče: <b>{status}</b>
             <br />
@@ -68,50 +49,15 @@ const DeviceListItem: React.FC<{
               : moment(lastUpdateRequest).format(czechLongDateTimeFormat)}
             )
           </span>
-        }>
-        <ListItemAvatar>
-          <StatusBadge status={status}>
-            <StatusBadge
-              status={pythonStatus}
-              origin={{ vertical: "bottom", horizontal: "left" }}>
-              <Avatar alt={name} src={getIconSourceSvg(icon)} />
-            </StatusBadge>
-          </StatusBadge>
-        </ListItemAvatar>
-      </Tooltip>
+        }
+      />
       <ListItemText
         sx={{ cursor: "pointer" }}
         primary={name}
-        primaryTypographyProps={{ onClick: createConfigureClickHandler(id) }}
+        primaryTypographyProps={{ onClick: handleConfigureClick }}
         secondary={`Přehrává: ${sceneName}`}
-        secondaryTypographyProps={{ onClick: handleChangeScene }}
       />
-      {userDevices.includes(id) && (
-        <ListItemSecondaryAction
-          sx={{
-            transition: "all 200ms ease-in-out",
-            opacity: hovering ? 1 : 0,
-          }}
-          onMouseEnter={() => setHovering(true)}
-          onMouseLeave={() => setHovering(false)}>
-          <DeviceChangeSceneButton deviceId={id} onClick={handleChangeScene} />
-          <DeviceAction
-            tooltip="Konfigurovat zařízení"
-            onClick={createConfigureClickHandler(id)}
-            icon="settings"
-          />
-          <DeviceAction
-            tooltip="Vypnout zařízení"
-            onClick={createShutdownClickHandler(id)}
-            icon="power_settings_new"
-          />
-          <DeviceAction
-            tooltip="Restartovat zařízení"
-            onClick={createRebootClickHandler(id)}
-            icon="restart_alt"
-          />
-        </ListItemSecondaryAction>
-      )}
+      {hasAccess && <DeviceActions deviceId={id} />}
     </ListItem>
   );
 };

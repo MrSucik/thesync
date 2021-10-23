@@ -1,11 +1,12 @@
-import { Icon, IconButton, IconButtonProps, Tooltip } from "@mui/material";
+import { Icon, IconButton, IconButtonProps } from "@mui/material";
+import Tooltip from "../../components/Tooltip";
 
 interface Props extends IconButtonProps {
   tooltip: string;
   icon: string;
 }
 
-const DeviceAction: React.FC<Props> = ({ tooltip, icon, ...props }) => {
+const DeviceActionButton: React.FC<Props> = ({ tooltip, icon, ...props }) => {
   return (
     <Tooltip title={tooltip}>
       <IconButton size="small" {...props}>
@@ -15,4 +16,4 @@ const DeviceAction: React.FC<Props> = ({ tooltip, icon, ...props }) => {
   );
 };
 
-export default DeviceAction;
+export default DeviceActionButton;

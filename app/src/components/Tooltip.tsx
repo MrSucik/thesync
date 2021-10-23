@@ -6,5 +6,6 @@ export default withStyles(theme => ({
   tooltip: {
     boxShadow: theme.shadows[1],
     fontSize: 14,
+    userSelect: "none",
   },
 }))(Tooltip);
