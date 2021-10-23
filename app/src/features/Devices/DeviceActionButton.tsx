@@ -1,4 +1,5 @@
 import { Icon, IconButton, IconButtonProps } from "@mui/material";
+import { forwardRef } from "react";
 import Tooltip from "../../components/Tooltip";
 
 interface Props extends IconButtonProps {
@@ -6,14 +7,18 @@ interface Props extends IconButtonProps {
   icon: string;
 }
 
-const DeviceActionButton: React.FC<Props> = ({ tooltip, icon, ...props }) => {
-  return (
-    <Tooltip title={tooltip}>
-      <IconButton size="small" {...props}>
-        <Icon style={{ color: "#c4c4c4" }}>{icon}</Icon>
-      </IconButton>
-    </Tooltip>
-  );
-};
+const DeviceActionButton: React.FC<Props> = forwardRef(
+  ({ tooltip, icon, ...props }, ref) => {
+    return (
+      <Tooltip title={tooltip}>
+        <IconButton ref={ref} size="small" {...props}>
+          <Icon style={{ color: "#c4c4c4" }}>{icon}</Icon>
+        </IconButton>
+      </Tooltip>
+    );
+  }
+);
+
+DeviceActionButton.displayName = "DeviceActionButton";
 
 export default DeviceActionButton;

@@ -9,5 +9,6 @@ export default withStyles(() => ({
     color: "rgba(241, 241, 241, 0.5)",
     textTransform: "uppercase",
     padding: 4,
+    lineHeight: "34px",
   },
 }))(Typography);

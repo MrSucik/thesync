@@ -17,7 +17,6 @@ const SceneListItem: React.FC<{
       justifyContent: "space-between",
       gap: 4,
       cursor: "pointer",
-      margin: "0 4px",
       width: "auto",
       boxShadow: selected ? "0 0 0 3px #fff" : undefined,
     }}

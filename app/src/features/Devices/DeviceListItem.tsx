@@ -25,8 +25,9 @@ const useDeviceAccess = (deviceId: string) => {
 const DeviceListItem: React.FC<{
   device: Device;
 }> = ({ device }) => {
-  const { id, name, sceneName, lastUpdateRequest } = device;
+  const { id, name, status, sceneName, lastUpdateRequest } = device;
   const dispatch = useDispatch();
+
   const pythonStatus = usePythonStatus(lastUpdateRequest);
   const hasAccess = useDeviceAccess(id);
 
@@ -34,7 +35,7 @@ const DeviceListItem: React.FC<{
 
   return (
     <ListItem
-      sx={{ paddingRight: hasAccess ? 38 * 4 + "px" : 0 }}
+      sx={{ paddingRight: hasAccess ? 38 * 3 + "px" : 0 }}
       disabled={!hasAccess}>
       <DeviceAvatar
         device={device}
