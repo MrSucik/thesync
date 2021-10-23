@@ -1,5 +1,6 @@
 export const internalDateFormat = "DD-MM-YYYY";
 export const czechDateFormat = "DD. MM. YYYY";
+export const czechLongDateTimeFormat = "DD. MM. YYYY HH:mm:ss";
 export const czechShortDateFormat = "DD. MM.";
 
 export const screenHeight = 1760;

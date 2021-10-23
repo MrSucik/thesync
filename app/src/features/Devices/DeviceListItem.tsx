@@ -1,10 +1,4 @@
-import {
-  Avatar,
-  Icon,
-  IconButton,
-  ListItemAvatar,
-  ListItemSecondaryAction,
-} from "@mui/material";
+import { Avatar, ListItemAvatar, ListItemSecondaryAction } from "@mui/material";
 import { getIconSourceSvg } from "../../utils/icons";
 import { DeviceModel } from "../../definitions";
 import { useSelector } from "../../store/useSelector";
@@ -21,6 +15,8 @@ import { useState } from "react";
 import { setDeviceSceneUpdate } from "../../store/slices/app";
 import moment from "moment";
 import { useStatus } from "../../hooks/useStatus";
+import { czechLongDateTimeFormat } from "../../utils/constants";
+import DeviceAction from "./DeviceAction";
 
 interface Device extends DeviceModel {
   sceneName: string;
@@ -54,7 +50,7 @@ const DeviceListItem: React.FC<{
   return (
     <ListItem
       sx={{
-        paddingRight: hovering && userDevices.includes(id) ? 34 * 4 + "px" : 0,
+        paddingRight: userDevices.includes(id) ? 34 * 4 + "px" : 0,
         userSelect: "none",
       }}
       disabled={!userDevices.includes(id)}
@@ -64,19 +60,20 @@ const DeviceListItem: React.FC<{
       <Tooltip
         title={
           <span>
-            Status prohlížeče: <b>{status ? "online" : "offline"}</b>
+            Status prohlížeče: <b>{status}</b>
             <br />
-            Poslední update ze zařízení:{" "}
+            Status zařízení: <b>{pythonStatus}</b> (poslední update:{" "}
             {!lastUpdateRequest
               ? "nikdy"
-              : moment(lastUpdateRequest).format("DD. MM. YYYY HH:mm:ss")}
+              : moment(lastUpdateRequest).format(czechLongDateTimeFormat)}
+            )
           </span>
         }>
         <ListItemAvatar>
-          <StatusBadge
-            status={pythonStatus}
-            origin={{ vertical: "bottom", horizontal: "left" }}>
-            <StatusBadge status={status}>
+          <StatusBadge status={status}>
+            <StatusBadge
+              status={pythonStatus}
+              origin={{ vertical: "bottom", horizontal: "left" }}>
               <Avatar alt={name} src={getIconSourceSvg(icon)} />
             </StatusBadge>
           </StatusBadge>
@@ -98,21 +95,21 @@ const DeviceListItem: React.FC<{
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}>
           <DeviceChangeSceneButton deviceId={id} onClick={handleChangeScene} />
-          <Tooltip title="Konfigurovat zařízení">
-            <IconButton onClick={createConfigureClickHandler(id)} size="small">
-              <Icon style={{ color: "#c4c4c4" }}>settings</Icon>
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Vypnout zařízení">
-            <IconButton onClick={createShutdownClickHandler(id)} size="small">
-              <Icon style={{ color: "#c4c4c4" }}>power_settings_new</Icon>
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Restartovat zařízení">
-            <IconButton onClick={createRebootClickHandler(id)} size="small">
-              <Icon style={{ color: "#c4c4c4" }}>restart_alt</Icon>
-            </IconButton>
-          </Tooltip>
+          <DeviceAction
+            tooltip="Konfigurovat zařízení"
+            onClick={createConfigureClickHandler(id)}
+            icon="settings"
+          />
+          <DeviceAction
+            tooltip="Vypnout zařízení"
+            onClick={createShutdownClickHandler(id)}
+            icon="power_settings_new"
+          />
+          <DeviceAction
+            tooltip="Restartovat zařízení"
+            onClick={createRebootClickHandler(id)}
+            icon="restart_alt"
+          />
         </ListItemSecondaryAction>
       )}
     </ListItem>
