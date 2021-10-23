@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useRef } from "react";
 import Weather from "./Weather";
 import { useCurrentScene } from "../../hooks/useCurrentScene";
+import NameDay from "./NameDay";
 
 const Footer = () => {
   const scene = useCurrentScene();
@@ -20,6 +21,7 @@ const Footer = () => {
         left: 0,
         right: 0,
       }}>
+      {!scene.hideNameDay && <NameDay />}
       <img
         style={{
           height: "2rem",

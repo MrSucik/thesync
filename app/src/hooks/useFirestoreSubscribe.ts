@@ -27,6 +27,7 @@ export const useFirestoreSubscribe = (area: string) => {
     connectCollection("scenes"),
     connectCollection("users"),
     connectCollection("powersettings"),
+    connectCollection("nameday"),
   ]);
   const dataLoaded = useSelector<boolean>(
     ({ firestore: { data } }) =>
@@ -38,13 +39,14 @@ export const useFirestoreSubscribe = (area: string) => {
       data.nameday
   );
   const loaded = useRef(dataLoaded);
+  loaded.current = dataLoaded;
   useEffect(() => {
     const redirectIfNotLoaded = () => {
       if (!loaded.current) {
         error.onFirestoreFailedToLoad(enqueueSnackbar)();
       }
     };
-    const timeout = setTimeout(redirectIfNotLoaded, 15 * 1000);
+    const timeout = setTimeout(redirectIfNotLoaded, 5 * 1000);
     return () => clearTimeout(timeout);
   });
   return dataLoaded;

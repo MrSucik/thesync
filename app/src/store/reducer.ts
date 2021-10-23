@@ -9,7 +9,6 @@ import preview from "./slices/preview";
 import content from "../features/Content/contentSlice";
 import deviceConfiguration from "../features/Devices/deviceConfigurationSlice";
 import weather from "../features/Footer/weatherSlice";
-import nameDay from "../features/Footer/nameDaySlice";
 
 export const reducer = combineReducers({
   firestore: firestoreReducer,
@@ -22,5 +21,4 @@ export const reducer = combineReducers({
   content,
   deviceConfiguration,
   weather,
-  nameDay,
 });

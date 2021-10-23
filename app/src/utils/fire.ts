@@ -54,6 +54,7 @@ export const createNewSceneInDB = (author: UserModel) =>
       area: author.area,
       hideProgress: false,
       hideWeather: false,
+      hideNameDay: false,
     }) as Partial<SceneModel>
   );
 

@@ -54,6 +54,7 @@ export interface SceneModel extends FirestoreDocument {
   mediaList: string[];
   hideWeather: boolean;
   hideProgress: boolean;
+  hideNameDay: boolean;
 }
 
 export interface Scene extends FirestoreDocument {
@@ -74,4 +75,9 @@ export interface PowerSettings {
   enabled: boolean;
   time: string;
   action: string;
+}
+
+export interface NameDayModel extends FirestoreDocument {
+  name: string;
+  date: Timestamp;
 }

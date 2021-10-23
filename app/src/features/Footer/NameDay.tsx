@@ -1,38 +1,34 @@
 import { Box, Typography } from "@mui/material";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { NameDayModel } from "../../definitions";
 import { useSelector } from "../../store/useSelector";
-import { fetchNameDay } from "./nameDaySlice";
+
+interface FirestoreDatabase {
+  nameday: { current: NameDayModel };
+}
+
+const useFirestoreData = <T,>(selector: (state: FirestoreDatabase) => T) =>
+  selector(useSelector(state => state.firestore.data as FirestoreDatabase));
 
 const NameDay = () => {
-  const { initialized, name } = useSelector(state => state.nameDay);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const updateNameDay = () => dispatch(fetchNameDay());
-    updateNameDay();
-    const interval = setInterval(updateNameDay, 10 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, []);
-  return !initialized ? null : (
+  const { name } = useFirestoreData(state => state.nameday.current);
+  return (
     <Box
-      style={{
-        paddingLeft: 4,
+      sx={{
+        paddingLeft: 3,
         height: 64,
         display: "flex",
         alignItems: "center",
         position: "absolute",
-        right: 0,
+        left: 0,
       }}>
       <Typography
         variant="caption"
-        style={{
+        sx={{
           fontSize: "1rem",
           fontWeight: "bold",
-          textAlign: "right",
-          textTransform: "capitalize",
           whiteSpace: "nowrap",
         }}>
-        {name}
+        Dnes má svátek: {name}
       </Typography>
     </Box>
   );

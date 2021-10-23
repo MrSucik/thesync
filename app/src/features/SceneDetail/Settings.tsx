@@ -15,8 +15,15 @@ const Settings = () => {
   const firestore = useFirestore();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  const { footer, backgroundColor, name, id, hideProgress, hideWeather } =
-    useCurrentScene();
+  const {
+    footer,
+    backgroundColor,
+    name,
+    id,
+    hideProgress,
+    hideWeather,
+    hideNameDay,
+  } = useCurrentScene();
   const handleDeleteClick = async () => {
     await firestore.delete(`scenes/${id}`);
     dispatch(setSelectedScene(null));
@@ -29,6 +36,7 @@ const Settings = () => {
       backgroundColor,
       hideProgress,
       hideWeather,
+      hideNameDay
     },
     onSubmit: async (values, { resetForm }) => {
       const databaseScene = await firestore.update(`scenes/${id}`, values);
@@ -70,6 +78,12 @@ const Settings = () => {
           checked={formik.values.hideProgress}
           onChange={formik.handleChange}
           label="Schovat progressbar"
+        />
+        <CustomSwitch
+          name="hideNameDay"
+          checked={formik.values.hideNameDay}
+          onChange={formik.handleChange}
+          label="Schovat svátek"
         />
       </FormGroup>
       <FormGroup sx={{ flexDirection: "row-reverse", gap: 1, marginTop: 4 }}>
