@@ -16,6 +16,9 @@ export const handleError = (error: Error, payload?: unknown) => {
   firestore.collection("logs").add(withTimestamp(data));
 };
 
+const reloadWindow = (delay = 1) =>
+  setTimeout(() => window.location.reload(), delay);
+
 type EnqueueSnackbarHandler = (
   message: SnackbarMessage,
   options?: OptionsObject | undefined
@@ -64,4 +67,12 @@ export default {
       handleError(error as Error, { userMessage, function: func, error });
       enqueueSnackbar(userMessage, { variant: "error" });
     },
+  onFirestoreFailedToLoad: (enqueueSnackbar: EnqueueSnackbarHandler) => () => {
+    const userMessage = "Nepodařilo se připojit k databázi.";
+    const func = "Failed Firestore load documents";
+    const error = new Error(func);
+    handleError(error as Error, { userMessage, function: func, error });
+    enqueueSnackbar(userMessage, { variant: "error" });
+    reloadWindow(3000);
+  },
 };
