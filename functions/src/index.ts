@@ -21,6 +21,8 @@ export {
 
 export { cutImageToSlices, getImageSize } from "./images/endpoints";
 
+export { scheduledNameDayUpdate } from "./nameDay/nameDay";
+
 export const generateDeviceToken = functions
   .region("europe-west3")
   .https.onRequest(async (request, response) => {

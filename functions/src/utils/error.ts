@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import { firestore } from "../firebase/fire";
-import moment = require("moment");
+import moment from "moment";
 
 interface ErrorDetails {
   message: string;
@@ -10,7 +10,7 @@ interface ErrorDetails {
 export const handleError = (
   error: any,
   endpoint: string,
-  response?: functions.Response<ErrorDetails>
+  response?: functions.Response<string>
 ) => {
   functions.logger.error(error);
   firestore.collection("logs").add({
@@ -39,6 +39,6 @@ const escape = (s?: string) => {
 };
 
 const sendErrorToClient = (
-  response: functions.Response<ErrorDetails>,
+  response: functions.Response<string>,
   error: ErrorDetails
 ) => response.status(500).send(escape(JSON.stringify(serialize(error))));

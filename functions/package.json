@@ -16,6 +16,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "axios": "^0.23.0",
     "buffer-image-size": "^0.6.4",
     "child-process-promise": "^2.2.1",
     "cors": "^2.8.5",
