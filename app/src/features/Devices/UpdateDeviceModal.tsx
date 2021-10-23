@@ -1,4 +1,4 @@
-import { Modal, Paper } from "@mui/material";
+import { DialogTitle, Modal, Paper } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { DeviceModel } from "../../definitions";
 import { useSelector } from "../../store/useSelector";
@@ -18,6 +18,7 @@ const UpdateDeviceModal = () => {
     <Modal open={Boolean(updateDeviceId)} onClose={handleClose}>
       <Paper
         sx={{ width: 420, margin: "16px auto 16px auto", overflow: "auto" }}>
+        <DialogTitle>Konfigurovat zařízení</DialogTitle>
         {updateDevice && (
           <UpdateDeviceForm
             updateDevice={{ ...updateDevice, id: updateDeviceId }}

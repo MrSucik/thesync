@@ -6,7 +6,6 @@ import {
   CardActions,
   Card,
   CardContent,
-  CardHeader,
 } from "@mui/material";
 import { icons } from "../../icons/icons.json";
 import React, { ChangeEvent, useState } from "react";
@@ -28,6 +27,7 @@ const UpdateDeviceForm: React.FC<{ updateDevice: DeviceModel }> = ({
     name: updateDevice?.name || "",
     icon: updateDevice?.icon || icons[0],
   });
+
   const handleUpdate = async () => {
     try {
       await firestore.update(`devices/${updateDevice.id}`, {
@@ -61,7 +61,6 @@ const UpdateDeviceForm: React.FC<{ updateDevice: DeviceModel }> = ({
   };
   return (
     <Card>
-      <CardHeader title="Konfigurovat zařízení" />
       <CardContent>
         <Box display="flex" padding={1}>
           <TextField
@@ -78,7 +77,7 @@ const UpdateDeviceForm: React.FC<{ updateDevice: DeviceModel }> = ({
           onChange={value => setFormData({ ...formData, icon: value })}
         />
       </CardContent>
-      <CardActions sx={{ flexDirection: "row-reverse" }}>
+      <CardActions sx={{ flexDirection: "row-reverse", pr: 4, pb: 3 }}>
         <Button variant="contained" color="primary" onClick={handleSubmit}>
           {loading ? <CircularProgress color="inherit" size={24} /> : "Uložit"}
         </Button>

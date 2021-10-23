@@ -24,7 +24,7 @@ const IconSelect: React.FC<Props> = ({ icon, onChange }) => {
           key={index}
           sx={{
             cursor: "pointer",
-            border: icon === icons[index] ? "4px solid info.main" : undefined,
+            boxShadow: icon === icons[index] ? "0 0 0 4px #098292" : undefined,
           }}
           src={source}
           onClick={() => onChange(icons[index])}
