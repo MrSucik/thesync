@@ -10,7 +10,7 @@ const SceneDetail = () => {
     <Box
       sx={{
         flex: 3,
-        margin: "8px 16px",
+        margin: "8px 32px 8px 16px",
         display: "flex",
         flexDirection: "column",
         backgroundColor: "background.default",
@@ -27,7 +27,7 @@ const SceneDetail = () => {
         </Typography>
       ) : (
         <>
-          <Title>{scene.name}</Title>
+          <Title sx={{ ml: 2 }}>{scene.name}</Title>
           <Tabs />
         </>
       )}
