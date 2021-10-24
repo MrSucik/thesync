@@ -1,11 +1,8 @@
 import { Box, Typography } from "@mui/material";
-import { forwardRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { forwardRef } from "react";
 import CurrentDateTime from "../../components/CurrentDateTime";
 import { useSelector } from "../../store/useSelector";
-import client from "../../utils/client";
 import { useWeather } from "../ForecastWidget/useWeather";
-import { setWeatherData } from "./weatherSlice";
 
 const Weather = forwardRef((_props, ref) => {
   useWeather();
