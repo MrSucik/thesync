@@ -6,7 +6,7 @@ import ProgressBar from "./ProgressBar";
 import PlayNextPrevious from "./PlayNext";
 import MediaPreviewPlayer from "./MediaPreviewPlayer";
 import { useCurrentScene } from "../../hooks/useCurrentScene";
-import ForecastWidget from "../ForecastWidget/ForecastWidget";
+// import ForecastWidget from "../ForecastWidget/ForecastWidget";
 
 interface Props {
   disableControls?: boolean;

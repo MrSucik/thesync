@@ -36,7 +36,7 @@ const Settings = () => {
       backgroundColor,
       hideProgress,
       hideWeather,
-      hideNameDay
+      hideNameDay,
     },
     onSubmit: async (values, { resetForm }) => {
       const databaseScene = await firestore.update(`scenes/${id}`, values);
