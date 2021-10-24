@@ -5,7 +5,8 @@ export type ContentType =
   | "existing"
   | "upload"
   | "bakalari-suplovani"
-  | "bakalari-planakci";
+  | "bakalari-planakci"
+  | "weather-forecast";
 
 export interface ContentState {
   contentOpen: boolean;

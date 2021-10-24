@@ -9,6 +9,7 @@ import ChooseExistingStage from "./stages/ChooseExistingStage";
 import MediaUpdateStage from "./stages/MediaUpdateStage";
 import PreviewStage from "./stages/PreviewStage";
 import ContentHeader from "./ContentHeader";
+import ForecastStage from "../ForecastWidget/ForecastStage";
 
 export const steps = ["VÝBĚR TYPU", "SOUBOR", "KONFIGURACE", "NÁHLED"];
 
@@ -38,6 +39,8 @@ const Content = () => {
               <ChooseExistingStage />
             ) : type === "upload" ? (
               <FileUploadStage />
+            ) : type === "weather-forecast" ? (
+              <ForecastStage />
             ) : type?.startsWith("bakalari-") ? (
               <BakalariConfigurationStage />
             ) : null)}

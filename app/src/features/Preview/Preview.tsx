@@ -6,6 +6,7 @@ import ProgressBar from "./ProgressBar";
 import PlayNextPrevious from "./PlayNext";
 import MediaPreviewPlayer from "./MediaPreviewPlayer";
 import { useCurrentScene } from "../../hooks/useCurrentScene";
+import ForecastWidget from "../ForecastWidget/ForecastWidget";
 
 interface Props {
   disableControls?: boolean;
@@ -27,11 +28,11 @@ const Preview: React.FC<Props> = ({ disableControls }) => {
       sx={{
         width: 1080,
         height: 1920,
-        transformOrigin: "left top",
-        transform:
-          window.innerHeight < 1500
-            ? `scale(${(window.innerHeight - 200) / 1920})`
-            : undefined,
+        transform: "rotate(90deg) translateX(-420px)",
+        // transformOrigin: "left top",
+        // window.innerHeight < 1500
+        //   ? `scale(${(window.innerHeight - 200) / 1920})`
+        //   : undefined,
         margin: "auto",
         boxSizing: "border-box",
         color: "#e6e6e6",
@@ -48,6 +49,7 @@ const Preview: React.FC<Props> = ({ disableControls }) => {
           <PlayNextPrevious type="next" />
         </>
       )}
+      {/* <ForecastWidget /> */}
       <MediaPreviewPlayer />
     </Box>
   );

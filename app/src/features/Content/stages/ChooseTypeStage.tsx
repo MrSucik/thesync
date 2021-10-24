@@ -5,7 +5,7 @@ import { List } from "../../../components/List";
 import ListItem from "../../../components/ListItem";
 import { ListItemText } from "../../../components/ListItemText";
 // import { useSelector } from "../../../store";
-import { getIconSourceSvg } from "../../../utils/icons";
+import { getIconSourcePng, getIconSourceSvg } from "../../../utils/icons";
 import { ContentType, setActiveStep, setContentType } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
 
@@ -35,6 +35,11 @@ const options: Option[] = [
     type: "bakalari-planakci",
     name: "Bakaláři - Plán akcí",
     icon: <Avatar src={getIconSourceSvg("bakalari")} />,
+  },
+  {
+    type: "weather-forecast",
+    name: "Předpověď počasí",
+    icon: <Avatar src={getIconSourcePng("cloudy-day")} />,
   },
 ];
 
