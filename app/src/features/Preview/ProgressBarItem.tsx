@@ -1,10 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
-import Tooltip from "../../components/Tooltip";
-import { MediaModel } from "../../definitions";
-import { useSelector } from "../../store/useSelector";
-import { setActiveMediaIndex } from "../../store/slices/preview";
+import Tooltip from "components/Tooltip";
+import { MediaModel } from "definitions";
+import { useSelector } from "store/useSelector";
+import { setActiveMediaIndex } from "store/slices/preview";
 import Progress from "./Progress";
 
 interface Props {

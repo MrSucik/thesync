@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon, IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { nextMedia, previousMedia } from "../../store/slices/preview";
+import { nextMedia, previousMedia } from "store/slices/preview";
 
 interface Props {
   type: "next" | "previous";

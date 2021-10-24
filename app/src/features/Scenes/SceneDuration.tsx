@@ -1,7 +1,7 @@
 import { Avatar, Box, Typography } from "@mui/material";
 import React from "react";
-import { MediaModel } from "../../definitions";
-import { getIconSourceSvg } from "../../utils/icons";
+import { MediaModel } from "definitions";
+import { getIconSourceSvg } from "utils/icons";
 
 const SceneDuration: React.FC<{ mediaList: MediaModel[] }> = ({
   mediaList,

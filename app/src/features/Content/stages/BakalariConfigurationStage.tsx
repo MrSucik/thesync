@@ -11,7 +11,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-import client from "../../../utils/client";
+import client from "utils/client";
 import {
   ContentType,
   setBakalariDates,
@@ -26,12 +26,12 @@ import {
   czechDateFormat,
   czechShortDateFormat,
   internalDateFormat,
-} from "../../../utils/constants";
-import { useCurrentScene } from "../../../hooks/useCurrentScene";
+} from "utils/constants";
+import { useCurrentScene } from "hooks/useCurrentScene";
 import { Box } from "@mui/system";
-import { useSelector } from "../../../store/useSelector";
-import { useCurrentUser } from "../../../hooks/useCurrentUser";
-import { withTimestamp } from "../../../utils/fire";
+import { useSelector } from "store/useSelector";
+import { useCurrentUser } from "hooks/useCurrentUser";
+import { withTimestamp } from "utils/fire";
 
 const generateName = (type: ContentType, date: string) =>
   `${type === "bakalari-suplovani" ? "Suplování" : "Plán Akcí"} (${

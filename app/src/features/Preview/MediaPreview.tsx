@@ -1,6 +1,6 @@
 import { useState, useRef, useLayoutEffect } from "react";
-import { MediaModel } from "../../definitions";
-import { useDownloadURL } from "../../hooks/useDownloadURL";
+import { MediaModel } from "definitions";
+import { useDownloadURL } from "hooks/useDownloadURL";
 import styled, { keyframes, css } from "styled-components";
 
 const scroll = (props: { offset: number }) => keyframes`

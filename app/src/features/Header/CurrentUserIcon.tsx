@@ -7,10 +7,10 @@ import {
 } from "@mui/material";
 import { useRef, useState } from "react";
 import { useFirebase } from "react-redux-firebase";
-import RoundedImage from "../../components/RoundedImage";
-import { List } from "../../components/List";
-import { ListItemText } from "../../components/ListItemText";
-import { useCurrentUser } from "../../hooks/useCurrentUser";
+import RoundedImage from "components/RoundedImage";
+import { List } from "components/List";
+import { ListItemText } from "components/ListItemText";
+import { useCurrentUser } from "hooks/useCurrentUser";
 
 const CurrentUserIcon = () => {
   const user = useCurrentUser();

@@ -1,14 +1,14 @@
 import { Box, Button, FormGroup } from "@mui/material";
 import { useFirestore } from "react-redux-firebase";
-import { useCurrentScene } from "../../hooks/useCurrentScene";
+import { useCurrentScene } from "hooks/useCurrentScene";
 import { useDispatch } from "react-redux";
-import { setSelectedScene } from "../../store/slices/app";
+import { setSelectedScene } from "store/slices/app";
 import { useFormik } from "formik";
-import { SceneModel } from "../../definitions";
-import { Field } from "../../components/Field";
-import { CustomSwitch } from "../../components/CustomSwitch";
-import { PrimaryButton } from "../../components/PrimaryButton";
-import CustomColorPicker from "../../components/CustomColorPicker";
+import { SceneModel } from "definitions";
+import { Field } from "components/Field";
+import { CustomSwitch } from "components/CustomSwitch";
+import { PrimaryButton } from "components/PrimaryButton";
+import CustomColorPicker from "components/CustomColorPicker";
 import { useSnackbar } from "notistack";
 
 const Settings = () => {

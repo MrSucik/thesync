@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
-import store from "./store";
+import App from "App";
+import store from "store";
 import { Provider } from "react-redux";
 import firebase from "firebase/app";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
@@ -12,13 +12,13 @@ import {
   StyledEngineProvider,
   CssBaseline,
 } from "@mui/material";
-import { theme } from "./utils/theme";
+import { theme } from "utils/theme";
 import { SnackbarProvider } from "notistack";
 import { BrowserRouter } from "react-router-dom";
-import ErrorContainer from "./components/ErrorContainer";
+import ErrorContainer from "components/ErrorContainer";
 import "moment/locale/cs";
 import moment from "moment";
-import StatCounter from "./components/StatCounter";
+import StatCounter from "components/StatCounter";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateMoment from "@mui/lab/AdapterMoment";
 declare module "@mui/styles/defaultTheme" {

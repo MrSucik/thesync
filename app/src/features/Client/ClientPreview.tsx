@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../store/useSelector";
+import { useSelector } from "store/useSelector";
 import Preview from "../Preview/Preview";
-import { setPreviewMediaList } from "../../store/slices/preview";
-import { setSelectedScene } from "../../store/slices/app";
+import { setPreviewMediaList } from "store/slices/preview";
+import { setSelectedScene } from "store/slices/app";
 import { Box } from "@mui/material";
 
 const ClientPreview: React.FC<{ deviceId: string }> = ({ deviceId }) => {

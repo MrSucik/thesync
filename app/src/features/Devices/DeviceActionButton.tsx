@@ -1,6 +1,6 @@
 import { Icon, IconButton, IconButtonProps } from "@mui/material";
 import { forwardRef } from "react";
-import Tooltip from "../../components/Tooltip";
+import Tooltip from "components/Tooltip";
 
 interface Props extends IconButtonProps {
   tooltip: string;

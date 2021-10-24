@@ -1,5 +1,5 @@
 import { DialogTitle, Step, StepLabel, Stepper, Box } from "@mui/material";
-import { useSelector } from "../../store/useSelector";
+import { useSelector } from "store/useSelector";
 
 export const steps = ["VÝBĚR TYPU", "SOUBOR", "KONFIGURACE", "NÁHLED"];
 

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import CurrentUserIcon from "./CurrentUserIcon";
-import { useSelector } from "../../store/useSelector";
+import { useSelector } from "store/useSelector";
 import UsersAdministrationIconButton from "./SettingsButton";
 
 const HeaderButtons = () => {

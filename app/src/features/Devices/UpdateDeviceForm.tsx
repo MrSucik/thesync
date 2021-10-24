@@ -7,13 +7,13 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
-import { icons } from "../../icons/icons.json";
+import { icons } from "icons/icons.json";
 import React, { ChangeEvent, useState } from "react";
 import { useFirestore } from "react-redux-firebase";
 import { useDispatch } from "react-redux";
 import { useSnackbar } from "notistack";
-import { DeviceModel } from "../../definitions";
-import IconSelect from "../../components/IconSelect";
+import { DeviceModel } from "definitions";
+import IconSelect from "components/IconSelect";
 import { setConfigureDevice } from "./deviceConfigurationSlice";
 
 const UpdateDeviceForm: React.FC<{ updateDevice: DeviceModel }> = ({

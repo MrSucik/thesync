@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import React from "react";
-import MuiListItem from "../../components/ListItem";
-import { ListItemText } from "../../components/ListItemText";
-import { Scene } from "../../definitions";
+import MuiListItem from "components/ListItem";
+import { ListItemText } from "components/ListItemText";
+import { Scene } from "definitions";
 import SceneDevices from "./SceneDevices";
 import SceneDuration from "./SceneDuration";
 import StackedMedia from "./StackedMedia";

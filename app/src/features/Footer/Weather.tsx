@@ -1,8 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import { forwardRef } from "react";
-import CurrentDateTime from "../../components/CurrentDateTime";
-import { useSelector } from "../../store/useSelector";
-import { useWeather } from "../ForecastWidget/useWeather";
+import CurrentDateTime from "components/CurrentDateTime";
+import { useSelector } from "store/useSelector";
+import { useWeather } from "features/ForecastWidget/useWeather";
 
 const Weather = forwardRef((_props, ref) => {
   useWeather();

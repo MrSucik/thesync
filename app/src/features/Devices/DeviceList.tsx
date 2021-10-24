@@ -1,6 +1,6 @@
-import { DeviceModel } from "../../definitions";
-import { useSelector } from "../../store/useSelector";
-import { List } from "../../components/List";
+import { DeviceModel } from "definitions";
+import { useSelector } from "store/useSelector";
+import { List } from "components/List";
 import DeviceListItem from "./DeviceListItem";
 
 interface Device extends DeviceModel {

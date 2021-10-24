@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import client from "../../utils/client";
+import client from "utils/client";
 import { setWeatherData } from "../Footer/weatherSlice";
 
 export const useWeather = () => {

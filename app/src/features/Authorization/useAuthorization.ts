@@ -4,9 +4,9 @@ import { useHistory } from "react-router";
 import { useSnackbar } from "notistack";
 import { useDispatch } from "react-redux";
 import { useCallback } from "react";
-import { setAuthorized } from "../../store/slices/auth";
-import { setOpenSettingsButtonVisible } from "../../store/slices/settings";
-import error from "../../utils/error";
+import { setAuthorized } from "store/slices/auth";
+import { setOpenSettingsButtonVisible } from "store/slices/settings";
+import error from "utils/error";
 
 export const useAuthorization = () => {
   const dispatch = useDispatch();

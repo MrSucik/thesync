@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { createNewSceneInDB } from "../../utils/fire";
-import Title from "../../components/Title";
-import { PrimaryButton } from "../../components/PrimaryButton";
+import { createNewSceneInDB } from "utils/fire";
+import Title from "components/Title";
+import { PrimaryButton } from "components/PrimaryButton";
 import ScenesList from "./ScenesList";
 import { useDispatch } from "react-redux";
-import { setSelectedScene } from "../../store/slices/app";
-import { useCurrentUser } from "../../hooks/useCurrentUser";
-import { UserModel } from "../../definitions";
+import { setSelectedScene } from "store/slices/app";
+import { useCurrentUser } from "hooks/useCurrentUser";
+import { UserModel } from "definitions";
 
 const Scenes = () => {
   const dispatch = useDispatch();

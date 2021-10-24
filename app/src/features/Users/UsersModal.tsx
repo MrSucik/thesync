@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../store/useSelector";
-import { setUserAdministrationOpen } from "../../store/slices/settings";
+import { useSelector } from "store/useSelector";
+import { setUserAdministrationOpen } from "store/slices/settings";
 import AddUserButton from "./AddUserButton";
 import UsersList from "./UsersList";
 

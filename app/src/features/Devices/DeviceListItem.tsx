@@ -1,13 +1,13 @@
-import { DeviceModel } from "../../definitions";
-import { useSelector } from "../../store/useSelector";
-import { ListItemText } from "../../components/ListItemText";
-import ListItem from "../../components/ListItem";
+import { DeviceModel } from "definitions";
+import { useSelector } from "store/useSelector";
+import { ListItemText } from "components/ListItemText";
+import ListItem from "components/ListItem";
 import { useDispatch } from "react-redux";
 import { setConfigureDevice } from "./deviceConfigurationSlice";
 import moment from "moment";
-import { usePythonStatus } from "../../hooks/usePythonStatus";
-import { czechLongDateTimeFormat } from "../../utils/constants";
-import DeviceAvatar from "../../components/DeviceAvatar";
+import { usePythonStatus } from "hooks/usePythonStatus";
+import { czechLongDateTimeFormat } from "utils/constants";
+import DeviceAvatar from "components/DeviceAvatar";
 import DeviceActions from "./DeviceActions";
 
 interface Device extends DeviceModel {

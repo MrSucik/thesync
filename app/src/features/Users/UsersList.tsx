@@ -1,6 +1,6 @@
-import { List } from "../../components/List";
-import { UserModel } from "../../definitions";
-import { useSelector } from "../../store/useSelector";
+import { List } from "components/List";
+import { UserModel } from "definitions";
+import { useSelector } from "store/useSelector";
 import UserListItem from "./UserListItem";
 
 const UsersList = () => {

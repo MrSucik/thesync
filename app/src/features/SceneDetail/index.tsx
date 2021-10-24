@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import Title from "../../components/Title";
-import { useCurrentScene } from "../../hooks/useCurrentScene";
+import Title from "components/Title";
+import { useCurrentScene } from "hooks/useCurrentScene";
 import Tabs from "./Tabs";
 
 const SceneDetail = () => {

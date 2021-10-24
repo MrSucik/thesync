@@ -1,4 +1,4 @@
-import { useDeviceAccess } from "../../hooks/useDeviceAccess";
+import { useDeviceAccess } from "hooks/useDeviceAccess";
 import Client from "./Client";
 
 const ClientAuthorization = () => {

@@ -2,10 +2,10 @@ import { InputAdornment } from "@mui/material";
 import { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
 import { useSnackbar } from "notistack";
-import Action from "../../components/Action";
-import { Field } from "../../components/Field";
-import { useSelector } from "../../store/useSelector";
-import { withTimestamp } from "../../utils/fire";
+import Action from "components/Action";
+import { Field } from "components/Field";
+import { useSelector } from "store/useSelector";
+import { withTimestamp } from "utils/fire";
 
 const regex =
   // eslint-disable-next-line no-control-regex

@@ -6,7 +6,7 @@ import "firebase/performance";
 import "firebase/database";
 import "firebase/analytics";
 import { firebaseApiKey, firebaseAppId } from "./constants";
-import { MediaModel, SceneModel, UserModel } from "../definitions";
+import { MediaModel, SceneModel, UserModel } from "definitions";
 
 const firebaseConfig = {
   apiKey: firebaseApiKey,

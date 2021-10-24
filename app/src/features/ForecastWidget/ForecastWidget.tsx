@@ -1,6 +1,6 @@
 import { Box } from "@mui/system";
 import ReactApexChart from "react-apexcharts";
-import { useSelector } from "../../store/useSelector";
+import { useSelector } from "store/useSelector";
 import { useWeather } from "./useWeather";
 
 const ForecastWidget: React.FC = () => {

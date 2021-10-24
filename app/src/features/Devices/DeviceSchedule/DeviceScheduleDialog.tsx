@@ -4,8 +4,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../../store/useSelector";
-import { setDeviceScheduleOpen } from "../../../store/slices/app";
+import { useSelector } from "store/useSelector";
+import { setDeviceScheduleOpen } from "store/slices/app";
 import moment from "moment";
 import {
   Box,
@@ -18,7 +18,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { TimePicker } from "@mui/lab";
-import { usePowerSettings } from "../../../hooks/usePowerSettings";
+import { usePowerSettings } from "hooks/usePowerSettings";
 
 const DeviceScheduleDialog = () => {
   const dispatch = useDispatch();

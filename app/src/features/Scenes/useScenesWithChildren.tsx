@@ -1,5 +1,5 @@
-import { DeviceModel, Scene, SceneModel } from "../../definitions";
-import { useSelector } from "../../store/useSelector";
+import { DeviceModel, Scene, SceneModel } from "definitions";
+import { useSelector } from "store/useSelector";
 
 export const useScenesWithChildren = () => {
   const scenes = useSelector<Scene[]>(state =>

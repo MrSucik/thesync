@@ -8,14 +8,14 @@ import {
 } from "@mui/material";
 import { SnackbarProvider } from "notistack";
 import { Provider } from "react-redux";
-import store from "../store";
+import store from "store";
 import MomentUtils from "@date-io/moment";
 import firebase from "firebase";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { BrowserRouter } from "react-router-dom";
 import { createFirestoreInstance } from "redux-firestore";
-import App from "../App";
-import ErrorContainer from "../components/ErrorContainer";
+import App from "App";
+import ErrorContainer from "components/ErrorContainer";
 import { theme } from "./theme";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 

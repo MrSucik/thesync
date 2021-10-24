@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import { useFirestoreSubscribe } from "../../hooks/useFirestoreSubscribe";
-import { useStatusReporting } from "../../hooks/useStatusReporting";
+import { useFirestoreSubscribe } from "hooks/useFirestoreSubscribe";
+import { useStatusReporting } from "hooks/useStatusReporting";
 import ClientPreview from "./ClientPreview";
 
 interface Params {

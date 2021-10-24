@@ -6,10 +6,10 @@ import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import { useScenesWithChildren } from "../Scenes/useScenesWithChildren";
 import SceneListItem from "../Scenes/SceneListItem";
-import { List } from "../../components/List";
+import { List } from "components/List";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../store/useSelector";
-import { setDeviceSceneUpdate } from "../../store/slices/app";
+import { useSelector } from "store/useSelector";
+import { setDeviceSceneUpdate } from "store/slices/app";
 import { useFirestore } from "react-redux-firebase";
 
 const DeviceChangeSceneDialog = () => {

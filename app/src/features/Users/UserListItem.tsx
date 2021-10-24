@@ -14,13 +14,13 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
-import { List } from "../../components/List";
-import StatusBadge from "../../components/StatusBadge";
-import { DeviceModel, UserModel } from "../../definitions";
-import { useSelector } from "../../store/useSelector";
-import { getIconSourceSvg } from "../../utils/icons";
+import { List } from "components/List";
+import StatusBadge from "components/StatusBadge";
+import { DeviceModel, UserModel } from "definitions";
+import { useSelector } from "store/useSelector";
+import { getIconSourceSvg } from "utils/icons";
 import moment from "moment";
-import { CustomSwitch } from "../../components/CustomSwitch";
+import { CustomSwitch } from "components/CustomSwitch";
 
 const DeviceListItem: React.FC<{
   isChecked: boolean;

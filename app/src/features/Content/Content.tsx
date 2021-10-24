@@ -1,6 +1,6 @@
 import { Container, Modal, Paper } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../store/useSelector";
+import { useSelector } from "store/useSelector";
 import BakalariConfigurationStage from "./stages/BakalariConfigurationStage";
 import ChooseTypeStage from "./stages/ChooseTypeStage";
 import { setContentOpen } from "./contentSlice";

@@ -1,5 +1,5 @@
 import React from "react";
-import { useTimeout } from "../../hooks/useTimeout";
+import { useTimeout } from "hooks/useTimeout";
 
 const TimedPreview: React.FC<{
   timeout: number | string;

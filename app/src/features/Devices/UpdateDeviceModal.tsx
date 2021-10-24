@@ -1,7 +1,7 @@
 import { DialogTitle, Modal, Paper } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { DeviceModel } from "../../definitions";
-import { useSelector } from "../../store/useSelector";
+import { DeviceModel } from "definitions";
+import { useSelector } from "store/useSelector";
 import { setConfigureDevice } from "./deviceConfigurationSlice";
 import UpdateDeviceForm from "./UpdateDeviceForm";
 

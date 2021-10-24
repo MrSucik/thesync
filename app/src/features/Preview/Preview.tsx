@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { MediaModel } from "../../definitions";
-import { useSelector } from "../../store/useSelector";
+import { MediaModel } from "definitions";
+import { useSelector } from "store/useSelector";
 import ProgressBar from "./ProgressBar";
 import PlayNextPrevious from "./PlayNext";
 import MediaPreviewPlayer from "./MediaPreviewPlayer";
-import { useCurrentScene } from "../../hooks/useCurrentScene";
+import { useCurrentScene } from "hooks/useCurrentScene";
 // import ForecastWidget from "../ForecastWidget/ForecastWidget";
 
 interface Props {

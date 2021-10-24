@@ -1,7 +1,7 @@
 import { Box, Modal } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../store/useSelector";
-import { setPreviewMediaList } from "../../store/slices/preview";
+import { useSelector } from "store/useSelector";
+import { setPreviewMediaList } from "store/slices/preview";
 import Preview from "./Preview";
 
 const ModalPreview = () => {

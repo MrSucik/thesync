@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { MediaModel } from "../../definitions";
-import { useDownloadURL } from "../../hooks/useDownloadURL";
-import { getIconSourceSvg } from "../../utils/icons";
+import { MediaModel } from "definitions";
+import { useDownloadURL } from "hooks/useDownloadURL";
+import { getIconSourceSvg } from "utils/icons";
 
 const Media: React.FC<{ media: MediaModel; src?: string }> = ({
   media,

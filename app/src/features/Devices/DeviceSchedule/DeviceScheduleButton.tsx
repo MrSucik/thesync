@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { setDeviceScheduleOpen } from "../../../store/slices/app";
+import { setDeviceScheduleOpen } from "store/slices/app";
 import DeviceActionButton from "../DeviceActionButton";
 
 const DeviceScheduleButton = () => {

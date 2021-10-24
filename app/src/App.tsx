@@ -1,5 +1,5 @@
 import Router from "./Router";
-import "./styles/base.sass";
+import "styles/base.sass";
 
 const App = () => {
   return <Router />;

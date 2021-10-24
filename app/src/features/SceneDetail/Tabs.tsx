@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Tab, Tabs as MuiTabs } from "@mui/material";
 import Content from "./Content";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../store/useSelector";
-import Preview from "../../features/Preview/Preview";
+import { useSelector } from "store/useSelector";
+import Preview from "features/Preview/Preview";
 import Settings from "./Settings";
-import { setPreviewMediaList } from "../../store/slices/preview";
-import { useCurrentScene } from "../../hooks/useCurrentScene";
+import { setPreviewMediaList } from "store/slices/preview";
+import { useCurrentScene } from "hooks/useCurrentScene";
 import TabPanel from "./TabPanel";
 
 const darkTab = {

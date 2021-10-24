@@ -1,15 +1,15 @@
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-import { List } from "../../components/List";
-import { MediaModel } from "../../definitions";
-import { useCurrentScene } from "../../hooks/useCurrentScene";
-import { useSelector } from "../../store/useSelector";
-import { setOptimisticReorderUpdate } from "../../store/slices/app";
+import { List } from "components/List";
+import { MediaModel } from "definitions";
+import { useCurrentScene } from "hooks/useCurrentScene";
+import { useSelector } from "store/useSelector";
+import { setOptimisticReorderUpdate } from "store/slices/app";
 import MediaListItem from "./MediaListItem";
-import { PrimaryButton } from "../../components/PrimaryButton";
+import { PrimaryButton } from "components/PrimaryButton";
 import { Box } from "@mui/material";
-import { setContentOpen } from "../../features/Content/contentSlice";
+import { setContentOpen } from "features/Content/contentSlice";
 
 const reorder = (list: string[], startIndex: number, endIndex: number) => {
   const result = Array.from(list);

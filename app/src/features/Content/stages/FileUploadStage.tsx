@@ -3,7 +3,7 @@ import firebase from "firebase/app";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../../store/useSelector";
+import { useSelector } from "store/useSelector";
 import {
   setActiveStep,
   setDurationVisible,
@@ -13,13 +13,13 @@ import {
 import { useSnackbar } from "notistack";
 import NextBackButtons from "../NextBackButtons";
 import { useFirestore } from "react-redux-firebase";
-import client from "../../../utils/client";
-import { useCurrentScene } from "../../../hooks/useCurrentScene";
-import { MediaFileType, MediaModel, UserModel } from "../../../definitions";
-import { useCurrentUser } from "../../../hooks/useCurrentUser";
-import { withTimestamp, createNewMedia, uploadFile } from "../../../utils/fire";
-import error from "../../../utils/error";
-import { getFileType } from "../../../utils/getFileType";
+import client from "utils/client";
+import { useCurrentScene } from "hooks/useCurrentScene";
+import { MediaFileType, MediaModel, UserModel } from "definitions";
+import { useCurrentUser } from "hooks/useCurrentUser";
+import { withTimestamp, createNewMedia, uploadFile } from "utils/fire";
+import error from "utils/error";
+import { getFileType } from "utils/getFileType";
 
 const FileUploadStage = () => {
   const defaultBackground = useCurrentScene().backgroundColor;

@@ -2,11 +2,11 @@ import { IconButton, ListItemSecondaryAction } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-import RoundedImage from "../../components/RoundedImage";
-import Tooltip from "../../components/Tooltip";
-import { MediaModel } from "../../definitions";
-import { useCurrentScene } from "../../hooks/useCurrentScene";
-import { getIconSourceSvg } from "../../utils/icons";
+import RoundedImage from "components/RoundedImage";
+import Tooltip from "components/Tooltip";
+import { MediaModel } from "definitions";
+import { useCurrentScene } from "hooks/useCurrentScene";
+import { getIconSourceSvg } from "utils/icons";
 import {
   setActiveStep,
   setContentOpen,

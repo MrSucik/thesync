@@ -3,7 +3,7 @@ import { useSnackbar } from "notistack";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-import { setDeviceSceneUpdate } from "../../store/slices/app";
+import { setDeviceSceneUpdate } from "store/slices/app";
 import DeviceActionButton from "./DeviceActionButton";
 import DeviceChangeSceneButton from "./DeviceChangeSceneButton";
 import { setConfigureDevice } from "./deviceConfigurationSlice";

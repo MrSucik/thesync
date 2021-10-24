@@ -1,8 +1,8 @@
 import { Box } from "@mui/system";
 import { useFirestore } from "react-redux-firebase";
-import { useCurrentScene } from "../../../hooks/useCurrentScene";
-import { useSelector } from "../../../store/useSelector";
-import Preview from "../../Preview/Preview";
+import { useCurrentScene } from "hooks/useCurrentScene";
+import { useSelector } from "store/useSelector";
+import Preview from "features/Preview/Preview";
 import NextBackButtons from "../NextBackButtons";
 
 const PreviewStage = () => {

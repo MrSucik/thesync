@@ -1,5 +1,5 @@
 import { Icon, IconButton } from "@mui/material";
-import Tooltip from "../../components/Tooltip";
+import Tooltip from "components/Tooltip";
 
 const DeviceChangeSceneButton: React.FC<{
   deviceId: string | "all";

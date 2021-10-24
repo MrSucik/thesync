@@ -3,12 +3,12 @@ import { Box } from "@mui/system";
 import firebase from "firebase/app";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-import { List } from "../../../components/List";
-import ListItem from "../../../components/ListItem";
-import { ListItemText } from "../../../components/ListItemText";
-import { MediaModel } from "../../../definitions";
-import { useDownloadURL } from "../../../hooks/useDownloadURL";
-import { useSelector } from "../../../store/useSelector";
+import { List } from "components/List";
+import ListItem from "components/ListItem";
+import { ListItemText } from "components/ListItemText";
+import { MediaModel } from "definitions";
+import { useDownloadURL } from "hooks/useDownloadURL";
+import { useSelector } from "store/useSelector";
 import { setActiveStep, setUpdatingMedia } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
 

@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import { NameDayModel } from "../../definitions";
-import { useSelector } from "../../store/useSelector";
+import { NameDayModel } from "definitions";
+import { useSelector } from "store/useSelector";
 
 interface FirestoreDatabase {
   nameday: { current: NameDayModel };

@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { MediaModel } from "../../definitions";
+import { MediaModel } from "definitions";
 import MediaPreview from "./MediaPreview";
-import { nextInnerMedia, nextMedia } from "../../store/slices/preview";
+import { nextInnerMedia, nextMedia } from "store/slices/preview";
 import TimedPreview from "./TimedPreview";
 import { Box } from "@mui/material";
 import Footer from "../Footer/Footer";
-import { useSelector } from "../../store/useSelector";
+import { useSelector } from "store/useSelector";
 
 const MediaPreviewPlayer: React.FC = () => {
   const dispatch = useDispatch();

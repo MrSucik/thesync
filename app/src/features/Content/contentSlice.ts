@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MediaModel } from "../../definitions";
+import { MediaModel } from "definitions";
 
 export type ContentType =
   | "existing"

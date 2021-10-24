@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { MediaModel } from "../../definitions";
-import { useSelector } from "../../store/useSelector";
+import { MediaModel } from "definitions";
+import { useSelector } from "store/useSelector";
 import Overlay from "./Overlay";
 import ProgressBarItem from "./ProgressBarItem";
 
