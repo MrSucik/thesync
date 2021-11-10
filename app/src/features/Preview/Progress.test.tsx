@@ -1,7 +1,6 @@
-import React from "react";
 // import { rest } from "msw";
 // import { setupServer } from "msw/node";
-import { render, screen, waitFor } from "../../utils/tests";
+import { render, screen } from "utils/tests";
 import Progress from "./Progress";
 // const server = setupServer(
 //   rest.get(

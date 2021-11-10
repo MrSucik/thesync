@@ -1,10 +1,11 @@
-import { Avatar, ListItemAvatar, withStyles } from "@material-ui/core";
+import { Avatar, ListItemAvatar } from "@mui/material";
+import { Box } from "@mui/system";
 import { useDispatch } from "react-redux";
-import { List } from "../../../components/List";
-import ListItem from "../../../components/ListItem";
-import { ListItemText } from "../../../components/ListItemText";
-// import { useSelector } from "../../../store";
-import { getIconSource } from "../../../utils/icons";
+import { List } from "components/List";
+import ListItem from "components/ListItem";
+import { ListItemText } from "components/ListItemText";
+// import { useSelector } from "store";
+import { getIconSourcePng, getIconSourceSvg } from "utils/icons";
 import { ContentType, setActiveStep, setContentType } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
 
@@ -23,55 +24,53 @@ const options: Option[] = [
   {
     type: "upload",
     name: "Nahrát soubor",
-    icon: <Avatar src={getIconSource("upload-file")} />,
+    icon: <Avatar src={getIconSourceSvg("upload-file")} />,
   },
   {
     type: "bakalari-suplovani",
     name: "Bakaláři - Suplování",
-    icon: <Avatar src={getIconSource("bakalari")} />,
+    icon: <Avatar src={getIconSourceSvg("bakalari")} />,
   },
   {
     type: "bakalari-planakci",
     name: "Bakaláři - Plán akcí",
-    icon: <Avatar src={getIconSource("bakalari")} />,
+    icon: <Avatar src={getIconSourceSvg("bakalari")} />,
+  },
+  {
+    type: "weather-forecast",
+    name: "Předpověď počasí",
+    icon: <Avatar src={getIconSourcePng("cloudy-day")} />,
   },
 ];
 
-const OptionsList = withStyles({
-  root: { width: "80%", margin: "auto", overflow: "visible" },
-})(List);
-
 const ChooseTypeStage = () => {
-  // const selectedOption = useSelector<ContentType | undefined>(
-  //   (state) => state.content.type
-  // );
   const dispatch = useDispatch();
   const createClickHandler = (type: ContentType) => () => {
     dispatch(setContentType(type));
     dispatch(setActiveStep(1));
   };
   return (
-    <>
-      <OptionsList>
-        {options.map((option) => (
+    <Box
+      sx={{
+        width: "80%",
+        marginInline: "auto",
+        marginBlock: "2rem",
+        overflow: "visible",
+        userSelect: "none",
+      }}>
+      <List>
+        {options.map(option => (
           <ListItem
+            sx={{ cursor: "pointer" }}
             key={option.type}
-            // style={{
-            //   boxShadow:
-            //     option.type === selectedOption
-            //       ? "0 0 0 2px rgba(255, 255, 255, 0.7)"
-            //       : undefined,
-            // }}
-            onClick={createClickHandler(option.type)}
-            button
-          >
+            onClick={createClickHandler(option.type)}>
             <ListItemAvatar>{option.icon}</ListItemAvatar>
             <ListItemText primary={option.name} />
           </ListItem>
         ))}
-      </OptionsList>
+      </List>
       <NextBackButtons backHidden nextHidden />
-    </>
+    </Box>
   );
 };
 

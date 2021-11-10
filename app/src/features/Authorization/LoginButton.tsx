@@ -1,20 +1,17 @@
 import React from "react";
-import { useFirebase } from "react-redux-firebase";
-import firebase from "firebase/app";
-import { Avatar, Button } from "@material-ui/core";
+import { Avatar, Button } from "@mui/material";
+import { useAuthorization } from "./useAuthorization";
 
 const LoginButton: React.FC = () => {
-  const { auth } = useFirebase();
-  const handleClick = () =>
-    auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  const { onLogin } = useAuthorization();
   return (
     <Button
+      id="login"
       variant="contained"
       color="primary"
       size="large"
-      onClick={handleClick}
-      startIcon={<Avatar src="./google-icon.svg" />}
-    >
+      onClick={onLogin}
+      startIcon={<Avatar src="./google-icon.svg" />}>
       Přihlásit se
     </Button>
   );

@@ -1,4 +1,8 @@
-export const getIconSource = (name: string) =>
-  require(`../icons/${name}.svg`).default;
-  export const getIconSourcePng = (name: string) =>
-  require(`../icons/${name}.png`).default;
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+export const getIconSourceSvg = (name: string) => getIconSource(`${name}.svg`);
+
+export const getIconSourcePng = (name: string) => getIconSource(`${name}.png`);
+
+export const getIconSource = (fileName: string) =>
+  require(`../icons/${fileName}`).default;

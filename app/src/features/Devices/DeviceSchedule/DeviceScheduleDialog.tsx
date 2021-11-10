@@ -1,13 +1,11 @@
-import Button from "@material-ui/core/Button";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Dialog from "@material-ui/core/Dialog";
+import Button from "@mui/material/Button";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Dialog from "@mui/material/Dialog";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../../store";
-import { setDeviceScheduleOpen } from "../../../store/slices/app";
-import { useFirestore } from "react-redux-firebase";
-import { KeyboardTimePicker } from "@material-ui/pickers";
+import { useSelector } from "store/useSelector";
+import { setDeviceScheduleOpen } from "store/slices/app";
 import moment from "moment";
 import {
   Box,
@@ -16,35 +14,28 @@ import {
   MenuItem,
   Select,
   Switch,
-} from "@material-ui/core";
-import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
+  TextField,
+  SelectChangeEvent,
+} from "@mui/material";
+import { TimePicker } from "@mui/lab";
+import { usePowerSettings } from "hooks/usePowerSettings";
+
 
 const DeviceScheduleDialog = () => {
   const dispatch = useDispatch();
-  const settings = useSelector(
-    (state) => state.firestore.ordered.powersettings[0]
-  );
-  const firestore = useFirestore();
-  const open = useSelector((state) => state.app.deviceScheduleOpen);
+  const { powerSettings, updatePowerSettings } = usePowerSettings();
+  const open = useSelector(state => state.app.deviceScheduleOpen);
 
-  const updateSettings = (changes: any) =>
-    firestore.add("powersettings", {
-      ...settings,
-      updated: moment().format(),
-      ...changes,
-    });
+  const handleTimeChange = (date: unknown) =>
+    updatePowerSettings({ time: moment(date as string).format() });
 
-  const handleTimeChange = (date: MaterialUiPickersDate) =>
-    updateSettings({ time: moment(date).format() });
-
-  const handleActionChange = (
-    event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
-  ) => updateSettings({ action: event.target.value });
+  const handleActionChange = (event: SelectChangeEvent<unknown>) =>
+    updatePowerSettings({ action: event.target.value as string });
 
   const handleEnabledChange = (
     _event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean
-  ) => updateSettings({ enabled: checked });
+  ) => updatePowerSettings({ enabled: checked });
 
   const handleCancel = () => dispatch(setDeviceScheduleOpen(false));
 
@@ -58,11 +49,11 @@ const DeviceScheduleDialog = () => {
           control={
             <Switch
               color="secondary"
-              checked={settings.enabled}
+              checked={powerSettings.enabled}
               onChange={handleEnabledChange}
             />
           }
-          label={settings.enabled ? "Zapnuto" : "Vypnuto"}
+          label={powerSettings.enabled ? "Zapnuto" : "Vypnuto"}
         />
         <Box
           style={{
@@ -70,16 +61,15 @@ const DeviceScheduleDialog = () => {
             alignItems: "flex-end",
             gap: "2rem",
             marginTop: "1rem",
-          }}
-        >
-          <KeyboardTimePicker
-            margin="none"
-            label="Vybrat čas"
-            value={settings.time}
+          }}>
+          <TimePicker
+            // margin="none"
+            value={powerSettings.time}
             ampm={false}
             onChange={handleTimeChange}
-            style={{ flex: 1 }}
-            disabled={!settings.enabled}
+            // style={{ flex: 1 }}
+            disabled={!powerSettings.enabled}
+            renderInput={props => <TextField {...props} label="Vybrat čas" />}
           />
           <Box flex={1}>
             <InputLabel id="select-label" shrink>
@@ -88,10 +78,9 @@ const DeviceScheduleDialog = () => {
             <Select
               labelId="select-label"
               style={{ width: "100%" }}
-              value={settings.action}
+              value={powerSettings.action}
               onChange={handleActionChange}
-              disabled={!settings.enabled}
-            >
+              disabled={!powerSettings.enabled}>
               <MenuItem value="shutdown">Vypnout</MenuItem>
               <MenuItem value="reboot">Restartovat</MenuItem>
             </Select>

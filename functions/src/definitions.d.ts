@@ -1,5 +1,9 @@
 import { firestore } from "firebase-admin";
 
+type DateQuery = string | "auto";
+
+type BakalariType = "bakalari-planakci" | "bakalari-suplovani";
+
 interface ClientModel {
   name: string;
   scene: string;

@@ -1,17 +1,17 @@
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-import { List } from "../../components/List";
-import { MediaModel } from "../../definitions";
-import { useCurrentScene } from "../../hooks/useCurrentScene";
-import { RootState } from "../../store";
-import { setOptimisticReorderUpdate } from "../../store/slices/app";
+import { List } from "components/List";
+import { MediaModel } from "definitions";
+import { useCurrentScene } from "hooks/useCurrentScene";
+import { useSelector } from "store/useSelector";
+import { setOptimisticReorderUpdate } from "store/slices/app";
 import MediaListItem from "./MediaListItem";
-import { PrimaryButton } from "../../components/PrimaryButton";
-import { Box } from "@material-ui/core";
-import { setContentOpen } from "../../features/Content/contentSlice";
+import { PrimaryButton } from "components/PrimaryButton";
+import { Box } from "@mui/material";
+import { setContentOpen } from "features/Content/contentSlice";
 
-const reorder = (list: any[], startIndex: number, endIndex: number) => {
+const reorder = (list: string[], startIndex: number, endIndex: number) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
@@ -22,7 +22,7 @@ const Content = () => {
   const firestore = useFirestore();
   const dispatch = useDispatch();
   const scene = useCurrentScene();
-  const mediaList = useSelector<RootState, MediaModel[]>((state) =>
+  const mediaList = useSelector<MediaModel[]>(state =>
     scene?.mediaList
       ? scene.mediaList.map((m: string) => ({
           id: m,
@@ -38,7 +38,7 @@ const Content = () => {
       return;
     }
     const reordered = reorder(
-      mediaList.map((x) => x.id),
+      mediaList.map(x => x.id),
       result.source.index,
       result.destination.index
     );
@@ -53,13 +53,13 @@ const Content = () => {
   };
   const handleAddContentClick = () => dispatch(setContentOpen(true));
   return (
-    <Box display="flex" flexDirection="column">
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       <PrimaryButton onClick={handleAddContentClick}>
         přidat obsah
       </PrimaryButton>
       <DragDropContext onDragEnd={handleMediaDragEnd}>
         <Droppable droppableId="scene">
-          {(provided) => (
+          {provided => (
             <List ref={provided.innerRef} {...provided.droppableProps}>
               {mediaList.map((media, index) => (
                 <MediaListItem key={media.id} index={index} media={media} />

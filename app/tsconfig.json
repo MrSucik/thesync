@@ -6,6 +6,7 @@
       "dom.iterable",
       "esnext"
     ],
+    "baseUrl": "./src/",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -19,10 +20,15 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "suppressImplicitAnyIndexErrors": true
   },
   "include": [
     "src",
-    "jest.config.ts"
+    "jest.config.ts",
+    "tests"
+  ],
+  "exclude": [
+    "__tests__"
   ]
 }

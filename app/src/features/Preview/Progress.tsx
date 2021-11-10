@@ -1,42 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
-import { createStyles, LinearProgress, makeStyles } from "@material-ui/core";
+import { LinearProgress } from "@mui/material";
 import moment from "moment";
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    progress: {
-      zIndex: 99,
-      height: 2,
-      background: "rgba(100, 100, 100, 0.7)",
-      "& div": {
-        background: "white",
-      },
-    },
-  })
-);
-
 interface Props {
   duration: number;
   state: "empty" | "full" | "running";
 }
 
 const Progress: React.FC<Props> = ({ duration, state }) => {
-  const classes = useStyles();
   const [progress, setProgress] = useState(0);
-  const interval = useRef<NodeJS.Timeout>();
+  const interval = useRef<number>(0);
   // 101 for smoothness
   const completed = progress >= 101;
   useEffect(() => {
     if (state === "full") {
       setProgress(100);
-      clearInterval(interval.current as any);
+      clearInterval(interval.current);
     } else if (state === "empty") {
       setProgress(0);
-      clearInterval(interval.current as any);
+      clearInterval(interval.current);
     }
   }, [state]);
   useEffect(() => {
-    clearInterval(interval?.current as any);
+    clearInterval(interval?.current);
     if (state === "running") {
       setProgress(0);
       const startTime = moment();
@@ -48,13 +33,21 @@ const Progress: React.FC<Props> = ({ duration, state }) => {
               100
           ),
         1000
-      );
+      ) as unknown as number;
     }
-    return () => clearInterval(interval?.current as any);
+    return () => clearInterval(interval.current);
   }, [duration, state, completed]);
   return (
     <LinearProgress
-      className={classes.progress}
+      sx={{
+        zIndex: 99,
+        height: 2,
+        background: "rgba(100, 100, 100, 0.7)",
+        borderRadius: 1,
+        "& div": {
+          background: "white",
+        },
+      }}
       variant="determinate"
       value={state === "full" ? 100 : state === "empty" ? 0 : progress}
     />

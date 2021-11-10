@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import { Box, BoxProps } from "@material-ui/core";
+import { Box, BoxProps } from "@mui/material";
 import Glowing from "./Glowing";
 import Disabled from "./Disabled";
 
@@ -10,27 +10,19 @@ interface Props {
   outerBoxProps?: BoxProps;
 }
 
-const Card: React.FC<Props> = forwardRef<any, Props>(
+const Card: React.FC<Props> = forwardRef<unknown, Props>(
   ({ children, outerBoxProps, disabled, fill, clickable }, ref) => {
     return (
-      <Box
-        // @ts-ignore
-        ref={ref}
-        flex={1}
-        margin={3}
-        marginBottom={3}
-        {...outerBoxProps}
-      >
+      <Box ref={ref} flex={1} margin={3} marginBottom={3} {...outerBoxProps}>
         <Box
           position="relative"
-          style={{
+          sx={{
             backgroundColor: fill ? "rgb(66, 96, 143)" : "transparent",
             cursor: clickable ? "pointer" : "auto",
             borderRadius: 4,
             overflow: "auto",
-            paddingTop: fill ? 0 : 8,
-          }}
-        >
+            paddingTop: fill ? 0 : 1,
+          }}>
           {clickable && <Glowing />}
           {disabled && <Disabled />}
           {children}
@@ -39,5 +31,7 @@ const Card: React.FC<Props> = forwardRef<any, Props>(
     );
   }
 );
+
+Card.displayName = "Card";
 
 export default Card;

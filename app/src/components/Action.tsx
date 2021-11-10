@@ -1,21 +1,7 @@
-import {
-  Icon,
-  IconButton,
-  IconButtonProps,
-  IconProps,
-  withStyles,
-} from "@material-ui/core";
+import { Icon, IconButton, IconButtonProps, IconProps } from "@mui/material";
 import React from "react";
+import { dummyFunction } from "../utils/constants";
 import Tooltip from "./Tooltip";
-
-const IconButtonAction = withStyles(() => ({
-  root: {
-    margin: 8,
-    "&:hover": {
-      backgroundColor: "rgba(100, 100, 100, 0.5)",
-    },
-  },
-}))(IconButton);
 
 interface Props {
   icon: string;
@@ -27,16 +13,23 @@ interface Props {
 
 const Action: React.FC<Props> = ({
   icon,
-  onClick = () => {},
+  onClick = dummyFunction,
   tooltip,
   iconButtonProps,
   iconProps,
 }) => {
   const button = (
-    <IconButtonAction onClick={onClick} {...iconButtonProps}>
+    <IconButton
+      sx={{
+        margin: 1,
+        ":hover": { backgroundColor: "rgba(100, 100, 100, 0.5)" },
+      }}
+      onClick={onClick}
+      {...iconButtonProps}>
       <Icon {...iconProps}>{icon}</Icon>
-    </IconButtonAction>
+    </IconButton>
   );
   return tooltip ? <Tooltip title={tooltip}>{button}</Tooltip> : button;
 };
+
 export default Action;

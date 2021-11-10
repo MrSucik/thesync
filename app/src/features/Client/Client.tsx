@@ -1,7 +1,6 @@
-import React from "react";
 import { useParams } from "react-router-dom";
-import { useFirestoreSubscribe } from "../../hooks/useFirestoreSubscribe";
-import { useStatusReporting } from "../../hooks/useStatusReporting";
+import { useFirestoreSubscribe } from "hooks/useFirestoreSubscribe";
+import { useStatusReporting } from "hooks/useStatusReporting";
 import ClientPreview from "./ClientPreview";
 
 interface Params {
@@ -11,7 +10,7 @@ interface Params {
 const Client = () => {
   const { deviceId } = useParams<Params>();
   useStatusReporting(deviceId);
-  const loaded = useFirestoreSubscribe();
+  const loaded = useFirestoreSubscribe("wigym");
   return loaded ? <ClientPreview deviceId={deviceId} /> : null;
 };
 

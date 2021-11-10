@@ -1,10 +1,10 @@
-import { Icon, ListItem, ListItemAvatar, Popover } from "@material-ui/core";
-import React, { useRef, useState } from "react";
+import { Icon, ListItem, ListItemAvatar, Popover } from "@mui/material";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import Action from "../../components/Action";
-import { List } from "../../components/List";
-import { ListItemText } from "../../components/ListItemText";
-import { setUserAdministrationOpen } from "../../store/slices/settings";
+import Action from "components/Action";
+import { List } from "components/List";
+import { ListItemText } from "components/ListItemText";
+import { setUserAdministrationOpen } from "store/slices/settings";
 
 const UsersAdministrationIconButton = () => {
   const [open, setOpen] = useState(false);
@@ -21,7 +21,7 @@ const UsersAdministrationIconButton = () => {
         icon="settings"
         onClick={handleClickList}
         iconProps={{
-          style: { color: "rgba(241, 241, 241, 0.73)", fontSize: 32 },
+          sx: { color: "rgba(241, 241, 241, 0.73)", fontSize: 32 },
         }}
       />
       <Popover
@@ -31,8 +31,7 @@ const UsersAdministrationIconButton = () => {
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "center",
-        }}
-      >
+        }}>
         <List>
           <ListItem button onClick={handleClickListItem}>
             <ListItemAvatar>

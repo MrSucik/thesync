@@ -11,26 +11,16 @@ import {
   ListItemAvatar,
   ListItemSecondaryAction,
   ListItemText,
-  Switch,
-  withStyles,
-} from "@material-ui/core";
+} from "@mui/material";
 import React, { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
-import { List } from "../../components/List";
-import StatusBadge from "../../components/StatusBadge";
-import { DeviceModel, UserModel } from "../../definitions";
-import { useSelector } from "../../store";
-import { getIconSource } from "../../utils/icons";
+import { List } from "components/List";
+import StatusBadge from "components/StatusBadge";
+import { DeviceModel, UserModel } from "definitions";
+import { useSelector } from "store/useSelector";
+import { getIconSourceSvg } from "utils/icons";
 import moment from "moment";
-
-const BeatifulSwitch = withStyles({
-  switchBase: {
-    "&$checked": { color: "#74aa44" },
-    "&$checked + $track": { backgroundColor: "#74aa44" },
-  },
-  track: {},
-  checked: {},
-})(Switch);
+import { CustomSwitch } from "components/CustomSwitch";
 
 const DeviceListItem: React.FC<{
   isChecked: boolean;
@@ -44,12 +34,12 @@ const DeviceListItem: React.FC<{
     <ListItem>
       <ListItemAvatar>
         <StatusBadge status={device.status}>
-          <Avatar alt={device.name} src={getIconSource(device.icon)} />
+          <Avatar alt={device.name} src={getIconSourceSvg(device.icon)} />
         </StatusBadge>
       </ListItemAvatar>
       <ListItemText primary={device.name} />
       <ListItemSecondaryAction>
-        <BeatifulSwitch edge="end" onChange={onChange} checked={isChecked} />
+        <CustomSwitch label="" onChange={onChange} checked={isChecked} />
       </ListItemSecondaryAction>
     </ListItem>
   );
@@ -57,31 +47,34 @@ const DeviceListItem: React.FC<{
 
 const DeviceList: React.FC<{ user: string }> = ({ user }) => {
   const firestore = useFirestore();
-  const devices = useSelector((state) => state.firestore.ordered.devices);
-  const checkedDevices = useSelector<string[]>(
-    (state) => state.firestore.data.users[user]?.devices || []
+  const devices = useSelector<DeviceModel[]>(
+    state => state.firestore.ordered.devices
   );
-  const createChangeHandler = (id: string) => (
-    _event: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean
-  ) => {
-    if (checked) {
-      firestore.update(`users/${user}`, {
-        devices: [...checkedDevices, id],
-      });
-    } else {
-      firestore.update(`users/${user}`, {
-        devices: checkedDevices.filter((x) => x !== id),
-      });
-    }
-  };
+  const checkedDevices = useSelector<string[]>(
+    state => state.firestore.data.users[user]?.devices || []
+  );
+  const createChangeHandler =
+    (id: string) =>
+    (_event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+      if (checked) {
+        firestore.update(`users/${user}`, {
+          devices: [...checkedDevices, id],
+        });
+      } else {
+        firestore.update(`users/${user}`, {
+          devices: checkedDevices.filter(x => x !== id),
+        });
+      }
+    };
   return (
     <>
-      <FormLabel style={{ textAlign: "center" }} component="legend">
-        Uživatel je oprávněn ovládat následující zařízení
+      <FormLabel
+        sx={{ textAlign: "center", color: "rgba(255, 255, 255, .54)" }}
+        component="legend">
+        Uživatel je oprávněn ovládat pouze vybraná zařízení
       </FormLabel>
       <List>
-        {devices.map((device) => (
+        {devices.map(device => (
           <DeviceListItem
             key={device.id}
             device={device}
@@ -102,16 +95,14 @@ const UserListItem: React.FC<{ user: UserModel }> = ({ user }) => {
     <Accordion
       expanded={user.bigD ? false : expanded}
       onChange={() => setExpanded(!expanded)}
-      style={{ backgroundColor: "#323232" }}
-    >
+      sx={{ backgroundColor: "#323232" }}>
       <AccordionSummary
         style={{ cursor: user.bigD ? "default" : "pointer" }}
         expandIcon={
           user.bigD ? null : (
             <Icon>{!expanded ? "expand_more" : "expand_less"}</Icon>
           )
-        }
-      >
+        }>
         <ListItem>
           <ListItemAvatar>
             <Avatar src={user.photoURL} />
@@ -137,8 +128,7 @@ const UserListItem: React.FC<{ user: UserModel }> = ({ user }) => {
             variant="contained"
             color="secondary"
             onClick={handleDeleteClick}
-            fullWidth
-          >
+            fullWidth>
             odstranit uživatele z aplikace
           </Button>
         </Box>

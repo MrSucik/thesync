@@ -1,24 +1,24 @@
-import { List } from "../../components/List";
+import { List } from "components/List";
 import { useScenesWithChildren } from "./useScenesWithChildren";
 import SceneListItem from "./SceneListItem";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../store";
-import { setSelectedScene } from "../../store/slices/app";
-import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { useSelector } from "store/useSelector";
+import { setSelectedScene } from "store/slices/app";
+import { useCurrentUser } from "hooks/useCurrentUser";
 import { useSnackbar } from "notistack";
 
 const ScenesList = () => {
   const user = useCurrentUser();
-  const inaccessibleScenes = useSelector<string[]>((state) => [
+  const inaccessibleScenes = useSelector<string[]>(state => [
     ...new Set(
       Object.keys(state.firestore.data.devices)
-        .filter((x) => !user?.devices.includes(x))
-        .map((x) => state.firestore.data.devices[x].scene)
+        .filter(x => !user?.devices.includes(x))
+        .map(x => state.firestore.data.devices[x].scene)
     ),
   ]);
   const { enqueueSnackbar } = useSnackbar();
   const scenes = useScenesWithChildren();
-  const selectedScene = useSelector((state) => state.app.selectedScene);
+  const selectedScene = useSelector(state => state.app.selectedScene);
   const dispatch = useDispatch();
   const createClickHandler = (id: string) => () => {
     const hasAccess = !inaccessibleScenes.includes(id);
@@ -31,8 +31,8 @@ const ScenesList = () => {
     }
   };
   return (
-    <List style={{ paddingRight: 16 }}>
-      {scenes.map((scene) => (
+    <List id="playlists" sx={{ paddingRight: 2 }}>
+      {scenes.map(scene => (
         <SceneListItem
           key={scene.id}
           scene={scene}

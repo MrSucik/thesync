@@ -1,34 +1,34 @@
 import { useEffect, useState } from "react";
-import Button from "@material-ui/core/Button";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Dialog from "@material-ui/core/Dialog";
+import Button from "@mui/material/Button";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Dialog from "@mui/material/Dialog";
 import { useScenesWithChildren } from "../Scenes/useScenesWithChildren";
 import SceneListItem from "../Scenes/SceneListItem";
-import { List } from "../../components/List";
+import { List } from "components/List";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../store";
-import { setDeviceSceneUpdate } from "../../store/slices/app";
+import { useSelector } from "store/useSelector";
+import { setDeviceSceneUpdate } from "store/slices/app";
 import { useFirestore } from "react-redux-firebase";
 
 const DeviceChangeSceneDialog = () => {
   const dispatch = useDispatch();
   const handleCancel = () => dispatch(setDeviceSceneUpdate(""));
   const firestore = useFirestore();
-  const deviceId = useSelector((state) => state.app.deviceSceneUpdate);
-  const device = useSelector((state) => ({
+  const deviceId = useSelector(state => state.app.deviceSceneUpdate);
+  const device = useSelector(state => ({
     id: deviceId,
     ...state.firestore.data.devices[deviceId],
   }));
-  const allDevices = useSelector((state) =>
+  const allDevices = useSelector(state =>
     Object.keys(state.firestore.data.devices)
   );
   const scenes = useScenesWithChildren();
   const [selectedIndex, setSelectedIndex] = useState(0);
   useEffect(() => {
     if (deviceId) {
-      setSelectedIndex(scenes.findIndex((x) => x.id === device.scene));
+      setSelectedIndex(scenes.findIndex(x => x.id === device.scene));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deviceId, setSelectedIndex]);
@@ -36,15 +36,13 @@ const DeviceChangeSceneDialog = () => {
     handleCancel();
     const updatedScene = { scene: scenes[selectedIndex].id };
     if (deviceId === "all") {
-      allDevices.forEach((id) =>
-        firestore.update(`devices/${id}`, updatedScene)
-      );
+      allDevices.forEach(id => firestore.update(`devices/${id}`, updatedScene));
     } else {
       firestore.update(`devices/${device.id}`, updatedScene);
     }
   };
   return (
-    <Dialog disableBackdropClick disableEscapeKeyDown open={Boolean(deviceId)}>
+    <Dialog disableEscapeKeyDown open={Boolean(deviceId)}>
       <DialogTitle>
         Vybrat scénu pro
         <b>{deviceId === "all" ? " všechna zařízení" : ": " + device.name}</b>

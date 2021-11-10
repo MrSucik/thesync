@@ -1,20 +1,30 @@
 import React, { ReactElement } from "react";
 import { render, RenderOptions } from "@testing-library/react";
-import { ThemeProvider, CssBaseline } from "@material-ui/core";
+import {
+  ThemeProvider,
+  Theme,
+  StyledEngineProvider,
+  CssBaseline,
+} from "@mui/material";
 import { SnackbarProvider } from "notistack";
 import { Provider } from "react-redux";
-import store from "../store";
+import store from "store";
 import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import firebase from "firebase";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { BrowserRouter } from "react-router-dom";
 import { createFirestoreInstance } from "redux-firestore";
-import App from "../App";
-import ErrorContainer from "../components/ErrorContainer";
+import App from "App";
+import ErrorContainer from "components/ErrorContainer";
 import { theme } from "./theme";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
 
-const AllTheProviders: React.FC = ({ children }) => {
+declare module "@mui/styles/defaultTheme" {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
+const AllTheProviders: React.FC = () => {
   return (
     <React.StrictMode>
       <BrowserRouter>
@@ -23,17 +33,18 @@ const AllTheProviders: React.FC = ({ children }) => {
             firebase={firebase}
             config={{}}
             dispatch={store.dispatch}
-            createFirestoreInstance={createFirestoreInstance}
-          >
+            createFirestoreInstance={createFirestoreInstance}>
             <SnackbarProvider>
-              <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <MuiPickersUtilsProvider utils={MomentUtils}>
-                  <ErrorContainer>
-                    <App />
-                  </ErrorContainer>
-                </MuiPickersUtilsProvider>
-              </ThemeProvider>
+              <StyledEngineProvider injectFirst>
+                <ThemeProvider theme={theme}>
+                  <CssBaseline />
+                  <LocalizationProvider dateAdapter={MomentUtils}>
+                    <ErrorContainer>
+                      <App />
+                    </ErrorContainer>
+                  </LocalizationProvider>
+                </ThemeProvider>
+              </StyledEngineProvider>
             </SnackbarProvider>
           </ReactReduxFirebaseProvider>
         </Provider>

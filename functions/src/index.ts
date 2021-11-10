@@ -1,47 +1,27 @@
 import * as functions from "firebase-functions";
 import { validateDeviceId, createDeviceToken } from "./auth";
-import { bucket, firestore, uploadFile } from "./fire";
-import {
-  exportCurrentBakalari,
-  generateBakalariFileName,
-  getAvailableDates,
-  initialize,
-  scrapePlan,
-  scrapeSupl,
-} from "./baka";
-import {
-  bakaPlanDatesRoute,
-  bakaSuplDatesRoute,
-  internalDateFormat,
-} from "./constants";
+import { bucket, firestore } from "./firebase/fire";
 import moment = require("moment");
 import * as path from "path";
 import * as os from "os";
 import * as fs from "fs";
 import { spawn } from "child-process-promise";
 import { createThumbnailFromVideo } from "./thumbnails";
-import * as cors from "cors";
-import { getImageMetadata } from "./utils";
+import { handleError } from "./utils/error";
+import { corsHandler } from "./utils/corsHandler";
 
-const corsHandler = cors({ origin: true });
-const handleError = (
-  error: any,
-  response: functions.Response<any>,
-  endpoint: string
-) => {
-  firestore.collection("logs").add({
-    ...log,
-    endpoint,
-    created: moment().format(),
-  });
-  response.status(500).send(error);
-};
+export {
+  manualBakalariUpdate,
+  scheduledBakalariUpdate,
+  availableBakaPlanDates,
+  availableBakaSuplDates,
+  bakalariProcessPlan,
+  bakalariProcessSupl,
+} from "./bakalari/endpoints";
 
-export const scheduledBakalariUpdate = functions
-  .region("europe-west3")
-  .runWith({ timeoutSeconds: 300, memory: "4GB" })
-  .pubsub.schedule("every 30 minutes")
-  .onRun(exportCurrentBakalari);
+export { cutImageToSlices, getImageSize } from "./images/endpoints";
+
+export { scheduledNameDayUpdate } from "./nameDay/nameDay";
 
 export const generateDeviceToken = functions
   .region("europe-west3")
@@ -57,7 +37,7 @@ export const generateDeviceToken = functions
           response.send(token);
         }
       } catch (error) {
-        handleError(error, response, "getImageSize");
+        handleError(error, "generateDeviceToken", response);
       }
     });
   });
@@ -76,83 +56,6 @@ export const onClientStatusChanged = functions
       ? null
       : userStatusFirestoreRef.update({ status: eventStatus.state });
   });
-
-const loadDates = async (url: string) => {
-  const page = await initialize();
-  await page.goto(url);
-  const dates = await getAvailableDates(page);
-  return dates;
-};
-
-const createAvailableDatesHandler = (url: string) =>
-  functions
-    .region("europe-west3")
-    .runWith({ memory: "1GB" })
-    .https.onRequest(async (_request, response) => {
-      corsHandler(_request, response, async () => {
-        try {
-          const dates = await loadDates(url);
-          response.send(dates);
-        } catch (error) {
-          handleError(error, response, "getImageSize");
-        }
-      });
-    });
-
-export const availableBakaSuplDates =
-  createAvailableDatesHandler(bakaSuplDatesRoute);
-
-export const availableBakaPlanDates =
-  createAvailableDatesHandler(bakaPlanDatesRoute);
-
-const createProcessDateHandler = (type: "supl" | "plan") =>
-  functions
-    .region("europe-west3")
-    .runWith({ memory: "1GB" })
-    .https.onRequest((request, response) => {
-      corsHandler(request, response, async () => {
-        try {
-          const dateQuery = request.query["date"] as string;
-          const { dates, selected } = await loadDates(
-            type === "supl" ? bakaSuplDatesRoute : bakaPlanDatesRoute
-          );
-          console.log(dates, selected);
-
-          if (dateQuery !== "auto") {
-            const dateExists = dates.find(
-              (x) =>
-                x ===
-                moment(dateQuery).add(8, "hours").format(internalDateFormat)
-            );
-            if (!dateExists) {
-              response.status(404).send("Bakaláři for this date not found");
-              return;
-            }
-          }
-          const date = (
-            dateQuery === "auto"
-              ? moment(selected, internalDateFormat)
-              : moment(dateQuery)
-          ).add(8, "hours");
-          const page = await initialize();
-          const screen =
-            type === "supl"
-              ? await scrapeSupl(page, date)
-              : await scrapePlan(page, date);
-          const result = await uploadFile(
-            screen,
-            generateBakalariFileName(type)
-          );
-          response.send({ date, file: result[1].name });
-        } catch (error) {
-          response.status(500).send(error);
-        }
-      });
-    });
-
-export const bakalariProcessSupl = createProcessDateHandler("supl");
-
-export const bakalariProcessPlan = createProcessDateHandler("plan");
 
 // export const onMediaFileUpdate = functions
 //   .region("europe-west3")
@@ -174,7 +77,7 @@ export const onFileCreated = functions
   .region("europe-west3")
   .runWith({ memory: "1GB" })
   .storage.object()
-  .onFinalize(async (object) => {
+  .onFinalize(async object => {
     const filePath = object.name;
     const contentType = object.contentType;
     if (!contentType || !filePath) {
@@ -185,7 +88,7 @@ export const onFileCreated = functions
       return functions.logger.log("Already a Thumbnail.");
     }
 
-    let tempFilePath = path.join(os.tmpdir(), fileName);
+    const tempFilePath = path.join(os.tmpdir(), fileName);
     const metadata = { contentType: contentType };
     await bucket.file(filePath).download({ destination: tempFilePath });
     let thumbPath = "";
@@ -210,20 +113,6 @@ export const onFileCreated = functions
     return fs.unlinkSync(tempFilePath);
   });
 
-export const getImageSize = functions
-  .region("europe-west3")
-  .https.onRequest(async (request, response) => {
-    corsHandler(request, response, async () => {
-      try {
-        const requestedFile = request.query.file as string;
-        const metadata = await getImageMetadata(requestedFile);
-        response.send(metadata);
-      } catch (error) {
-        handleError(error, response, "getImageSize");
-      }
-    });
-  });
-
 export const echoDevice = functions
   .region("europe-west3")
   .https.onRequest((request, response) => {
@@ -234,7 +123,7 @@ export const echoDevice = functions
           startup: moment().add(3, "minutes"),
         });
       } catch (error) {
-        handleError(error, response, "getImageSize");
+        handleError(error, "echoDevice", response);
       }
     });
   });
@@ -275,14 +164,14 @@ export const endpoint = functions.https.onRequest((request, response) => {
         startup: false,
       });
     } catch (error) {
-      handleError(error, response, "getImageSize");
+      handleError(error, "endpoint", response);
     }
   });
 });
 
 export const log = functions.https.onRequest((request, response) => {
   corsHandler(request, response, async () => {
-    const log = request.body;
-    response.status(200).send(await firestore.collection("logs").add(log));
+    const data = request.body;
+    response.status(200).send(await firestore.collection("logs").add(data));
   });
 });

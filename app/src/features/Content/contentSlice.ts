@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MediaModel } from "../../definitions";
+import { MediaModel } from "definitions";
 
 export type ContentType =
   | "existing"
   | "upload"
   | "bakalari-suplovani"
-  | "bakalari-planakci";
+  | "bakalari-planakci"
+  | "weather-forecast";
 
 export interface ContentState {
   contentOpen: boolean;
@@ -51,7 +52,7 @@ const contentSlice = createSlice({
         state.updatingMedia = {
           duration: 7,
           name: "",
-          layout: "center"
+          layout: "center",
         };
         state.bakalariFileLoading = false;
         state.bakalariSelectedOption = "auto";

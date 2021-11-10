@@ -5,7 +5,7 @@ export const useStoreUserData = () => {
   const firestore = useFirestore();
   const firebase = useFirebase();
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (user && !window.location.pathname.startsWith("/preview")) {
         firestore.doc(`users/${user.email}`).update({
           email: user.email,

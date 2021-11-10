@@ -1,6 +1,6 @@
 import { useState, useRef, useLayoutEffect } from "react";
-import { MediaModel } from "../../definitions";
-import { useDownloadURL } from "../../hooks/useDownloadURL";
+import { MediaModel } from "definitions";
+import { useDownloadURL } from "hooks/useDownloadURL";
 import styled, { keyframes, css } from "styled-components";
 
 const scroll = (props: { offset: number }) => keyframes`
@@ -26,7 +26,7 @@ const scroll = (props: { offset: number }) => keyframes`
 
 const animation = (props: { offset: number }) =>
   css`
-    ${scroll(props)} 80s linear
+    ${scroll(props)} 30s linear
   `;
 
 const ScrollingImage = styled.img`
@@ -34,8 +34,7 @@ const ScrollingImage = styled.img`
   max-width: 100%;
   display: ${(props: { visible: boolean; offset: number }) =>
     props.visible ? "inline" : "none"};
-  max-height: ${(props: { offset: number; visible: boolean }) =>
-    window.innerHeight > 1200 ? "" : "100%"};
+  max-height: ${() => (window.innerHeight > 1200 ? "" : "100%")};
   animation: ${(props: { offset: number; visible: boolean }) =>
     props.offset ? animation(props) : ""};
   will-change: transform;
@@ -75,10 +74,7 @@ const MediaPreview: React.FC<Props> = ({ media, visible }) => {
       )}
       {media.fileType === "video" && (
         <video autoPlay loop>
-          <source
-            src={downloadURL}
-            type="video/mp4"
-          />
+          <source src={downloadURL} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       )}

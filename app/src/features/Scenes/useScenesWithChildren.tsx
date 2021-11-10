@@ -1,10 +1,9 @@
-import { useSelector } from "react-redux";
-import { DeviceModel, Scene } from "../../definitions";
-import { RootState } from "../../store";
+import { DeviceModel, Scene, SceneModel } from "definitions";
+import { useSelector } from "store/useSelector";
 
 export const useScenesWithChildren = () => {
-  const scenes = useSelector<RootState, Scene[]>((state) =>
-    state.firestore.ordered.scenes.map((scene) => {
+  const scenes = useSelector<Scene[]>(state =>
+    state.firestore.ordered.scenes.map((scene: SceneModel) => {
       const mediaList = (
         (state.app.optimisticReorderUpdate?.sceneId === scene.id
           ? state.app.optimisticReorderUpdate?.mediaList

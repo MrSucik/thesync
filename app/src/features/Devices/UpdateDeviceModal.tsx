@@ -1,33 +1,24 @@
-import { Modal, Paper, createStyles, makeStyles } from "@material-ui/core";
+import { DialogTitle, Modal, Paper } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { DeviceModel } from "../../definitions";
-import { useSelector } from "../../store";
+import { DeviceModel } from "definitions";
+import { useSelector } from "store/useSelector";
 import { setConfigureDevice } from "./deviceConfigurationSlice";
 import UpdateDeviceForm from "./UpdateDeviceForm";
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    container: {
-      width: 420,
-      margin: "16px auto 16px auto",
-      overflow: "auto",
-    },
-  })
-);
-
 const UpdateDeviceModal = () => {
-  const classes = useStyles();
   const updateDeviceId = useSelector(
-    (state) => state.deviceConfiguration.updateDevice
+    state => state.deviceConfiguration.updateDevice
   ) as string;
   const updateDevice: DeviceModel = useSelector(
-    (state) => state.firestore.data.devices[updateDeviceId + ""]
+    state => state.firestore.data.devices[updateDeviceId + ""]
   );
   const dispatch = useDispatch();
   const handleClose = () => dispatch(setConfigureDevice(null));
   return (
     <Modal open={Boolean(updateDeviceId)} onClose={handleClose}>
-      <Paper className={classes.container}>
+      <Paper
+        sx={{ width: 420, margin: "16px auto 16px auto", overflow: "auto" }}>
+        <DialogTitle>Konfigurovat zařízení</DialogTitle>
         {updateDevice && (
           <UpdateDeviceForm
             updateDevice={{ ...updateDevice, id: updateDeviceId }}

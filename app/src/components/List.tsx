@@ -1,4 +1,6 @@
-import { List as MuiList, withStyles } from "@material-ui/core";
+import { List as MuiList } from "@mui/material";
+
+import withStyles from "@mui/styles/withStyles";
 
 export const List = withStyles({
   root: {

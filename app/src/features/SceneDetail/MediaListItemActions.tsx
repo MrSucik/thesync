@@ -1,12 +1,12 @@
-import { IconButton, ListItemSecondaryAction } from "@material-ui/core";
+import { IconButton, ListItemSecondaryAction } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-import RoundedImage from "../../components/RoundedImage";
-import Tooltip from "../../components/Tooltip";
-import { MediaModel } from "../../definitions";
-import { useCurrentScene } from "../../hooks/useCurrentScene";
-import { getIconSource } from "../../utils/icons";
+import RoundedImage from "components/RoundedImage";
+import Tooltip from "components/Tooltip";
+import { MediaModel } from "definitions";
+import { useCurrentScene } from "hooks/useCurrentScene";
+import { getIconSourceSvg } from "utils/icons";
 import {
   setActiveStep,
   setContentOpen,
@@ -32,19 +32,19 @@ const MediaListItemActions: React.FC<{ media: MediaModel }> = ({ media }) => {
   const handleDeleteClick = () => {
     firestore.delete(`media/${media.id}`);
     firestore.update(`scenes/${scene.id}`, {
-      mediaList: scene.mediaList.filter((m) => m !== media.id),
+      mediaList: scene.mediaList.filter(m => m !== media.id),
     });
   };
   return (
     <ListItemSecondaryAction>
       <Tooltip title="Konfigurovat">
         <IconButton onClick={handleConfigureClick} size="small">
-          <RoundedImage src={getIconSource("settings")} />
+          <RoundedImage src={getIconSourceSvg("settings")} />
         </IconButton>
       </Tooltip>
       <Tooltip title="Odstranit">
         <IconButton onClick={handleDeleteClick} size="small">
-          <RoundedImage src={getIconSource("delete")} />
+          <RoundedImage src={getIconSourceSvg("delete")} />
         </IconButton>
       </Tooltip>
     </ListItemSecondaryAction>

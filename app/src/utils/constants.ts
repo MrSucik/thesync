@@ -1,5 +1,6 @@
 export const internalDateFormat = "DD-MM-YYYY";
 export const czechDateFormat = "DD. MM. YYYY";
+export const czechLongDateTimeFormat = "DD. MM. YYYY HH:mm:ss";
 export const czechShortDateFormat = "DD. MM.";
 
 export const screenHeight = 1760;
@@ -10,3 +11,5 @@ export const firebaseApiKey = process.env.REACT_APP_FIREBASE_API_KEY;
 export const firebaseAppId = process.env.REACT_APP_FIREBASE_APP_ID;
 
 export const isDevelopment = process.env.NODE_ENV === "development";
+
+export const dummyFunction = (): void => console.log("Dummy function called!");

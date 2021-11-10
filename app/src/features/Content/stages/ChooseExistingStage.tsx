@@ -1,25 +1,16 @@
-import {
-  Avatar,
-  FormGroup,
-  FormLabel,
-  ListItemAvatar,
-  withStyles,
-} from "@material-ui/core";
+import { Avatar, FormGroup, FormLabel, ListItemAvatar } from "@mui/material";
+import { Box } from "@mui/system";
 import firebase from "firebase/app";
 import { useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-import { List } from "../../../components/List";
-import ListItem from "../../../components/ListItem";
-import { ListItemText } from "../../../components/ListItemText";
-import { MediaModel } from "../../../definitions";
-import { useDownloadURL } from "../../../hooks/useDownloadURL";
-import { useSelector } from "../../../store";
+import { List } from "components/List";
+import ListItem from "components/ListItem";
+import { ListItemText } from "components/ListItemText";
+import { MediaModel } from "definitions";
+import { useDownloadURL } from "hooks/useDownloadURL";
+import { useSelector } from "store/useSelector";
 import { setActiveStep, setUpdatingMedia } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
-
-const Container = withStyles({
-  root: { padding: "0 32px" },
-})(FormGroup);
 
 const ListIt: React.FC<{
   media: MediaModel;
@@ -27,7 +18,7 @@ const ListIt: React.FC<{
 }> = ({ media, onClick }) => {
   const url = useDownloadURL(media.file);
   return (
-    <ListItem onClick={onClick} button>
+    <ListItem onClick={onClick}>
       <ListItemAvatar>
         <Avatar src={url} />
       </ListItemAvatar>
@@ -38,12 +29,12 @@ const ListIt: React.FC<{
 
 const ChooseExistingStage = () => {
   const media = useSelector<MediaModel[]>(
-    (state) => state.firestore.ordered.media
+    state => state.firestore.ordered.media
   );
   const dispatch = useDispatch();
   const firestore = useFirestore();
   const createClickHandler = (id: string) => async () => {
-    const selected = media.find((x) => x.id === id);
+    const selected = media.find(x => x.id === id);
     const copy = {
       ...selected,
       name: selected?.name + " - kopie",
@@ -58,13 +49,13 @@ const ChooseExistingStage = () => {
     dispatch(setActiveStep(2));
   };
   return (
-    <>
-      <Container>
+    <Box sx={{ padding: "0 32px" }}>
+      <FormGroup>
         <FormLabel component="legend">Kopírovat položku</FormLabel>
         <List>
           {media
-            .filter((x) => !x.bakalariConfiguration)
-            .map((med) => (
+            .filter(x => !x.bakalariConfiguration)
+            .map(med => (
               <ListIt
                 key={med.id}
                 media={med}
@@ -72,9 +63,9 @@ const ChooseExistingStage = () => {
               />
             ))}
         </List>
-      </Container>
+      </FormGroup>
       <NextBackButtons nextHidden />
-    </>
+    </Box>
   );
 };
 

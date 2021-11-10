@@ -4,6 +4,7 @@ export type Timestamp = firebase.firestore.Timestamp;
 
 interface FirestoreDocument {
   id: string;
+  area: string;
 }
 
 export interface UserModel extends FirestoreDocument {
@@ -16,6 +17,8 @@ export interface UserModel extends FirestoreDocument {
   bigD?: boolean;
 }
 
+export type MediaFileType = "images" | "image" | "video";
+
 export interface MediaModel extends FirestoreDocument {
   created: Timestamp;
   thumbnail: string;
@@ -23,9 +26,10 @@ export interface MediaModel extends FirestoreDocument {
   duration: number;
   file: string;
   files?: string[];
-  fileType: "images" | "image" | "video";
+  fileType: MediaFileType;
   backgroundColor?: string;
   bakalariConfiguration?: string | "auto";
+  bakalariType?: "bakalari-planakci" | "bakalari-suplovani";
   layout: "fill-width" | "fill-height" | "center";
   author: string;
   height: number;
@@ -48,6 +52,9 @@ export interface SceneModel extends FirestoreDocument {
   author: string;
   backgroundColor: string;
   mediaList: string[];
+  hideWeather: boolean;
+  hideProgress: boolean;
+  hideNameDay: boolean;
 }
 
 export interface Scene extends FirestoreDocument {
@@ -62,4 +69,15 @@ export interface ConfigurationModel extends FirestoreDocument {
   autoPlanDate: boolean;
   planDate: Timestamp;
   suplDate: Timestamp;
+}
+
+export interface PowerSettings {
+  enabled: boolean;
+  time: string;
+  action: string;
+}
+
+export interface NameDayModel extends FirestoreDocument {
+  name: string;
+  date: Timestamp;
 }

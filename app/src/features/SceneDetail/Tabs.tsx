@@ -1,50 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Box, Tab, Tabs as MuiTabs, withStyles } from "@material-ui/core";
+import { useEffect, useState } from "react";
+import { Tab, Tabs as MuiTabs } from "@mui/material";
 import Content from "./Content";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import Preview from "../../features/Preview/Preview";
+import { useDispatch } from "react-redux";
+import { useSelector } from "store/useSelector";
+import Preview from "features/Preview/Preview";
 import Settings from "./Settings";
-import { setPreviewMediaList } from "../../store/slices/preview";
-import { useCurrentScene } from "../../hooks/useCurrentScene";
+import { setPreviewMediaList } from "store/slices/preview";
+import { useCurrentScene } from "hooks/useCurrentScene";
+import TabPanel from "./TabPanel";
 
-const DarkTabs = withStyles((theme) => ({
-  indicator: { backgroundColor: theme.palette.primary.main },
-}))(MuiTabs);
-const DarkTab = withStyles((theme) => ({
-  root: {
-    color: "rgba(255, 255, 255, 0.7)",
-    "&$selected": { color: theme.palette.primary.main },
-  },
-}))(Tab);
-const TabContainer = withStyles({
-  root: {
-    overflow: "auto",
-    padding: 8,
-    flexGrow: 1,
-  },
-})(Box);
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
-}
-
-const TabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
-  return (
-    <TabContainer role="tabpanel" hidden={value !== index} {...other}>
-      {value === index && <>{children}</>}
-    </TabContainer>
-  );
+const darkTab = {
+  color: "rgba(255, 255, 255, 0.7)",
+  "&$selected": { color: "primary.main" },
 };
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const selectedScene = useSelector<RootState, string | null>(
-    (state) => state.app.selectedScene
-  );
+  const selectedScene = useSelector(state => state.app.selectedScene);
   const dispatch = useDispatch();
   const scene = useCurrentScene();
   useEffect(() => setActiveTab(0), [selectedScene]);
@@ -54,20 +26,18 @@ const Tabs = () => {
         setPreviewMediaList({ mediaList: scene.mediaList, type: "tab" })
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab, selectedScene]);
   return !selectedScene ? null : (
     <>
-      <DarkTabs
+      <MuiTabs
         value={activeTab}
         onChange={(_, value) => setActiveTab(value)}
         textColor="primary"
-        variant="fullWidth"
-      >
-        <DarkTab label="obsah" />
-        <DarkTab label="náhled" disabled={!Boolean(scene?.mediaList?.length)} />
-        <DarkTab label="nastavení" />
-      </DarkTabs>
+        variant="fullWidth">
+        <Tab sx={darkTab} label="obsah" />
+        <Tab sx={darkTab} label="náhled" disabled={!scene?.mediaList?.length} />
+        <Tab sx={darkTab} label="nastavení" />
+      </MuiTabs>
       <TabPanel value={activeTab} index={0}>
         <Content />
       </TabPanel>

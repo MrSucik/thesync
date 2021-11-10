@@ -1,7 +1,11 @@
-import { ListItem as MuiListItem, withStyles } from "@material-ui/core";
+import { ListItem as MuiListItem } from "@mui/material";
+import { withStyles } from "@mui/styles";
 
-const ListItem: any = withStyles(() => ({
-  root: { background: "#444", borderRadius: 8 },
-}))(MuiListItem);
-
-export default ListItem;
+export default withStyles({
+  root: {
+    background: "#444",
+    borderRadius: 8,
+    userSelect: "none",
+    gap: "16px",
+  },
+})(MuiListItem);

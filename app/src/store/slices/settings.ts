@@ -23,9 +23,7 @@ const settingsSlice = createSlice({
   },
 });
 
-export const {
-  setUserAdministrationOpen,
-  setOpenSettingsButtonVisible,
-} = settingsSlice.actions;
+export const { setUserAdministrationOpen, setOpenSettingsButtonVisible } =
+  settingsSlice.actions;
 
 export default settingsSlice.reducer;

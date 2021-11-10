@@ -1,9 +1,7 @@
-import { Button, ButtonProps, withStyles } from "@material-ui/core";
+import { Button, ButtonProps } from "@mui/material";
 
-export const PrimaryButton = withStyles({ root: { margin: "8px 0" } })(
-  (props: ButtonProps) => (
-    <Button color="primary" variant="contained" {...props}>
-      {props.children}
-    </Button>
-  )
+export const PrimaryButton = (props: ButtonProps) => (
+  <Button color="primary" variant="contained" {...props}>
+    {props.children}
+  </Button>
 );

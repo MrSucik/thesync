@@ -1,29 +1,16 @@
-import { Box, Typography } from "@material-ui/core";
-import { forwardRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import CurrentDateTime from "../../components/CurrentDateTime";
-import { useSelector } from "../../store";
-import client from "../../utils/client";
-import { setWeatherData } from "./weatherSlice";
+import { Box, Typography } from "@mui/material";
+import { forwardRef } from "react";
+import CurrentDateTime from "components/CurrentDateTime";
+import { useSelector } from "store/useSelector";
+import { useWeather } from "features/ForecastWidget/useWeather";
 
 const Weather = forwardRef((_props, ref) => {
-  const dispatch = useDispatch();
-  const updateWeather = async () => {
-    const response = await client.weather();
-    dispatch(setWeatherData(response.data));
-  };
-  useEffect(() => {
-    updateWeather();
-    const interval = setInterval(updateWeather, 10 * 60 * 1000);
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useWeather();
   const { currentTemperature, maxTemperature, icon, description } = useSelector(
-    (state) => state.weather
+    state => state.weather
   );
   return !description ? null : (
     <Box
-      // @ts-ignore
       ref={ref}
       style={{
         paddingLeft: 4,
@@ -32,24 +19,25 @@ const Weather = forwardRef((_props, ref) => {
         alignItems: "center",
         position: "absolute",
         right: 0,
-      }}
-    >
+      }}>
       <Typography
         variant="caption"
         style={{
+          fontSize: "1rem",
           fontWeight: "bold",
           textAlign: "right",
           textTransform: "capitalize",
           whiteSpace: "nowrap",
-        }}
-      >
+        }}>
         <CurrentDateTime />
         <br />
         {description} {currentTemperature} ({maxTemperature})
       </Typography>
-      <img src={icon} alt="weather" style={{ height: 40 }} />
+      <img src={icon} alt="weather" style={{ height: 64 }} />
     </Box>
   );
 });
+
+Weather.displayName = "Weather";
 
 export default Weather;

@@ -1,16 +1,14 @@
-import { withStyles, Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import React from "react";
-import { DeviceModel } from "../../definitions";
-import SceneDevice from "./SceneDevice";
-
-const DevicesContainer = withStyles({ root: { display: "flex", gap: 4 } })(Box);
+import DeviceAvatar from "components/DeviceAvatar";
+import { DeviceModel } from "definitions";
 
 const SceneDevices: React.FC<{ devices: DeviceModel[] }> = ({ devices }) => (
-  <DevicesContainer>
-    {devices.map((device) => (
-      <SceneDevice key={device.id} device={device} />
+  <Box sx={{ display: "flex", gap: 1 }}>
+    {devices.map(device => (
+      <DeviceAvatar key={device.id} device={device} />
     ))}
-  </DevicesContainer>
+  </Box>
 );
 
 export default SceneDevices;

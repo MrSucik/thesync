@@ -1,28 +1,22 @@
-import { Box, withStyles } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { Box } from "@mui/material";
 import CurrentUserIcon from "./CurrentUserIcon";
-import { RootState } from "../../store";
+import { useSelector } from "store/useSelector";
 import UsersAdministrationIconButton from "./SettingsButton";
 
-const Container = withStyles(() => ({
-  root: {
-    display: "flex",
-    alignItems: "center",
-  },
-}))(Box);
-
 const HeaderButtons = () => {
-  const isEmpty = useSelector<RootState, boolean>(
-    (state) => state.firebase.auth.isEmpty
-  );
-  const settingsButtonVisible = useSelector<RootState, boolean>(
-    (state) => state.settings.openSettingsButtonVisible
+  const isEmpty = useSelector(state => state.firebase.auth.isEmpty);
+  const settingsButtonVisible = useSelector(
+    state => state.settings.openSettingsButtonVisible
   );
   return !isEmpty ? (
-    <Container>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+      }}>
       {settingsButtonVisible && <UsersAdministrationIconButton />}
       <CurrentUserIcon />
-    </Container>
+    </Box>
   ) : null;
 };
 

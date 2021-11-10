@@ -1,10 +1,10 @@
-import { Avatar, ListItemAvatar } from "@material-ui/core";
+import { Avatar, ListItemAvatar } from "@mui/material";
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
-import ListItem from "../../components/ListItem";
-import { ListItemText } from "../../components/ListItemText";
-import { MediaModel } from "../../definitions";
-import { useDownloadURL } from "../../hooks/useDownloadURL";
+import ListItem from "components/ListItem";
+import { ListItemText } from "components/ListItemText";
+import { MediaModel } from "definitions";
+import { useDownloadURL } from "hooks/useDownloadURL";
 import SceneDuration from "../Scenes/SceneDuration";
 import MediaListItemActions from "./MediaListItemActions";
 
@@ -15,12 +15,11 @@ const MediaListItem: React.FC<{ media: MediaModel; index: number }> = ({
   const url = useDownloadURL(media.file);
   return (
     <Draggable draggableId={media.id} index={index}>
-      {(provided) => (
+      {provided => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
+          {...provided.dragHandleProps}>
           <ListItem style={{ paddingRight: 86 }}>
             <ListItemAvatar>
               <Avatar src={url} />

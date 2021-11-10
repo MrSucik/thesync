@@ -4,13 +4,13 @@ import {
   ListItem,
   ListItemAvatar,
   Popover,
-} from "@material-ui/core";
+} from "@mui/material";
 import { useRef, useState } from "react";
 import { useFirebase } from "react-redux-firebase";
-import RoundedImage from "../../components/RoundedImage";
-import { List } from "../../components/List";
-import { ListItemText } from "../../components/ListItemText";
-import { useCurrentUser } from "../../hooks/useCurrentUser";
+import RoundedImage from "components/RoundedImage";
+import { List } from "components/List";
+import { ListItemText } from "components/ListItemText";
+import { useCurrentUser } from "hooks/useCurrentUser";
 
 const CurrentUserIcon = () => {
   const user = useCurrentUser();
@@ -24,15 +24,14 @@ const CurrentUserIcon = () => {
   const anchor = useRef<HTMLElement | null>(null);
   return !user ? null : (
     <span ref={anchor}>
-      <IconButton onClick={handleClick}>
+      <IconButton onClick={handleClick} size="large">
         <RoundedImage src={user.photoURL} />
       </IconButton>
       <Popover
         open={open}
         onClose={() => setOpen(false)}
         anchorEl={anchor.current}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
         <List>
           <ListItem selected>
             <ListItemText primary={`Přihlášen jako: ${user.email}`} />

@@ -1,8 +1,8 @@
-import * as ffmpeg from "fluent-ffmpeg";
+import ffmpeg from "fluent-ffmpeg";
 import { spawn } from "child-process-promise";
 import * as ffmpegPath from "ffmpeg-static";
-import { uploadFile } from "./fire";
-import { tempFilePath } from "./utils";
+import { tempFilePath } from "./utils/os";
+import { uploadFile } from "./firebase/storage";
 
 export const createThumbnailFromImage = async (
   name: string,
@@ -29,7 +29,7 @@ export const createThumbnailFromVideo = (
   inputPath: string,
   frameIntervalInSeconds: number
 ) =>
-  new Promise<string>(async (resolve, reject) => {
+  new Promise<string>((resolve, reject) => {
     const outputPath = tempFilePath(`thumbnail_${name}.mp4`);
     const thumbnailPath = `thumbnails/${name}.mp4`;
     const handleConversionEnd = async () => {
