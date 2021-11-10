@@ -20,6 +20,7 @@ import {
 import { TimePicker } from "@mui/lab";
 import { usePowerSettings } from "hooks/usePowerSettings";
 
+
 const DeviceScheduleDialog = () => {
   const dispatch = useDispatch();
   const { powerSettings, updatePowerSettings } = usePowerSettings();

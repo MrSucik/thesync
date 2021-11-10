@@ -7,6 +7,7 @@ interface Props {
 
 const Loading: React.FC<Props> = ({ color = "inherit" }) => (
   <Box
+    id="loading"
     sx={{
       position: "absolute",
       transform: "translate(-50%, -50%)",

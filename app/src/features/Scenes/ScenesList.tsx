@@ -31,7 +31,7 @@ const ScenesList = () => {
     }
   };
   return (
-    <List sx={{ paddingRight: 2 }}>
+    <List id="playlists" sx={{ paddingRight: 2 }}>
       {scenes.map(scene => (
         <SceneListItem
           key={scene.id}

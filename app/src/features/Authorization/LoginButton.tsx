@@ -6,6 +6,7 @@ const LoginButton: React.FC = () => {
   const { onLogin } = useAuthorization();
   return (
     <Button
+      id="login"
       variant="contained"
       color="primary"
       size="large"

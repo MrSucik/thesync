@@ -33,7 +33,10 @@ const Scenes = () => {
         minWidth: 300,
       }}>
       <Title>scény</Title>
-      <PrimaryButton sx={{ mt: 1, mr: 2 }} onClick={handleAddScene}>
+      <PrimaryButton
+        id="add-playlist"
+        sx={{ mt: 1, mr: 2 }}
+        onClick={handleAddScene}>
         přidat scénu
       </PrimaryButton>
       <ScenesList />

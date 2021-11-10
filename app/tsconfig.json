@@ -25,6 +25,10 @@
   },
   "include": [
     "src",
-    "jest.config.ts"
+    "jest.config.ts",
+    "tests"
+  ],
+  "exclude": [
+    "__tests__"
   ]
 }
