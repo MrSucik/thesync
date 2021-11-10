@@ -1,4 +1,4 @@
-import * as puppeteer from "puppeteer";
+import puppeteer from "puppeteer";
 import { getMonday } from "../utils/date";
 import { executeFunctionOnUrl, takeScreenshot } from "../puppeteer";
 import { removeNewLines } from "../utils/string";

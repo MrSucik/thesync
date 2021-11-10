@@ -1,4 +1,4 @@
-import * as puppeteer from "puppeteer";
+import puppeteer from "puppeteer";
 import { screenWidth } from "./constants";
 import { tempFilePath } from "./utils/os";
 

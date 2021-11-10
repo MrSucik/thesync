@@ -2,7 +2,7 @@ import moment = require("moment");
 import { executeFunctionOnUrl, takeScreenshot } from "../puppeteer";
 import { getDateInUrlFormat } from "./bakalari";
 import { bakaSuplRoute, bakaSuffix } from "./constants";
-import * as puppeteer from "puppeteer";
+import puppeteer from "puppeteer";
 
 export const scrapeSupl = async (page: puppeteer.Page, date: moment.Moment) => {
   const url = bakaSuplRoute + getDateInUrlFormat(date) + bakaSuffix;

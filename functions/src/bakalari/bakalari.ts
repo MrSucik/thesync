@@ -1,4 +1,4 @@
-import moment = require("moment");
+import moment from "moment";
 import { czechShortDateFormat, maxHeight } from "../constants";
 import { getMonday, getNearestWeekday } from "../utils/date";
 import { bakaDateFormat, internalDateFormat } from "./constants";
@@ -8,7 +8,7 @@ import { BakalariType } from "../definitions";
 import { initializePage } from "../puppeteer";
 import { scrapePlan } from "./planakci";
 import { scrapeSupl } from "./suplovani";
-import * as puppeteer from "puppeteer";
+import puppeteer from "puppeteer";
 import {
   getAllBakalariMediaDocumentsForExport,
   updateBakalariDoc,
