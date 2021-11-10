@@ -4,9 +4,9 @@ import { MediaModel } from "definitions";
 import { useSelector } from "store/useSelector";
 import ProgressBar from "./ProgressBar";
 import PlayNextPrevious from "./PlayNext";
-import MediaPreviewPlayer from "./MediaPreviewPlayer";
 import { useCurrentScene } from "hooks/useCurrentScene";
-// import ForecastWidget from "../ForecastWidget/ForecastWidget";
+import MediaPreviewPlayer from "./MediaPreviewPlayer";
+// import ForecastWidget from "features/ForecastWidget/ForecastWidget";
 
 interface Props {
   disableControls?: boolean;
@@ -28,11 +28,12 @@ const Preview: React.FC<Props> = ({ disableControls }) => {
       sx={{
         width: 1080,
         height: 1920,
-        transform: "rotate(90deg) translateX(-420px)",
-        // transformOrigin: "left top",
-        // window.innerHeight < 1500
-        //   ? `scale(${(window.innerHeight - 200) / 1920})`
-        //   : undefined,
+        transformOrigin: "left top",
+        //  "rotate(90deg) translateX(-420px)",
+        transform:
+          window.innerHeight < 1500
+            ? `scale(${(window.innerHeight - 200) / 1920})`
+            : undefined,
         margin: "auto",
         boxSizing: "border-box",
         color: "#e6e6e6",

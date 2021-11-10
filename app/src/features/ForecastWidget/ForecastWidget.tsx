@@ -24,38 +24,32 @@ const ForecastWidget: React.FC = () => {
         options={{
           chart: {
             foreColor: "#fff",
-            background: "blue",
+            background: "transparent",
             fontFamily: "Roboto",
             selection: { enabled: false },
             zoom: { enabled: false },
             toolbar: { show: false },
             sparkline: { enabled: true },
           },
+          colors: ["#fff"],
           tooltip: { enabled: false },
           dataLabels: {
             enabled: true,
-            distributed: true,
             background: { enabled: false, dropShadow: { enabled: false } },
             offsetY: 16,
+            textAnchor: "middle",
           },
           states: { hover: { filter: { type: "none" } } },
           stroke: { colors: ["#fff"], curve: "smooth" },
-          grid: { show: false },
+          grid: { show: false, padding: { left: 64, right: 64 } },
           yaxis: {
             show: false,
-            max:
-              Math.max.apply(
-                null,
-                hourlyForecast.map(x => x.temp)
-              ) + 2,
-            min:
-              Math.min.apply(
-                null,
-                hourlyForecast.map(x => x.temp)
-              ) - 2,
+            max: max => max + 2,
+            min: min => min - 2,
           },
           xaxis: {
-            labels: { offsetX: 100 },
+            tooltip: { enabled: false },
+            labels: { show: false },
             axisBorder: { show: false },
             axisTicks: { show: false },
           },
@@ -63,7 +57,7 @@ const ForecastWidget: React.FC = () => {
         series={[{ name: "series", data: hourlyForecast.map(x => x.temp) }]}
         type="line"
         height={420}
-        width={800}
+        width={1080}
       />
     </Box>
   );
