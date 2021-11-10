@@ -6,7 +6,9 @@ name: Lint, Build and Deploy to Firebase Hosting on merge
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-    environment: Production
+    environment:
+      name: Production
+      url: https://syncoli.com
     steps:
       - name: Checkout files
         uses: actions/checkout@v2
