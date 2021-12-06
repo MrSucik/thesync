@@ -5,7 +5,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest --env=jsdom",
     "e2e": "dotenv npx playwright test -- --browser=webkit",
     "lint": "eslint ./src --ext .js,.ts,.jsx,.tsx",
     "format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json}\""
