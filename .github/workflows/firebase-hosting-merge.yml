@@ -15,8 +15,7 @@ jobs:
       - name: Lint and Build
         run: |
           cd app
-          yarn
-          yarn lint
+          yarn install --prod
           yarn build
         env:
           REACT_APP_OPEN_WEATHER_API_TOKEN: ${{ secrets.REACT_APP_OPEN_WEATHER_API_TOKEN }}
