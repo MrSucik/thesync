@@ -16,7 +16,6 @@ const Settings = () => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const {
-    footer,
     backgroundColor,
     name,
     id,
@@ -32,7 +31,6 @@ const Settings = () => {
     enableReinitialize: true,
     initialValues: {
       name,
-      footer,
       backgroundColor,
       hideProgress,
       hideWeather,
