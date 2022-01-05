@@ -36,11 +36,11 @@ const options: Option[] = [
     name: "Bakaláři - Plán akcí",
     icon: <Avatar src={getIconSourceSvg("bakalari")} />,
   },
-  {
-    type: "weather-forecast",
-    name: "Předpověď počasí",
-    icon: <Avatar src={getIconSourcePng("cloudy-day")} />,
-  },
+  // {
+  //   type: "weather-forecast",
+  //   name: "Předpověď počasí",
+  //   icon: <Avatar src={getIconSourcePng("cloudy-day")} />,
+  // },
 ];
 
 const ChooseTypeStage = () => {
