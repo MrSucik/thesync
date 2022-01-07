@@ -10,7 +10,7 @@ const DeviceAvatar: React.FC<{
   tooltip?: React.ReactChild | React.ReactFragment | React.ReactPortal;
   size?: number;
 }> = ({
-  device: { name, status, lastUpdateRequest, icon },
+  device: { name, lastUpdateRequest, icon },
   tooltip = name,
   size = 24,
 }) => {
@@ -18,17 +18,15 @@ const DeviceAvatar: React.FC<{
   return (
     <Tooltip title={tooltip}>
       <span>
-        <StatusBadge size={size > 24 ? 8 : 6} status={status}>
-          <StatusBadge
-            size={size > 24 ? 8 : 6}
-            status={pythonStatus}
-            origin={{ vertical: "bottom", horizontal: "left" }}>
-            <Avatar
-              sx={{ height: size, width: size }}
-              alt={icon}
-              src={getIconSourceSvg(icon)}
-            />
-          </StatusBadge>
+        <StatusBadge
+          size={size > 24 ? 8 : 6}
+          status={pythonStatus}
+          origin={{ vertical: "bottom", horizontal: "left" }}>
+          <Avatar
+            sx={{ height: size, width: size }}
+            alt={icon}
+            src={getIconSourceSvg(icon)}
+          />
         </StatusBadge>
       </span>
     </Tooltip>

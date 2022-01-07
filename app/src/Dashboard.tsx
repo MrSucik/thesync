@@ -8,8 +8,10 @@ import ModalPreview from "features/Preview/ModalPreview";
 import SceneDetail from "features/SceneDetail";
 import Content from "features/Content/Content";
 import { Box } from "@mui/system";
+import { useStoreUserData } from "features/Authorization/useStoreUserData";
 
 const Dashboard = () => {
+  useStoreUserData();
   const dataLoaded = useFirestoreSubscribe("wigym");
   return dataLoaded ? (
     <>
