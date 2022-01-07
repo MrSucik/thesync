@@ -5,7 +5,7 @@ import { List } from "components/List";
 import ListItem from "components/ListItem";
 import { ListItemText } from "components/ListItemText";
 // import { useSelector } from "store";
-import { getIconSourcePng, getIconSourceSvg } from "utils/icons";
+import { getIconSourceSvg } from "utils/icons";
 import { ContentType, setActiveStep, setContentType } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
 
