@@ -1,15 +1,14 @@
 {
   "name": "syncoli-app",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "yarn run build && firebase deploy --only hosting",
-    "test": "jest --env=jsdom",
     "e2e": "dotenv npx playwright test -- --browser=webkit",
     "lint": "eslint ./src --ext .js,.ts,.jsx,.tsx",
-    "format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json}\""
+    "format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json}\"",
+    "cypress": "npx cypress open"
   },
   "dependencies": {
     "@emotion/react": "^11.4.1",
