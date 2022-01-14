@@ -12,7 +12,6 @@ import CustomColorPicker from "components/CustomColorPicker";
 import { useCurrentScene } from "hooks/useCurrentScene";
 import { setPreviewMediaList } from "store/slices/preview";
 import { useSelector } from "store/useSelector";
-import { screenHeight } from "utils/constants";
 import { setPreviewMediaId, updateUpdatingMediaLmao } from "../contentSlice";
 import NextBackButtons from "../NextBackButtons";
 
@@ -48,7 +47,7 @@ const MediaUpdateStage = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     updateMedia(event.target.name, event.target.value);
 
-  const overflow = media?.height && media.height > screenHeight;
+  const overflow = false; // media?.height && media.height > screenHeight;
 
   return (
     <Box
