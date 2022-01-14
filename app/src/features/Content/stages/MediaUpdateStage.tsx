@@ -47,7 +47,7 @@ const MediaUpdateStage = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     updateMedia(event.target.name, event.target.value);
 
-  const overflow = true; // media?.height && media.height > screenHeight;
+  const overflow = false; // media?.height && media.height > screenHeight;
 
   return (
     <Box
