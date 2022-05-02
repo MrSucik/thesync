@@ -18,16 +18,16 @@ const DeviceAvatar: React.FC<{
   return (
     <Tooltip title={tooltip}>
       <span>
-        <StatusBadge
+        {/* <StatusBadge
           size={size > 24 ? 8 : 6}
           status={pythonStatus}
-          origin={{ vertical: "bottom", horizontal: "left" }}>
+          origin={{ vertical: "bottom", horizontal: "left" }}> */}
           <Avatar
             sx={{ height: size, width: size }}
             alt={icon}
             src={getIconSourceSvg(icon)}
           />
-        </StatusBadge>
+        {/* </StatusBadge> */}
       </span>
     </Tooltip>
   );

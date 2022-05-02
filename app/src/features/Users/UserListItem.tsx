@@ -33,9 +33,9 @@ const DeviceListItem: React.FC<{
   return (
     <ListItem>
       <ListItemAvatar>
-        <StatusBadge status={device.status}>
+        {/* <StatusBadge status={device.status}> */}
           <Avatar alt={device.name} src={getIconSourceSvg(device.icon)} />
-        </StatusBadge>
+        {/* </StatusBadge> */}
       </ListItemAvatar>
       <ListItemText primary={device.name} />
       <ListItemSecondaryAction>
