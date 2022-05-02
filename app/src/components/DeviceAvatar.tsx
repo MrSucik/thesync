@@ -1,8 +1,8 @@
 import { Avatar } from "@mui/material";
 import { DeviceModel } from "../definitions";
-import { usePythonStatus } from "../hooks/usePythonStatus";
+// import { usePythonStatus } from "../hooks/usePythonStatus";
 import { getIconSourceSvg } from "../utils/icons";
-import StatusBadge from "./StatusBadge";
+// import StatusBadge from "./StatusBadge";
 import Tooltip from "./Tooltip";
 
 const DeviceAvatar: React.FC<{
@@ -10,11 +10,11 @@ const DeviceAvatar: React.FC<{
   tooltip?: React.ReactChild | React.ReactFragment | React.ReactPortal;
   size?: number;
 }> = ({
-  device: { name, lastUpdateRequest, icon },
+  device: { name, icon },
   tooltip = name,
   size = 24,
 }) => {
-  const pythonStatus = usePythonStatus(lastUpdateRequest);
+  // const pythonStatus = usePythonStatus(lastUpdateRequest);
   return (
     <Tooltip title={tooltip}>
       <span>
