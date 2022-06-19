@@ -26,16 +26,16 @@ const options: Option[] = [
     name: "Nahrát soubor",
     icon: <Avatar src={getIconSourceSvg("upload-file")} />,
   },
-  // {
-  //   type: "bakalari-suplovani",
-  //   name: "Bakaláři - Suplování",
-  //   icon: <Avatar src={getIconSourceSvg("bakalari")} />,
-  // },
-  // {
-  //   type: "bakalari-planakci",
-  //   name: "Bakaláři - Plán akcí",
-  //   icon: <Avatar src={getIconSourceSvg("bakalari")} />,
-  // },
+  {
+    type: "bakalari-suplovani",
+    name: "Bakaláři - Suplování",
+    icon: <Avatar src={getIconSourceSvg("bakalari")} />,
+  },
+  {
+    type: "bakalari-planakci",
+    name: "Bakaláři - Plán akcí",
+    icon: <Avatar src={getIconSourceSvg("bakalari")} />,
+  },
   // {
   //   type: "weather-forecast",
   //   name: "Předpověď počasí",
